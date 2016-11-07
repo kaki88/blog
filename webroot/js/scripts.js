@@ -19,3 +19,23 @@ function date(selector, range, def) {
         yearRange: range
     });
 }
+
+// autocomplete ville
+var options_ac = {
+    url: window.location.origin + "/files/cities.json",
+
+    getValue: function(element) {
+        return element.zipcode + ' | ' + element.city.toUpperCase();
+    },
+    list: {
+        onSelectItemEvent: function() {
+            var index = $("#ville").getSelectedItemData().id;
+            $("#city-id").val(index).trigger("change");
+        },
+        maxNumberOfElements: 100,
+        match: {
+            enabled: true
+        }
+    },
+    theme: "square"
+};
