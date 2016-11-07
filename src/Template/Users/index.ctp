@@ -1,15 +1,3 @@
-<!--<nav class="large-3 medium-4 columns" id="actions-sidebar">-->
-    <!--<ul class="side-nav">-->
-        <!--<li class="heading"><?= __('Actions') ?></li>-->
-        <!--<li><?= $this->Html->link(__('New User'), ['action' => 'add']) ?></li>-->
-        <!--<li><?= $this->Html->link(__('List Cities'), ['controller' => 'Cities', 'action' => 'index']) ?></li>-->
-        <!--<li><?= $this->Html->link(__('New City'), ['controller' => 'Cities', 'action' => 'add']) ?></li>-->
-        <!--<li><?= $this->Html->link(__('List Roles'), ['controller' => 'Roles', 'action' => 'index']) ?></li>-->
-        <!--<li><?= $this->Html->link(__('New Role'), ['controller' => 'Roles', 'action' => 'add']) ?></li>-->
-        <!--<li><?= $this->Html->link(__('List Posts'), ['controller' => 'Posts', 'action' => 'index']) ?></li>-->
-        <!--<li><?= $this->Html->link(__('New Post'), ['controller' => 'Posts', 'action' => 'add']) ?></li>-->
-    <!--</ul>-->
-<!--</nav>-->
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
@@ -19,30 +7,41 @@
                         <table class="table user-list">
                             <thead>
             <tr>
-                <th><span><?= $this->Paginator->sort('login') ?></span></th>
-                <th><span><?= $this->Paginator->sort('created') ?></span></th>
-                <th class="text-center"><span><?= $this->Paginator->sort('active') ?></span></th>
-                <th><span><?= $this->Paginator->sort('email') ?></span></th>
-                <th ></th>
+                <th><span><?= $this->Paginator->sort('login', ['label' => 'Pseudonyme']) ?></span></th>
+                <th><span><?= $this->Paginator->sort('created', ['label' => 'Inscription']) ?></span></th>
+                <th class="hidden-xs text-center"><span><?= $this->Paginator->sort('active', ['label' => 'Status']) ?></span></th>
+                <th class="hidden-xs"><span><?= $this->Paginator->sort('email') ?></span></th>
+                <th >Action</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($users as $user): ?>
             <tr>
-                <td>
-                    <img src="http://bootdey.com/img/Content/user_1.jpg" alt="">
+                <td width="30%">
+                    <img src="<?= $this->Url->image('no-avatar.png') ?>" alt="">
                     <a href="#" class="user-link"><?= h($user->login) ?></a>
                     <span class="user-subhead"><?= $user->role->groupname ?></span>
                 </td>
-                <td><?= h($user->created) ?></td>
-                <td class="text-center">
-                    <span class="label label-default"><?= h($user->active) ?></span>
+                <td width="15%"><?= $user->created->i18nformat('dd MMM YYYY') ?></td>
+                <td width="15%" class="hidden-xs text-center">
+                        <?php if ($user->active == 0) : ?>
+                    <span class="label label-danger">
+                          En Attente
+                         </span>
+                        <?php endif ?>
+                        <?php if ($user->active == 1) : ?>
+                      <span class="label label-success">
+                       Actif
+                          </span>
+                        <?php endif ?>
+
                 </td>
-                <td><?= h($user->email) ?></td>
-                <td style="width: 20%;">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $user->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>
+                <td width="25%" class="hidden-xs"><?= h($user->email) ?></td>
+                <td width="15%">
+                    <?= $this->Html->link(__('<i class="fa fa-eye" aria-hidden="true"></i>'), ['action' => 'view', $user->id , $user->login] , ['escape' => false , 'class' => 'btn btn-xs btn-info']) ?>
+                    <?= $this->Html->link(__('<i class="fa fa-pencil" aria-hidden="true"></i>'), ['action' => 'edit', $user->id, $user->login] , ['escape' => false , 'class' => 'btn btn-xs btn-warning']) ?>
+                    <?= $this->Form->postLink(__('<i class="fa fa-trash" aria-hidden="true"></i>
+                    '), ['action' => 'delete', $user->id], ['escape' => false , 'class' => 'btn btn-xs btn-danger','confirm' => __('Are you sure you want to delete # {0}?', $user->id)] ) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

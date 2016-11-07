@@ -80,36 +80,13 @@ class UsersTable extends Table
             ->requirePresence('password', 'create')
             ->notEmpty('password');
 
-        $validator
-            ->requirePresence('firstname', 'create')
-            ->notEmpty('firstname');
 
-        $validator
-            ->requirePresence('lastname', 'create')
-            ->notEmpty('lastname');
-
-        $validator
-            ->requirePresence('address', 'create')
-            ->notEmpty('address');
 
         $validator
             ->date('birthday')
             ->requirePresence('birthday', 'create')
             ->notEmpty('birthday');
 
-        $validator
-            ->boolean('active')
-            ->requirePresence('active', 'create')
-            ->notEmpty('active');
-
-        $validator
-            ->date('connected')
-            ->requirePresence('connected', 'create')
-            ->notEmpty('connected');
-
-        $validator
-            ->requirePresence('avatar', 'create')
-            ->notEmpty('avatar');
 
         return $validator;
     }
