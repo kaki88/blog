@@ -45,10 +45,6 @@ Router::scope('/', function (RouteBuilder $routes) {
             '/restrictions',
             ['controller' => 'Restrictions', 'action' => 'add']
         );
-        $routes->connect(
-            '/zones',
-            ['controller' => 'Zones', 'action' => 'add']
-        );
         $routes->fallbacks(DashedRoute::class);
     });
     //   __________________________________________________________________Membres
@@ -80,6 +76,11 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect(
         '/connexion',
         ['controller' => 'Users', 'action' => 'login']
+    );
+    //   __________________________________________________________________Concours
+    $routes->connect(
+        '/deposer-un-jeu',
+        ['controller' => 'Contests', 'action' => 'add']
     );
     $routes->fallbacks(DashedRoute::class);
 });

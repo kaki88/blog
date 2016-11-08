@@ -33,7 +33,7 @@ class ZonesTable extends Table
         parent::initialize($config);
 
         $this->table('zones');
-        $this->displayField('id');
+        $this->displayField('place');
         $this->primaryKey('id');
 
         $this->belongsToMany('Contests', [
