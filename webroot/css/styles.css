@@ -19,6 +19,10 @@ body{
     width: 30px;
 }
 
+label{
+    color: #3498db;
+    font-size: 0.875em;
+}
 /*____________________________________________________________table*/
 .main-box.no-header {
     padding-top: 20px;
@@ -94,6 +98,11 @@ a {
 
 .panel-title{
     padding-top: 20px;
+    color: #3498db;
+}
+
+.linkcontest{
+    text-transform: none!important;
 }
 
 .panstyl > .panel-heading {
@@ -103,8 +112,20 @@ a {
     border-color: #e7ebee;
 }
 
-/*____________________________________________________________formulaire*/
-label{
-    color: #3498db;
-    font-size: 0.875em;
+
+/*____________________________________________________________accueil*/
+
+.prize{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.contest-img{
+    width: 150px;
+    border-radius: 3px;
+    border: 1px solid grey;
+}
+
+.befprize{
+    font-size: 12px;
 }
