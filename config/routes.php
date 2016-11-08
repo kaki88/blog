@@ -77,6 +77,11 @@ Router::scope('/', function (RouteBuilder $routes) {
         '/connexion',
         ['controller' => 'Users', 'action' => 'login']
     );
+    //   __________________________________________________________________Concours
+    $routes->connect(
+        '/deposer-un-jeu',
+        ['controller' => 'Contests', 'action' => 'add']
+    );
     $routes->fallbacks(DashedRoute::class);
 });
 

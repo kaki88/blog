@@ -33,7 +33,7 @@ class FrequenciesTable extends Table
         parent::initialize($config);
 
         $this->table('frequencies');
-        $this->displayField('id');
+        $this->displayField('period');
         $this->primaryKey('id');
 
         $this->hasMany('Contests', [

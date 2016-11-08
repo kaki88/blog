@@ -27,12 +27,14 @@
                     </ul>
                 </li>
 
-                <li><?= $this->Html->link('Liste des membres',
-                    ['controller' => 'Users', 'action' => 'index','prefix'=> false]); ?></li>
+                <li><a href="<?= $this->Url->build(['controller' => 'Users','action' => 'index' , 'prefix' => false ]); ?>"><i class="fa fa-list-alt" aria-hidden="true"></i>
+                    Liste des membres</a></li>
 
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
+                <li><a href="<?= $this->Url->build(['controller' => 'Contests','action' => 'add' , 'prefix' => false ]); ?>"><i class="fa fa-plus-square" aria-hidden="true"></i>
+                    Proposer un jeu</a></li>
             <li class="dropdown">
                 <?php $cell = $this->cell('Login');
                 echo $cell; ?>

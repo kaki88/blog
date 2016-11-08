@@ -33,7 +33,7 @@ class CategoriesTable extends Table
         parent::initialize($config);
 
         $this->table('categories');
-        $this->displayField('id');
+        $this->displayField('type');
         $this->primaryKey('id');
 
         $this->hasMany('Contests', [

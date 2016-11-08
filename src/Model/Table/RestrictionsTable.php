@@ -33,7 +33,7 @@ class RestrictionsTable extends Table
         parent::initialize($config);
 
         $this->table('restrictions');
-        $this->displayField('id');
+        $this->displayField('sort');
         $this->primaryKey('id');
 
         $this->belongsToMany('Contests', [
