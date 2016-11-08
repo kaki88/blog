@@ -30,7 +30,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
     //   __________________________________________________________________Membres
     $routes->connect(
-        '/membre',
+        '/membres',
         ['controller' => 'Users', 'action' => 'index']
     );
     $routes->connect(
