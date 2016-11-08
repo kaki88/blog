@@ -1,65 +1,68 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Contest'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Categories'), ['controller' => 'Categories', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Category'), ['controller' => 'Categories', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Frequencies'), ['controller' => 'Frequencies', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Frequency'), ['controller' => 'Frequencies', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Restrictions'), ['controller' => 'Restrictions', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Restriction'), ['controller' => 'Restrictions', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Zones'), ['controller' => 'Zones', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Zone'), ['controller' => 'Zones', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="contests index large-9 medium-8 columns content">
-    <h3><?= __('Contests') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('category_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('name') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('game_url') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('rule_url') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('on_facebook') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('frequency_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('deadline') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('img_url') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($contests as $contest): ?>
-            <tr>
-                <td><?= $this->Number->format($contest->id) ?></td>
-                <td><?= $contest->has('category') ? $this->Html->link($contest->category->id, ['controller' => 'Categories', 'action' => 'view', $contest->category->id]) : '' ?></td>
-                <td><?= h($contest->name) ?></td>
-                <td><?= h($contest->game_url) ?></td>
-                <td><?= h($contest->rule_url) ?></td>
-                <td><?= h($contest->on_facebook) ?></td>
-                <td><?= $contest->has('frequency') ? $this->Html->link($contest->frequency->id, ['controller' => 'Frequencies', 'action' => 'view', $contest->frequency->id]) : '' ?></td>
-                <td><?= h($contest->deadline) ?></td>
-                <td><?= h($contest->img_url) ?></td>
-                <td><?= h($contest->created) ?></td>
-                <td><?= h($contest->modified) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $contest->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $contest->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $contest->id], ['confirm' => __('Are you sure you want to delete # {0}?', $contest->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-        </ul>
-        <p><?= $this->Paginator->counter() ?></p>
+<?php foreach ($contests as $contest) :?>
+
+<div class="row">
+    <div class="col-md-9">
+        <div class="panel panel-primary panstyl">
+            <div class="panel-heading clearfix">
+                <div class="panel-title pull-left">
+                    <?= $contest->name ?>
+                </div>
+                <div class="panel-title pull-right linkcontest">
+                Commentaires(0)
+                </div>
+            </div>
+
+            <div class="panel-body">
+
+
+
+                <table class="table">
+                <tr>
+                    <td width="20%" rowspan="3">
+                        <?php if ($contest->img_url): ?>
+                        <?= $this->Html->image("../uploads/img/$contest->img_url" , ['class' => 'contest-img'])?>
+                        <?php endif ?>
+                    </td>
+                    <td width="15%"><span class="befprize">Lot(s) à gagner :</span></td>
+                    <td width="65%"><span class="prize"><?= $contest->prize ?></span></td>
+                </tr>
+                    <tr>
+                        <td><span class="befprize">Principe :</span></td>
+                        <td></td>
+                    </tr>
+
+
+                    <tr>
+                        <td >
+                            <a href="<?= $contest->game_url ?>" target="_blank">
+                                <button type="button" class="btn btn-primary">
+                                    <i class="fa fa-external-link" aria-hidden="true"></i> Participer
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </div>
+        </div>
     </div>
+</div>
+
+<?php endforeach ?>
+
+
+
+
+    <ul class="pagination pagination-large">
+        <?php
+                echo $this->Paginator->prev(__('Prec'), array('tag' => 'li'), null, array('tag' => 'li','class' =>
+                'disabled','disabledTag' => 'a'));
+                echo $this->Paginator->numbers(array('separator' => '','currentTag' => 'a', 'currentClass' =>
+                'active','tag' => 'li','first' => 1));
+                echo $this->Paginator->next(__('Suiv'), array('tag' => 'li','currentClass' => 'disabled'), null,
+                array('tag' => 'li','class' => 'disabled','disabledTag' => 'a'));
+                ?>
+    </ul>
+
 </div>
