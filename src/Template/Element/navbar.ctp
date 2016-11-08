@@ -16,7 +16,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-cogs" aria-hidden="true"></i> Admin</a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#"><span class="glyphicon glyphicon-pencil"></span> Créer une catégorie</a></li>
+                        <li><?= $this->Html->link('Catégories',
+                            ['controller' => 'Categories', 'action' => 'add','prefix'=> 'admin']); ?></li>
                         <li class="divider"></li>
                     </ul>
                 </li>

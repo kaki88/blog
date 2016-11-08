@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Controller\AppController;
 
@@ -59,7 +59,9 @@ class CategoriesController extends AppController
                 $this->Flash->error(__('The category could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('category'));
+
+        $categories = $this->Categories->find('all');
+        $this->set(compact('category','categories'));
         $this->set('_serialize', ['category']);
     }
 

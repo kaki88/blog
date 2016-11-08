@@ -14,10 +14,10 @@ else{
 <?php
 if($isConnected) {
     ?>
-        <li><a href="<?= $this->Url->build(['controller' => 'Users','action' => 'view' ,$myId, $auth]); ?>"><span class="glyphicon glyphicon-user"></span> Profil</a></li>
+        <li><a href="<?= $this->Url->build(['controller' => 'Users','action' => 'view' ,$myId, $auth,'prefix'=> false]); ?>"><span class="glyphicon glyphicon-user"></span> Profil</a></li>
 
 
-    <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Paramètres</a></li>
+
         <li class="divider"></li>
         <li><a href="<?= $this->Url->build(['controller' => 'Users','action' => 'logout',
         'prefix' => false]); ?>"><span class="glyphicon glyphicon-off"></span> Deconnexion</a></li>
