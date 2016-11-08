@@ -1,36 +1,67 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Contests'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Categories'), ['controller' => 'Categories', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Category'), ['controller' => 'Categories', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Frequencies'), ['controller' => 'Frequencies', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Frequency'), ['controller' => 'Frequencies', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Restrictions'), ['controller' => 'Restrictions', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Restriction'), ['controller' => 'Restrictions', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Zones'), ['controller' => 'Zones', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Zone'), ['controller' => 'Zones', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="contests form large-9 medium-8 columns content">
-    <?= $this->Form->create($contest) ?>
-    <fieldset>
-        <legend><?= __('Add Contest') ?></legend>
-        <?php
-            echo $this->Form->input('category_id', ['options' => $categories]);
-            echo $this->Form->input('name');
-            echo $this->Form->input('game_url');
-            echo $this->Form->input('rule_url');
-            echo $this->Form->input('on_facebook');
-            echo $this->Form->input('frequency_id', ['options' => $frequencies]);
-            echo $this->Form->input('deadline');
-            echo $this->Form->input('img_url');
-            echo $this->Form->input('prize');
-            echo $this->Form->input('answer');
-            echo $this->Form->input('restrictions._ids', ['options' => $restrictions]);
-            echo $this->Form->input('zones._ids', ['options' => $zones]);
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<?= $this->Html->css('bootstrap-fileinput.css') ?>
+<?= $this->Html->script('bootstrap-fileinput.js') ?>
+<div class="row">
+<div class="col-md-12">
+    <div class="panel panel-primary panstyl">
+        <div class="panel-heading clearfix">
+            <i class="icon-calendar"></i>
+            <h3 class="panel-title">
+                <?= __('Déposer un jeu concours') ?></h3>
+        </div>
+
+        <div class="panel-body">
+            <div class="col-md-6">
+                <?php
+                        echo $this->Form->create($contest , ['type' => 'file','id' => 'form']);
+
+                        echo $this->Form->input('name', ['label' => 'Nom de l\'opération',  'prepend' => '<i class="fa fa-ticket" aria-hidden="true"></i>']);
+                        echo $this->Form->input('game_url', ['label' => 'Lien vers le jeu',  'prepend' => '<i class="fa fa-link" aria-hidden="true"></i>']);
+                        echo $this->Form->input('rule_url', ['label' => 'Lien vers le règlement',  'prepend' => '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>']);
+                        echo $this->Form->input('deadline',['label' => 'Date limite de participation']);
+
+                        ?>
+            </div>
+            <div class="col-md-6">
+                <?php
+                echo $this->Form->input('category_id', ['options' => $categories, 'label' => 'Type de jeu',  'prepend' => '<i class="fa fa-tag" aria-hidden="true"></i>']);
+                        echo $this->Form->input('frequency_id', ['options' => $frequencies, 'label' => 'Participation',  'prepend' => '<i class="fa fa-clock-o" aria-hidden="true"></i>']);
+                        echo $this->Form->input('on_facebook',['label' => 'Sur facebook ?']);
+                        echo $this->Form->input('img_url',['type' => 'file']);
+                        ?>
+                <br> <br> <br>
+            </div>
+
+
+
+                <div class="col-md-12">
+                    <?php
+                            echo $this->Form->input('restrictions._ids', ['options' => $restrictions, 'type'=>'checkbox']);
+                            echo $this->Form->input('zones._ids', ['options' => $zones, 'type'=>'checkbox']);
+                    echo $this->Form->input('prize',['label' => 'Dotation(s)']);
+                    echo $this->Form->input('answer',['label' => 'Réponse(s)']);
+                    ?>
+                </div>
+
+
+
+            <div class="row ">
+                <div class="col-md-12">
+                <div class="btn-toolbar text-center ">
+
+                    <?= $this->Form->button(' <i class="fa fa-times" aria-hidden="true"></i> Effacer', ['onclick' => 'reset()' , 'type'=>'button','class' => 'btn btn-danger ']) ; ?>
+                    <?= $this->Form->button(' <i class="fa fa-check" aria-hidden="true"></i> Valider', ['type'=>'submit' , 'class' => 'btn btn-success  ', 'div' => false]) ; ?>
+                    <?= $this->Form->end() ?>
+                </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+        </div>
+    </div>
+</div>
 </div>
