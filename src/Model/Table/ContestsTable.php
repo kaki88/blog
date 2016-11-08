@@ -48,7 +48,11 @@ class ContestsTable extends Table
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('Frequencies', [
-            'foreignKey' => 'frequency_id',
+        'foreignKey' => 'frequency_id',
+        'joinType' => 'INNER'
+    ]);
+        $this->belongsTo('Principles', [
+            'foreignKey' => 'principle_id',
             'joinType' => 'INNER'
         ]);
         $this->belongsToMany('Restrictions', [
@@ -108,6 +112,10 @@ class ContestsTable extends Table
         $validator
             ->requirePresence('answer', 'create')
             ->notEmpty('answer');
+
+        $validator
+            ->requirePresence('principle_id', 'create')
+            ->notEmpty('principle_id');
 
 
         return $validator;
