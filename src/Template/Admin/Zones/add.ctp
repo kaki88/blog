@@ -1,4 +1,4 @@
-<!--_________________________________________________________________ajouter une restrictions-->
+<!--_________________________________________________________________ajouter une zone-->
 <div class="row">
     <div class="col-md-3">
         <div class="panel panel-primary panstyl">
@@ -8,9 +8,9 @@
             </div>
 
             <div class="panel-body">
-                <?= $this->Form->create($restriction) ?>
+                <?= $this->Form->create($zone) ?>
                 <?php
-                        echo $this->Form->input('sort',['label' => 'Nom de la restriction']);
+                        echo $this->Form->input('place',['label' => 'Nom de la zone']);
                         ?>
                 <?= $this->Form->button(__('Ajouter'),['class'=>'btn btn-success']) ?>
                 <?= $this->Form->end() ?>
@@ -18,11 +18,11 @@
         </div>
     </div>
 
-    <!--_________________________________________________________________liste des restrictions-->
+    <!--_________________________________________________________________liste des zones-->
     <div class="col-md-9">
         <div class="panel panel-primary panstyl">
             <div class="panel-heading clearfix">
-                <h3 class="panel-title">Liste des restrictions</h3>
+                <h3 class="panel-title">Liste des zones</h3>
             </div>
 
             <div class="panel-body">
@@ -36,10 +36,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($restrictions as $rest) : ?>
+                        <?php foreach ($zones as $zo) : ?>
                         <tr>
-                            <td><?= $rest->id ?></td>
-                            <td><?= $rest->sort ?></td>
+                            <td><?= $zo->id ?></td>
+                            <td><?= $zo->place ?></td>
                         </tr>
                         <?php endforeach ?>
                         </tbody>

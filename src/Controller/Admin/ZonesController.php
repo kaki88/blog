@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Controller\AppController;
 
@@ -60,7 +60,9 @@ class ZonesController extends AppController
             }
         }
         $contests = $this->Zones->Contests->find('list', ['limit' => 200]);
-        $this->set(compact('zone', 'contests'));
+
+        $zones = $this->Zones->find('all');
+        $this->set(compact('zone', 'contests','zones'));
         $this->set('_serialize', ['zone']);
     }
 
