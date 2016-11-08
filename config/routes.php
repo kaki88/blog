@@ -25,9 +25,20 @@ use Cake\Routing\Route\DashedRoute;
 
 Router::defaultRouteClass(DashedRoute::class);
 
+
+
 Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
+
+    Router::prefix('admin', function ($routes) {
+        //   __________________________________________________________________Categories
+        $routes->connect(
+            '/categories',
+            ['controller' => 'Categories', 'action' => 'add']
+        );
+        $routes->fallbacks(DashedRoute::class);
+    });
     //   __________________________________________________________________Membres
     $routes->connect(
         '/membres',
@@ -53,8 +64,14 @@ Router::scope('/', function (RouteBuilder $routes) {
             'id' => '[0-9]+',
         ]
     );
+    //   __________________________________________________________________Login
+    $routes->connect(
+        '/connexion',
+        ['controller' => 'Users', 'action' => 'login']
+    );
     $routes->fallbacks(DashedRoute::class);
 });
 
 /*Load all plugin routes */
 Plugin::routes();
+
