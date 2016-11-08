@@ -21,7 +21,7 @@ class ContestsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Categories', 'Frequencies']
+            'contain' => ['Categories', 'Frequencies','Principles']
         ];
         $contests = $this->paginate($this->Contests);
 
@@ -100,8 +100,9 @@ class ContestsController extends AppController
         $categories = $this->Contests->Categories->find('list', ['limit' => 200]);
         $frequencies = $this->Contests->Frequencies->find('list', ['limit' => 200]);
         $restrictions = $this->Contests->Restrictions->find('list', ['limit' => 200]);
+        $principles = $this->Contests->Principles->find('list', ['limit' => 200]);
         $zones = $this->Contests->Zones->find('list', ['limit' => 200]);
-        $this->set(compact('contest', 'categories', 'frequencies', 'restrictions', 'zones'));
+        $this->set(compact('contest', 'categories', 'frequencies', 'restrictions', 'zones', 'principles'));
         $this->set('_serialize', ['contest']);
     }
 

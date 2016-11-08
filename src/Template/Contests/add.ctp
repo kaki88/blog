@@ -25,6 +25,7 @@
                 <?php
                 echo $this->Form->input('category_id', ['options' => $categories, 'label' => 'Type de jeu',  'prepend' => '<i class="fa fa-tag" aria-hidden="true"></i>']);
                         echo $this->Form->input('frequency_id', ['options' => $frequencies, 'label' => 'Participation',  'prepend' => '<i class="fa fa-clock-o" aria-hidden="true"></i>']);
+                echo $this->Form->input('principle_id', ['options' => $principles, 'label' => 'Principe du jeu',  'prepend' => '<i class="fa fa-clock-o" aria-hidden="true"></i>']);
                         echo $this->Form->input('on_facebook',['label' => 'Sur facebook ?']);
                         echo $this->Form->input('img_url',['type' => 'file','label' => 'Image']);
                         ?>

@@ -28,7 +28,7 @@
                 </tr>
                     <tr>
                         <td><span class="befprize">Principe :</span></td>
-                        <td></td>
+                        <td><span class=""><?= $contest->principle->description ?></span></td>
                     </tr>
 
 

@@ -26,6 +26,8 @@
                             ['controller' => 'Restrictions', 'action' => 'add','prefix'=> 'admin']); ?></li>
                         <li><?= $this->Html->link('Zones',
                             ['controller' => 'Zones', 'action' => 'add','prefix'=> 'admin']); ?></li>
+                        <li><?= $this->Html->link('Principes',
+                            ['controller' => 'Principles', 'action' => 'add','prefix'=> 'admin']); ?></li>
                     </ul>
                 </li>
 
