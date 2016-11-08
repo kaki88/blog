@@ -18,7 +18,14 @@
             <?php foreach ($users as $user): ?>
             <tr>
                 <td width="30%">
-                    <img src="<?= $this->Url->image('no-avatar.png') ?>" alt="">
+
+                    <?php if ($user->avatar): ?>
+                    <?= $this->Html->image("../uploads/avatars/$user->avatar" , ['class' => 'avatar'])?>
+                    <?php endif ?>
+                    <?php if (empty($user->avatar)): ?>
+                    <img src="<?= $this->Url->image('no-avatar.png') ?>" >
+                    <?php endif ?>
+
                     <a href="#" class="user-link"><?= h($user->login) ?></a>
                     <span class="user-subhead"><?= $user->role->groupname ?></span>
                 </td>

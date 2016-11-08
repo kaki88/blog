@@ -3,7 +3,9 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
-
+use Cake\I18n\Time;
+require_once(ROOT . DS . 'src'. DS . 'Controller'. DS . 'Component' . DS . 'ImageTool.php');
+use ImageTool;
 /**
  * Users Controller
  *
@@ -60,6 +62,25 @@ class UsersController extends AppController
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $this->request->data['role_id'] = 2;
+            
+# upload image
+            if (!empty($_FILES['avatar']) ) {
+                $img = $_FILES['avatar']['name'];
+                $extention = explode('.', $img);
+                $rename = str_replace($extention[0], Time::now()->format("Ymdhms"), $img);
+                $temp = $_FILES['avatar']['tmp_name'];
+                $pathimg = WWW_ROOT . "uploads" . DS . "avatars" . DS . $rename;
+                move_uploaded_file($temp, $pathimg);
+                ImageTool::resize(array(
+                    'input' => $pathimg,
+                    'output' => $pathimg,
+                    'width' =>100,
+                    'height' => 100,
+                    'mode' => 'fit'
+                ));
+                $this->request->data['avatar'] = $rename;
+            }
+
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__("L'utilisateur a été sauvegardé."));
