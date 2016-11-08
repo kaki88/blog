@@ -2,7 +2,9 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\I18n\Time;
+require_once(ROOT . DS . 'src'. DS . 'Controller'. DS . 'Component' . DS . 'ImageTool.php');
+use ImageTool;
 /**
  * Contests Controller
  *
@@ -53,8 +55,41 @@ class ContestsController extends AppController
     {
         $contest = $this->Contests->newEntity();
         if ($this->request->is('post')) {
+            # upload image
+            if (!empty($_FILES['img_url']) ) {
+                $img = $_FILES['img_url']['name'];
+                $extention = explode('.', $img);
+                $rename = str_replace($extention[0], Time::now()->format("Ymdhms"), $img);
+                $temp = $_FILES['img_url']['tmp_name'];
+                $pathimg = WWW_ROOT . "uploads" . DS . "img" . DS . $rename;
+                move_uploaded_file($temp, $pathimg);
+                ImageTool::resize(array(
+                    'input' => $pathimg,
+                    'output' => $pathimg,
+                    'width' =>100,
+                    'height' => 100,
+                    'mode' => 'fit'
+                ));
+                $this->request->data['img_url'] = $rename;
+            }
             $contest = $this->Contests->patchEntity($contest, $this->request->data);
             if ($this->Contests->save($contest)) {
+                $count = count($this->request->data['zones']['_ids']);
+                foreach ($this->request->data['zones']['_ids'] as $id){
+                    if (--$count <= 0) {
+                        break;
+                    }
+                    $query = $this->Contests->ContestsZones->query();
+                    $query->insert(['contest_id','zone_id'])->values(['contest_id' => $contest->id,'zone_id' => $id])->execute();
+                }
+                $count = count($this->request->data['zones']['_ids']);
+                foreach ($this->request->data['restrictions']['_ids'] as $id){
+                    if (--$count <= 0) {
+                        break;
+                    }
+                    $query = $this->Contests->ContestsRestrictions->query();
+                    $query->insert(['contest_id','restriction_id'])->values(['contest_id' => $contest->id,'restriction_id' => $id])->execute();
+                }
                 $this->Flash->success(__('The contest has been saved.'));
 
                 return $this->redirect(['action' => 'index']);

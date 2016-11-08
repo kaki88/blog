@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><img  class="logo" src="<?= $this->Url->image('logo.png') ?>"></a>
+            <a class="navbar-brand" href="<?= $this->Url->build(['controller' => 'Contests', 'action' => 'index','prefix'=> false]) ?>"><img  class="logo" src="<?= $this->Url->image('logo.png') ?>"></a>
         </div>
 
 
@@ -24,6 +24,8 @@
                         <li class="divider"></li>
                         <li><?= $this->Html->link('Restrictions',
                             ['controller' => 'Restrictions', 'action' => 'add','prefix'=> 'admin']); ?></li>
+                        <li><?= $this->Html->link('Zones',
+                            ['controller' => 'Zones', 'action' => 'add','prefix'=> 'admin']); ?></li>
                     </ul>
                 </li>
 

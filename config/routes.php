@@ -28,7 +28,7 @@ Router::defaultRouteClass(DashedRoute::class);
 
 
 Router::scope('/', function (RouteBuilder $routes) {
-    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+    $routes->connect('/', ['controller' => 'Contests', 'action' => 'index']);
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
 
     Router::prefix('admin', function ($routes) {
@@ -44,6 +44,10 @@ Router::scope('/', function (RouteBuilder $routes) {
         $routes->connect(
             '/restrictions',
             ['controller' => 'Restrictions', 'action' => 'add']
+        );
+        $routes->connect(
+           '/zones',
+          ['controller' => 'Zones', 'action' => 'add']
         );
         $routes->fallbacks(DashedRoute::class);
     });

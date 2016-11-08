@@ -34,6 +34,7 @@ class ContestsZonesTable extends Table
         parent::initialize($config);
 
         $this->table('contests_zones');
+        $this->primaryKey('contest_id');
 
         $this->belongsTo('Contests', [
             'foreignKey' => 'contest_id',

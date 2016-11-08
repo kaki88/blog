@@ -109,6 +109,7 @@ class ContestsTable extends Table
             ->requirePresence('answer', 'create')
             ->notEmpty('answer');
 
+
         return $validator;
     }
 
