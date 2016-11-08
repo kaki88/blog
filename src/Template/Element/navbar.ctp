@@ -19,8 +19,17 @@
                         <li><?= $this->Html->link('Catégories',
                             ['controller' => 'Categories', 'action' => 'add','prefix'=> 'admin']); ?></li>
                         <li class="divider"></li>
+                        <li><?= $this->Html->link('Fréquences',
+                            ['controller' => 'Frequencies', 'action' => 'add','prefix'=> 'admin']); ?></li>
+                        <li class="divider"></li>
+                        <li><?= $this->Html->link('Restrictions',
+                            ['controller' => 'Restrictions', 'action' => 'add','prefix'=> 'admin']); ?></li>
                     </ul>
                 </li>
+
+                <li><?= $this->Html->link('Liste des membres',
+                    ['controller' => 'Users', 'action' => 'index','prefix'=> false]); ?></li>
+
             </ul>
 
             <ul class="nav navbar-nav navbar-right">

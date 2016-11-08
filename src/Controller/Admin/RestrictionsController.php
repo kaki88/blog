@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Controller\AppController;
 
@@ -60,7 +60,9 @@ class RestrictionsController extends AppController
             }
         }
         $contests = $this->Restrictions->Contests->find('list', ['limit' => 200]);
-        $this->set(compact('restriction', 'contests'));
+
+        $restrictions = $this->Restrictions->find('all');
+        $this->set(compact('restriction', 'contests','restrictions'));
         $this->set('_serialize', ['restriction']);
     }
 

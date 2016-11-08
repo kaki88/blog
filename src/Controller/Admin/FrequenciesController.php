@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Controller\AppController;
 
@@ -59,7 +59,8 @@ class FrequenciesController extends AppController
                 $this->Flash->error(__('The frequency could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('frequency'));
+        $frequencies = $this->Frequencies->find('all');
+        $this->set(compact('frequency','frequencies'));
         $this->set('_serialize', ['frequency']);
     }
 

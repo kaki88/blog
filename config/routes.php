@@ -37,6 +37,14 @@ Router::scope('/', function (RouteBuilder $routes) {
             '/categories',
             ['controller' => 'Categories', 'action' => 'add']
         );
+        $routes->connect(
+            '/frequences',
+            ['controller' => 'Frequencies', 'action' => 'add']
+        );
+        $routes->connect(
+            '/restrictions',
+            ['controller' => 'Restrictions', 'action' => 'add']
+        );
         $routes->fallbacks(DashedRoute::class);
     });
     //   __________________________________________________________________Membres
