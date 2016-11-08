@@ -26,17 +26,29 @@
                 echo $this->Form->input('category_id', ['options' => $categories, 'label' => 'Type de jeu',  'prepend' => '<i class="fa fa-tag" aria-hidden="true"></i>']);
                         echo $this->Form->input('frequency_id', ['options' => $frequencies, 'label' => 'Participation',  'prepend' => '<i class="fa fa-clock-o" aria-hidden="true"></i>']);
                         echo $this->Form->input('on_facebook',['label' => 'Sur facebook ?']);
-                        echo $this->Form->input('img_url',['type' => 'file']);
+                        echo $this->Form->input('img_url',['type' => 'file','label' => 'Image']);
                         ?>
                 <br> <br> <br>
             </div>
 
 
 
+
+
+                <div class="col-md-6">
+                    <?php
+                    echo $this->Form->input('restrictions._ids', ['options' => $restrictions, 'multiple'=> 'checkbox']);
+                            ?>
+                </div>
+                <div class="col-md-6">
+                            <?php
+                    echo $this->Form->input('zones._ids', ['options' => $zones, 'multiple'=> 'checkbox']);
+                            ?>
+                </div>
+
+
                 <div class="col-md-12">
                     <?php
-                            echo $this->Form->input('restrictions._ids', ['options' => $restrictions, 'type'=>'checkbox']);
-                            echo $this->Form->input('zones._ids', ['options' => $zones, 'type'=>'checkbox']);
                     echo $this->Form->input('prize',['label' => 'Dotation(s)']);
                     echo $this->Form->input('answer',['label' => 'Réponse(s)']);
                     ?>
