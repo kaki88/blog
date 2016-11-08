@@ -18,12 +18,14 @@
                     <ul class="dropdown-menu" role="menu">
                         <li><?= $this->Html->link('Catégories',
                             ['controller' => 'Categories', 'action' => 'add','prefix'=> 'admin']); ?></li>
-                        <li class="divider"></li>
                         <li><?= $this->Html->link('Fréquences',
                             ['controller' => 'Frequencies', 'action' => 'add','prefix'=> 'admin']); ?></li>
-                        <li class="divider"></li>
                         <li><?= $this->Html->link('Restrictions',
                             ['controller' => 'Restrictions', 'action' => 'add','prefix'=> 'admin']); ?></li>
+                        <li><?= $this->Html->link('Zones',
+                            ['controller' => 'Zones', 'action' => 'add','prefix'=> 'admin']); ?></li>
+                        <li class="divider"></li>
+
                     </ul>
                 </li>
 
@@ -33,6 +35,9 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
+                <li><?= $this->Html->link('Déposer un jeu',
+                    ['controller' => 'Contests', 'action' => 'add','prefix'=> false]); ?></li>
+
             <li class="dropdown">
                 <?php $cell = $this->cell('Login');
                 echo $cell; ?>

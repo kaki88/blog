@@ -45,6 +45,10 @@ Router::scope('/', function (RouteBuilder $routes) {
             '/restrictions',
             ['controller' => 'Restrictions', 'action' => 'add']
         );
+        $routes->connect(
+            '/zones',
+            ['controller' => 'Zones', 'action' => 'add']
+        );
         $routes->fallbacks(DashedRoute::class);
     });
     //   __________________________________________________________________Membres
