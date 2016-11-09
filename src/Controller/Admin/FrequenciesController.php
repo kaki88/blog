@@ -63,8 +63,8 @@ class FrequenciesController extends AppController
                 ImageTool::resize(array(
                     'input' => $pathimg,
                     'output' => $pathimg,
-                    'width' =>100,
-                    'height' => 100,
+                    'width' =>30,
+                    'height' => 30,
                     'mode' => 'fit'
                 ));
                 $this->request->data['icon_url'] = $rename;
@@ -73,7 +73,7 @@ class FrequenciesController extends AppController
             if ($this->Frequencies->save($frequency)) {
                 $this->Flash->success(__('The frequency has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'add']);
             } else {
                 $this->Flash->error(__('The frequency could not be saved. Please, try again.'));
             }
