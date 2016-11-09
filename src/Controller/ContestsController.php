@@ -19,7 +19,8 @@ class ContestsController extends AppController
         $this->paginate = [
             'contain' => ['Categories', 'Frequencies', 'Principles', 'Zones', 'Restrictions']
         ];
-        $contests = $this->paginate($this->Contests);
+        $contests = $this->paginate($this->Contests->find('all')
+            ->where(['active' => 1]));
 
         $this->set(compact('contests'));
         $this->set('_serialize', ['contests']);
