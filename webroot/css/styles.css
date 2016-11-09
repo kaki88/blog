@@ -158,3 +158,16 @@ a {
 .bt-w{
     width: 70px;
 }
+
+::-webkit-input-placeholder {
+    color: lightgrey!important;
+    opacity: 0.8;
+}
+:-moz-placeholder {
+    color: #0b93d5!important;
+    opacity: 0.8;
+}
+:-ms-input-placeholder {
+    color: #0b93d5!important;
+    opacity: 0.8;
+}

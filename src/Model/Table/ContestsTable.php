@@ -95,10 +95,7 @@ class ContestsTable extends Table
             ->date('deadline')
             ->requirePresence('deadline', 'create')
             ->notEmpty('deadline');
-
-        $validator
-            ->requirePresence('img_url', 'create')
-            ->notEmpty('img_url');
+        
 
         $validator
             ->requirePresence('prize', 'create')
