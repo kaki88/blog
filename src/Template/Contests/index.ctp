@@ -57,12 +57,14 @@
                     <tr>
                         <td colspan="3" >
 
+                            <div class="pull-left">
+                                <?php $ico = $contest->frequency->icon_url ?>
+                                <?= $this->Html->image("../uploads/icons/$ico" , ['class' => 'admin-ico-freq'])?>
+                                <?php if ($contest->on_facebook) : ?>
+                                <?= $this->Html->image('facebook.jpg', ['class' => 'admin-ico-freq']) ?>
+                                <?php endif ?>
+                            </div>
                             <div class="pull-right">
-                            <?php if ($contest->on_facebook) : ?>
-                            <?= $this->Html->image('facebook.jpg', ['class' => 'facebook']) ?>
-                            <?php endif ?>
-                            <?= $contest->frequency->period ?>
-
                             <?php if ($contest->rule_url) : ?>
                             <a href="<?= $contest->rule_url ?>" target="_blank">
                                 <button type="button" class="btn btn-sm btn-warning">

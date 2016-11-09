@@ -50,13 +50,19 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Titre</th>
+                            <th>Icône</th>
+                            <th>Description</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php foreach ($frequencies as $freq) : ?>
                         <tr>
                             <td><?= $freq->id ?></td>
+                            <td>
+                                <?php if ($freq->icon_url): ?>
+                                <?= $this->Html->image("../uploads/icons/$freq->icon_url" , ['class' => 'admin-ico-freq'])?>
+                                <?php endif ?>
+                            </td>
                             <td><?= $freq->period ?></td>
                         </tr>
                         <?php endforeach ?>
