@@ -72,6 +72,7 @@ class ContestsController extends AppController
             $contest = $this->Contests->patchEntity($contest, $this->request->data);
             if ($this->Contests->save($contest)) {
                 $count = count($this->request->data['zones']['_ids']);
+                if ($this->request->data['zones']['_ids']){
                 foreach ($this->request->data['zones']['_ids'] as $id){
                     if (--$count <= 0) {
                         break;
@@ -79,14 +80,17 @@ class ContestsController extends AppController
                     $query = $this->Contests->ContestsZones->query();
                     $query->insert(['contest_id','zone_id'])->values(['contest_id' => $contest->id,'zone_id' => $id])->execute();
                 }
-                $count = count($this->request->data['zones']['_ids']);
+                }
+                $countt = count($this->request->data['zones']['_ids']);
+                if ($this->request->data['zones']['_ids']){
                 foreach ($this->request->data['restrictions']['_ids'] as $id){
-                    if (--$count <= 0) {
+                    if (--$countt <= 0) {
                         break;
                     }
                     $query = $this->Contests->ContestsRestrictions->query();
                     $query->insert(['contest_id','restriction_id'])->values(['contest_id' => $contest->id,'restriction_id' => $id])->execute();
                 }
+            }
                 $this->Flash->success(__('The contest has been saved.'));
 
                 return $this->redirect(['action' => 'index']);

@@ -92,11 +92,6 @@ class ContestsTable extends Table
             ->notEmpty('rule_url');
 
         $validator
-            ->boolean('on_facebook')
-            ->requirePresence('on_facebook', 'create')
-            ->notEmpty('on_facebook');
-
-        $validator
             ->date('deadline')
             ->requirePresence('deadline', 'create')
             ->notEmpty('deadline');
@@ -110,12 +105,16 @@ class ContestsTable extends Table
             ->notEmpty('prize');
 
         $validator
-            ->requirePresence('answer', 'create')
-            ->notEmpty('answer');
-
-        $validator
             ->requirePresence('principle_id', 'create')
             ->notEmpty('principle_id');
+
+        $validator
+            ->requirePresence('frequency_id', 'create')
+            ->notEmpty('frequency_id');
+
+        $validator
+            ->requirePresence('category_id', 'create')
+            ->notEmpty('category_id');
 
 
         return $validator;
