@@ -90,6 +90,14 @@ Router::scope('/', function (RouteBuilder $routes) {
         '/deposer-un-jeu',
         ['controller' => 'Contests', 'action' => 'add']
     );
+    $routes->connect(
+        '/concours/:id-:title',
+        ['controller' => 'Contests', 'action' => 'view'],
+        [
+            'pass' => ['id','title'],
+            'id' => '[0-9]+',
+        ]
+    );
     $routes->fallbacks(DashedRoute::class);
 });
 
