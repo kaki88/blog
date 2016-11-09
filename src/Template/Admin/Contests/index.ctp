@@ -23,13 +23,13 @@
                                 <?php if ($contest->active == 1) : ?>
                                 <td id="<?= $contest->id ?>" class="publier">
                                 <button type="button" class="publier action btn btn-xs btn-success bt-w">
-                                    <i class="fa fa-check" aria-hidden="true"></i> Publier
+                                    <i class="fa fa-eye" aria-hidden="true"></i> Publier
                                 </button>
                                 <?php endif ?>
                                 <?php if ($contest->active == 0) : ?>
                                 <td id="<?= $contest->id ?>" class="retirer">
                                     <button type="button" class="retirer action btn btn-xs btn-danger bt-w">
-                                        <i class="fa fa-times" aria-hidden="true"></i> Cacher
+                                        <i class="fa fa-eye-slash" aria-hidden="true"></i> Cacher
                                     </button>
                                     <?php endif ?>
                                 </td>
@@ -37,11 +37,11 @@
                                     <a href="<?= $this->Url->build([ 'controller' => 'Contests',
                              'action' => 'view',$contest->id, strtolower(str_replace(' ', '-', removeAccents($contest->name))), 'prefix'=>false]); ?>" target="_blank">
                                         <button type="button" class="btn btn-xs btn-info">
-                                            <i class="fa fa-eye" aria-hidden="true"></i> Fiche
+                                            <i class="fa fa-external-link" aria-hidden="true"></i> Fiche
                                         </button>
                                     </a>
                                     <a href="<?= $this->Url->build([ 'controller' => 'Contests',
-                             'action' => 'view',$contest->id, strtolower(str_replace(' ', '-', removeAccents($contest->name))), 'prefix'=>false]); ?>" target="_blank">
+                             'action' => 'edit',$contest->id, strtolower(str_replace(' ', '-', removeAccents($contest->name))), 'prefix'=>false]); ?>" target="_blank">
                                         <button type="button" class="btn btn-xs btn-warning hidden-xs">
                                             <i class="fa fa-pencil" aria-hidden="true"></i> Edition
                                         </button>
@@ -96,11 +96,11 @@
             data: 'id=' + id,
             success: function() {
                 if ($('#'+id+'').hasClass('retirer')){
-                    $('#'+id+'').html('<button type="button" class="action btn btn-xs btn-success bt-w"><i class="fa fa-check" aria-hidden="true"></i> Publier</button>')
+                    $('#'+id+'').html('<button type="button" class="action btn btn-xs btn-success bt-w"><i class="fa fa-eye" aria-hidden="true"></i> Publier</button>')
                     .removeClass('retirer').addClass('publier');
                 }
                 else {
-                    $('#'+id+'').html('<button type="button" class="action btn btn-xs btn-danger bt-w"><i class="fa fa-times" aria-hidden="true"></i> Cacher</button>')
+                    $('#'+id+'').html('<button type="button" class="action btn btn-xs btn-danger bt-w"><i class="fa fa-eye-slash" aria-hidden="true"></i> Cacher</button>')
                     .removeClass('publier').addClass('retirer');
                 }
             }
