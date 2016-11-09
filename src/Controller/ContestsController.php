@@ -13,11 +13,7 @@ use ImageTool;
 class ContestsController extends AppController
 {
 
-    /**
-     * Index method
-     *
-     * @return \Cake\Network\Response|null
-     */
+
     public function index()
     {
         $this->paginate = [
@@ -39,7 +35,7 @@ class ContestsController extends AppController
     public function view($id = null)
     {
         $contest = $this->Contests->get($id, [
-            'contain' => ['Categories', 'Frequencies', 'Restrictions', 'Zones']
+            'contain' => ['Categories', 'Frequencies', 'Principles', 'Zones', 'Restrictions']
         ]);
 
         $this->set('contest', $contest);
