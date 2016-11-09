@@ -2,7 +2,9 @@
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
-
+use Cake\I18n\Time;
+require_once(ROOT . DS . 'src'. DS . 'Controller'. DS . 'Component' . DS . 'ImageTool.php');
+use ImageTool;
 /**
  * Frequencies Controller
  *
@@ -50,6 +52,23 @@ class FrequenciesController extends AppController
     {
         $frequency = $this->Frequencies->newEntity();
         if ($this->request->is('post')) {
+            # upload image
+            if (!empty($_FILES['icon_url']) ) {
+                $img = $_FILES['icon_url']['name'];
+                $extention = explode('.', $img);
+                $rename = str_replace($extention[0], Time::now()->format("Ymdhms"), $img);
+                $temp = $_FILES['icon_url']['tmp_name'];
+                $pathimg = WWW_ROOT . "uploads" . DS . "icons" . DS . $rename;
+                move_uploaded_file($temp, $pathimg);
+                ImageTool::resize(array(
+                    'input' => $pathimg,
+                    'output' => $pathimg,
+                    'width' =>100,
+                    'height' => 100,
+                    'mode' => 'fit'
+                ));
+                $this->request->data['icon_url'] = $rename;
+            }
             $frequency = $this->Frequencies->patchEntity($frequency, $this->request->data);
             if ($this->Frequencies->save($frequency)) {
                 $this->Flash->success(__('The frequency has been saved.'));

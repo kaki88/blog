@@ -8,37 +8,82 @@
                     <?= $contest->name ?>
                 </div>
                 <div class="panel-title pull-right linkcontest">
-                Commentaires(0)
+                   # <?= $contest->id ?>   |
+                    Publié le <?= $contest->created->i18nformat('dd MMM YYYY') ?> |
+                    <strong>Clôture le  <?= $contest->deadline->i18nformat('dd MMM YYYY') ?></strong>
                 </div>
             </div>
 
-            <div class="panel-body">
+            <div class="panel-body pnbodytop">
 
-
-
-                <table class="table">
+                <table class="table table-striped tbl-bt-marge">
                 <tr>
-                    <td width="20%" rowspan="3">
+                    <td width="20%"><span class="befprize">Lot(s) à gagner </span></td>
+                    <td width="60%"><span class="prize"><?= $contest->prize ?></span></td>
+                    <td width="20%" rowspan="5" class="hidden-xs ">
                         <?php if ($contest->img_url): ?>
                         <?= $this->Html->image("../uploads/img/$contest->img_url" , ['class' => 'contest-img'])?>
                         <?php endif ?>
+
                     </td>
-                    <td width="15%"><span class="befprize">Lot(s) à gagner :</span></td>
-                    <td width="65%"><span class="prize"><?= $contest->prize ?></span></td>
                 </tr>
                     <tr>
-                        <td><span class="befprize">Principe :</span></td>
-                        <td><span class=""><?= $contest->principle->description ?></span></td>
+                    <td><span class="befprize">Principe </span></td>
+                    <td><span class="befdescr"><?= $contest->principle->description ?></span></td>
+                </tr>
+                    <tr>
+                        <td><span class="befprize">Zone(s) éligible(s) </span></td>
+                        <td><span class="befdescr">
+                            <?php foreach ($contest->zones as $zone) : ?>
+                            <?= $zone->place ?>
+                            <?php endforeach ?>
+                        </span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="befprize">Restriction(s) </span></td>
+                        <td><span class="befdescr">
+                            <?php foreach ($contest->restrictions as $restriction) : ?>
+                            <?= $restriction->sort ?>
+                            <?php endforeach ?>
+                        </span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="befprize">Réponse(s) </span></td>
+                        <td><span class="befdescr">
+                      <?= $contest->answer ?>
+                        </span></td>
                     </tr>
 
-
                     <tr>
-                        <td >
+                        <td colspan="3" >
+
+                            <div class="pull-right">
+                            <?php if ($contest->on_facebook) : ?>
+                            <?= $this->Html->image('facebook.jpg', ['class' => 'facebook']) ?>
+                            <?php endif ?>
+                            <?= $contest->frequency->period ?>
+
+                            <?php if ($contest->rule_url) : ?>
+                            <a href="<?= $contest->rule_url ?>" target="_blank">
+                                <button type="button" class="btn btn-sm btn-warning">
+                                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                </button>
+                            </a>
+                            <?php endif ?>
+
+                            <a href="<?= $contest->rule_url ?>" target="_blank">
+                                <button type="button" class="btn btn-sm btn-success">
+                                    <i class="fa fa-comments" aria-hidden="true"></i> (0)
+                                </button>
+                            </a>
+
                             <a href="<?= $contest->game_url ?>" target="_blank">
-                                <button type="button" class="btn btn-primary">
+                                <button type="button" class="btn btn-sm btn-primary">
                                     <i class="fa fa-external-link" aria-hidden="true"></i> Participer
                                 </button>
                             </a>
+                            </div>
+
                         </td>
                     </tr>
                 </table>

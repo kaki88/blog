@@ -57,6 +57,10 @@ class FrequenciesTable extends Table
             ->requirePresence('period', 'create')
             ->notEmpty('period');
 
+        $validator
+            ->requirePresence('icon_url', 'create')
+            ->notEmpty('icon_url');
+
         return $validator;
     }
 }
