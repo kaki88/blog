@@ -25,7 +25,7 @@ label{
 }
 /*____________________________________________________________table*/
 .main-box.no-header {
-    padding-top: 20px;
+    padding-top: 15px;
 }
 .main-box {
     background: #FFFFFF;
@@ -33,7 +33,7 @@ label{
     -moz-box-shadow: 1px 1px 2px 0 #CCCCCC;
     -o-box-shadow: 1px 1px 2px 0 #CCCCCC;
     box-shadow: 1px 1px 2px 0 #CCCCCC;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     -moz-border-radius: 3px;
     border-radius: 3px;
 }
@@ -81,7 +81,7 @@ a {
     font-size: 0.875em;
     vertical-align: middle;
     border-top: 1px solid #e7ebee;
-    padding: 12px 8px;
+    padding: 4px 8px;
 }
 
 /*____________________________________________________________panel*/
@@ -91,18 +91,20 @@ a {
     -moz-box-shadow: 1px 1px 2px 0 #CCCCCC;
     -o-box-shadow: 1px 1px 2px 0 #CCCCCC;
     box-shadow: 1px 1px 2px 0 #CCCCCC;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     -moz-border-radius: 3px;
     border-radius: 3px;
 }
 
 .panel-title{
-    padding-top: 20px;
+    padding-top: 10px;
     color: #3498db;
 }
 
 .linkcontest{
     text-transform: none!important;
+    color: dimgrey;
+    font-size: 13px;
 }
 
 .panstyl > .panel-heading {
@@ -116,16 +118,34 @@ a {
 /*____________________________________________________________accueil*/
 
 .prize{
-    font-size: 15px;
+    font-size: 13px;
     font-weight: bold;
 }
 
+.befdescr{
+    font-size: 13px;
+}
+
 .contest-img{
-    width: 150px;
+    width: 180px;
     border-radius: 3px;
     border: 1px solid grey;
 }
 
+
 .befprize{
     font-size: 12px;
+    font-style: italic;
+}
+
+.facebook{
+    width: 20px;
+}
+
+.pnbodytop {
+    padding : 0;
+}
+
+.tbl-bt-marge{
+    margin-bottom: 3px!important;
 }
