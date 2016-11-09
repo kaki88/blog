@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<?= $this->Url->build(['controller' => 'Contests', 'action' => 'index','prefix'=> false]) ?>"><img  class="logo" src="<?= $this->Url->image('logo.png') ?>"></a>
+            <a class="navbar-brand" href="<?= $this->Url->build(['controller' => 'Contests', 'action' => 'index','prefix'=> false]) ?>">Accueil</a>
         </div>
 
 
@@ -16,8 +16,11 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-cogs" aria-hidden="true"></i> Admin</a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><?= $this->Html->link('Concours',
-                            ['controller' => 'Contests', 'action' => 'index','prefix'=> 'admin']); ?></li>
+                        <li><a href="<?= $this->Url->build(['controller' => 'Users','action' => 'index' , 'prefix' => 'admin' ]); ?>"><i class="fa fa-list-alt" aria-hidden="true"></i>
+                            Liste des membres</a></li>
+                        <li class="divider"></li>
+                        <li><?= $this->Html->link('<i class="fa fa-list-alt" aria-hidden="true"></i> Concours',
+                            ['controller' => 'Contests', 'action' => 'index','prefix'=> 'admin'],['escape' => false]); ?></li>
                         <li class="divider"></li>
                         <li><?= $this->Html->link('Catégories',
                             ['controller' => 'Categories', 'action' => 'add','prefix'=> 'admin']); ?></li>
@@ -32,8 +35,7 @@
                     </ul>
                 </li>
 
-                <li><a href="<?= $this->Url->build(['controller' => 'Users','action' => 'index' , 'prefix' => false ]); ?>"><i class="fa fa-list-alt" aria-hidden="true"></i>
-                    Liste des membres</a></li>
+
 
             </ul>
 

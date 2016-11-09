@@ -32,7 +32,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
 
     Router::prefix('admin', function ($routes) {
-        //   __________________________________________________________________Categories
+        //   __________________________________________________________________Admin
         $routes->connect(
             '/categories',
             ['controller' => 'Categories', 'action' => 'add']
@@ -53,13 +53,17 @@ Router::scope('/', function (RouteBuilder $routes) {
             '/principes',
             ['controller' => 'Principles', 'action' => 'add']
         );
+        $routes->connect(
+            '/liste-des-concours',
+            ['controller' => 'Contests', 'action' => 'index']
+        );
+        $routes->connect(
+            '/liste-des-membres',
+            ['controller' => 'Users', 'action' => 'index']
+        );
         $routes->fallbacks(DashedRoute::class);
     });
     //   __________________________________________________________________Membres
-    $routes->connect(
-        '/membres',
-        ['controller' => 'Users', 'action' => 'index']
-    );
     $routes->connect(
         '/inscription',
         ['controller' => 'Users', 'action' => 'add']

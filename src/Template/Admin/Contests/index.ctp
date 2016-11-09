@@ -7,11 +7,10 @@
                         <table class="table user-list">
                             <thead>
                             <tr>
-
-                                <th><span><?= $this->Paginator->sort('created', ['label' => 'Type']) ?></span></th>
-                                <th><span><?= $this->Paginator->sort('created', ['label' => 'Nom de l\'opération']) ?></span></th>
-                                <th><span><?= $this->Paginator->sort('created', ['label' => 'Action']) ?></span></th>
-                                <th><span><?= $this->Paginator->sort('created', ['label' => 'Etat']) ?></span></th>
+                                <th width="40%"><span><?= $this->Paginator->sort('name', ['label' => 'Nom de l\'opération']) ?></span></th>
+                                <th width="20%"><span><?= $this->Paginator->sort('category_id', ['label' => 'Type']) ?></span></th>
+                                <th width="15%"><span><?= $this->Paginator->sort('active', ['label' => 'Etat']) ?></span></th>
+                                <th width="25%"><span><?= $this->Paginator->sort('created', ['label' => 'Action']) ?></span></th>
 
                             </tr>
                             </thead>
@@ -19,42 +18,43 @@
                             <?php foreach ($contests as $contest): ?>
 
                             <tr >
-                                <td><?= $contest->category->type ?></td>
                                 <td><?= $contest->name ?></td>
+                                <td><?= $contest->category->type ?></td>
+                                <?php if ($contest->active == 1) : ?>
+                                <td id="<?= $contest->id ?>" class="publier">
+                                <button type="button" class="publier action btn btn-xs btn-success bt-w">
+                                    <i class="fa fa-check" aria-hidden="true"></i> Publier
+                                </button>
+                                <?php endif ?>
+                                <?php if ($contest->active == 0) : ?>
+                                <td id="<?= $contest->id ?>" class="retirer">
+                                    <button type="button" class="retirer action btn btn-xs btn-danger bt-w">
+                                        <i class="fa fa-times" aria-hidden="true"></i> Cacher
+                                    </button>
+                                    <?php endif ?>
+                                </td>
                                 <td>
                                     <a href="<?= $this->Url->build([ 'controller' => 'Contests',
                              'action' => 'view',$contest->id, strtolower(str_replace(' ', '-', removeAccents($contest->name))), 'prefix'=>false]); ?>" target="_blank">
                                         <button type="button" class="btn btn-xs btn-info">
-                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                            <i class="fa fa-eye" aria-hidden="true"></i> Fiche
                                         </button>
                                     </a>
                                     <a href="<?= $this->Url->build([ 'controller' => 'Contests',
                              'action' => 'view',$contest->id, strtolower(str_replace(' ', '-', removeAccents($contest->name))), 'prefix'=>false]); ?>" target="_blank">
-                                        <button type="button" class="btn btn-xs btn-warning">
-                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        <button type="button" class="btn btn-xs btn-warning hidden-xs">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i> Edition
                                         </button>
                                     </a>
-                                    <a href="<?= $this->Url->build([ 'controller' => 'Contests',
-                             'action' => 'view',$contest->id, strtolower(str_replace(' ', '-', removeAccents($contest->name))), 'prefix'=>false]); ?>" target="_blank">
-                                        <button type="button" class="btn btn-xs btn-danger">
-                                            <i class="fa fa-trash" aria-hidden="true"></i>
-                                        </button>
-                                    </a>
+                                    <?= $this->Form->postLink(__('<i class="fa fa-trash" aria-hidden="true"></i>'),
+                                    ['controller' => 'Contests', 'action' => 'delete', $contest->id],
+                                    ['confirm' => __('Souhaitez-vous vraiment supprimer le jeu : {0}?', $contest->name),
+                                    'escape' => false, 'class' => 'btn btn-xs btn-danger hidden-xs']) ?>
                                 </td>
 
-                                        <?php if ($contest->active == 1) : ?>
-                                <td id="<?= $contest->id ?>" class="publier">
-                                        <button type="button" class="publier action btn btn-xs btn-success bt-w">
-                                            <i class="fa fa-check" aria-hidden="true"></i> Publier
-                                        </button>
-                                        <?php endif ?>
-                                        <?php if ($contest->active == 0) : ?>
-                                <td id="<?= $contest->id ?>" class="retirer">
-                                        <button type="button" class="retirer action btn btn-xs btn-danger bt-w">
-                                            <i class="fa fa-times" aria-hidden="true"></i> Retirer
-                                        </button>
-                                        <?php endif ?>
-                                </td>
+
+
+
                             </tr>
 
                             <?php endforeach; ?>
@@ -100,7 +100,7 @@
                     .removeClass('retirer').addClass('publier');
                 }
                 else {
-                    $('#'+id+'').html('<button type="button" class="action btn btn-xs btn-danger bt-w"><i class="fa fa-times" aria-hidden="true"></i> Retirer</button>')
+                    $('#'+id+'').html('<button type="button" class="action btn btn-xs btn-danger bt-w"><i class="fa fa-times" aria-hidden="true"></i> Cacher</button>')
                     .removeClass('publier').addClass('retirer');
                 }
             }
