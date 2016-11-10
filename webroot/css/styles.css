@@ -208,3 +208,36 @@ hr{
 .edit-profil{
     width: 100%;
 }
+
+.menuprofil{
+    color: #3498db;
+    text-transform: uppercase;
+    margin-top: -4px;
+}
+
+
+/*--------------------------------------------------------------------------------------------------------------------------------------------------ANIMATIONS*/
+
+#profil {
+    -webkit-animation: lightSpeedIn 1s linear ;
+    animation: lightSpeedIn 1s linear ;
+}
+
+#formation{
+    -webkit-animation: flipInX 1s linear ;
+    animation: flipInX 1s linear ;
+}
+
+#projet{
+    -webkit-animation: rollIn 1s linear ;
+    animation: rollIn 1s linear ;
+}
+
+#contact{
+    -webkit-animation: zoomIn 0.1s linear 5;
+    animation: zoomIn 0.1s linear 5;
+}
+#avatar{
+    -webkit-animation: flipInX 2s linear ;
+    animation: flipInX 2s linear ;
+}

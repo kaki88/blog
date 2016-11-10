@@ -1,25 +1,3 @@
-<!--<div class="users form large-9 medium-8 columns content">-->
-    <!--<?= $this->Form->create($user) ?>-->
-    <!--<fieldset>-->
-        <!--<legend><?= __('Add User') ?></legend>-->
-        <!--<?php-->
-            <!--echo $this->Form->input('login');-->
-            <!--echo $this->Form->input('email');-->
-            <!--echo $this->Form->input('password');-->
-            <!--echo $this->Form->input('firstname');-->
-            <!--echo $this->Form->input('lastname');-->
-            <!--echo $this->Form->input('address');-->
-            <!--echo $this->Form->input('city_id', ['options' => $cities]);-->
-            <!--echo $this->Form->input('birthday');-->
-            <!--echo $this->Form->input('active');-->
-            <!--echo $this->Form->input('connected');-->
-            <!--echo $this->Form->input('role_id', ['options' => $roles]);-->
-            <!--echo $this->Form->input('avatar');-->
-        <!--?>-->
-    <!--</fieldset>-->
-    <!--<?= $this->Form->button(__('Submit')) ?>-->
-    <!--<?= $this->Form->end() ?>-->
-<!--</div>-->
 
 <?= $this->Html->css('bootstrap-fileinput.css') ?>
 <?= $this->Html->script('bootstrap-fileinput.js') ?>

@@ -109,16 +109,35 @@ class UsersController extends AppController
     public function edit($id = null, $login = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => []
+            'contain' => ['Cities']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
+            $img = $user->avatar;
+            # upload image
+            if ($_FILES['avatar-edit']['name'] !== ''  ) {
+                $img = $_FILES['avatar-edit']['name'];
+                $extention = explode('.', $img);
+                $rename = str_replace($extention[0], Time::now()->format("Ymdhms"), $img);
+                $temp = $_FILES['avatar-edit']['tmp_name'];
+                $pathimg = WWW_ROOT . "uploads" . DS . "avatars" . DS . $rename;
+                move_uploaded_file($temp, $pathimg);
+                ImageTool::resize(array(
+                    'input' => $pathimg,
+                    'output' => $pathimg,
+                    'width' =>100,
+                    'height' => 100,
+                    'mode' => 'fit'
+                ));
+                $img = $rename;
+            }
             $user = $this->Users->patchEntity($user, $this->request->data);
+            $user->avatar = $img;
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__('Les modifications ont été enregistré.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $id]);
             } else {
-                $this->Flash->error(__('The user could not be saved. Please, try again.'));
+                $this->Flash->error(__('Les modifications n\'ont pas pu être sauvegardées. Svp, réessayez.'));
             }
         }
         $cities = $this->Users->Cities->find('list', ['limit' => 200]);

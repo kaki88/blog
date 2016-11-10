@@ -103,7 +103,6 @@ class UsersTable extends Table
         $rules->add($rules->isUnique(['login']));
         $rules->add($rules->isUnique(['email']));
         $rules->add($rules->existsIn(['city_id'], 'Cities'));
-        $rules->add($rules->existsIn(['role_id'], 'Roles'));
 
         return $rules;
     }
