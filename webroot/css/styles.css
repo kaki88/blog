@@ -174,7 +174,7 @@ a {
 
 .profil-head{
     background-color: white;
-    padding: 5px;
+    padding-top: 15px;
     -webkit-box-shadow: 1px 1px 2px 0 #CCCCCC;
     -moz-box-shadow: 1px 1px 2px 0 #CCCCCC;
     -o-box-shadow: 1px 1px 2px 0 #CCCCCC;
@@ -185,7 +185,10 @@ a {
 }
 
 .avatar-profil{
-    width: 70px;
+    width: 100px;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+    padding: 3px;
 }
 
 .pseudo{
@@ -196,4 +199,12 @@ a {
 
 hr{
     margin: 5px;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.edit-profil{
+    width: 100%;
 }
