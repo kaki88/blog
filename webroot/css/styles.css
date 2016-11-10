@@ -171,3 +171,29 @@ a {
     color: #0b93d5!important;
     opacity: 0.8;
 }
+
+.profil-head{
+    background-color: white;
+    padding: 5px;
+    -webkit-box-shadow: 1px 1px 2px 0 #CCCCCC;
+    -moz-box-shadow: 1px 1px 2px 0 #CCCCCC;
+    -o-box-shadow: 1px 1px 2px 0 #CCCCCC;
+    box-shadow: 1px 1px 2px 0 #CCCCCC;
+    margin-bottom: 10px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.avatar-profil{
+    width: 70px;
+}
+
+.pseudo{
+    color: #3498db;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+hr{
+    margin: 5px;
+}
