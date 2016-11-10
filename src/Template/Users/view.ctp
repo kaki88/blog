@@ -27,7 +27,7 @@
                 <hr>
 
                        <?php if ($user->id == $uid || $ugp == 1) : ?>
-                <button class="btn btn-primary edit-profil"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editer le profil</button>
+                <button id="edit" class="btn btn-primary edit-profil"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editer le profil</button>
                 <hr>
                 <?php endif ?>
 
@@ -46,12 +46,12 @@
     <div class="col-md-8 ">
         <div class="row">
             <div class="col-md-12 profil-head">
-                <h4><?= __('Activités') ?></h4>
+                <h4 class="menuprofil">Activités</h4>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-12 profil-head">
+            <div class="col-md-12 profil-head" id="lastpost">
 
                 <?php if (!empty($user->posts)): ?>
                 <table cellpadding="0" cellspacing="0">
@@ -86,3 +86,10 @@
         </div>
     </div>
 </div>
+
+<script>
+
+$('#edit').click(function () {
+$('#lastpost').fadeOut(0).show().load('/users/edit/5');
+});
+</script>
