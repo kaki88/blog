@@ -44,11 +44,16 @@ class UsersController extends AppController
      */
     public function view($id = null , $login = null)
     {
+        $uid =  $this->Auth->User('id');
+        $ugp =  $this->Auth->User('role_id');
+
         $user = $this->Users->get($id, [
             'contain' => ['Cities', 'Roles', 'Posts']
         ]);
 
         $this->set('user', $user);
+        $this->set('uid', $uid);
+        $this->set('ugp', $ugp);
         $this->set('_serialize', ['user']);
     }
 
@@ -148,15 +153,25 @@ class UsersController extends AppController
             $user = $this->Auth->identify();
             if ($user) {
                 $this->Auth->setUser($user);
-                return $this->redirect($this->Auth->redirectUrl());
+                $id =  $this->Auth->user('id');
+                $connected = $this->Users->get($id);
+                $time = Time::now();
+                $time->i18nFormat('yyyy-MM-dd HH:mm:ss');
+                $data = [
+                    'connected' => $time
+                ];
+                $connected = $this->Users->patchEntity($connected,$data);
+                $this->Users->save($connected);
+                $this->Flash->success('Vous êtes maintenant connecté.');
+                return $this->redirect(['controller'=>'Contests', 'action' => 'index']);
             }
-            $this->Flash->error('Your username or password is incorrect.');
+            $this->Flash->error('Votre identifiant ou mot de passe est incorrect.');
         }
     }
 
     public function logout()
     {
-        $this->Flash->success('You are now logged out.');
+        $this->Flash->success('Vous êtes maintenant deconnecté.');
         return $this->redirect($this->Auth->logout());
     }
 }
