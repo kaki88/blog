@@ -47,6 +47,12 @@ class ContestsTable extends Table
             'foreignKey' => 'category_id',
             'joinType' => 'INNER'
         ]);
+
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
+            'joinType' => 'INNER'
+        ]);
+
         $this->belongsTo('Frequencies', [
         'foreignKey' => 'frequency_id',
         'joinType' => 'INNER'

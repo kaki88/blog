@@ -2,10 +2,10 @@
 
 <section id="profil">
 <?= $this->Html->css('bootstrap-fileinput.css') ?>
-    <?= $this->Html->css('animate.css') ?>
+
         <?= $this->Html->script('bootstrap-fileinput.js') ?>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 profil-head">
         <?php echo $this->Form->create($user , ['type' => 'file','id' => 'form']);  ?>
 
                 <div class="col-md-6">
@@ -13,12 +13,13 @@
                             echo $this->Form->input('login',['label' => 'Nom d\'utilisateur',  'prepend' => '<i class="fa fa-user" aria-hidden="true"></i>']);
                             echo $this->Form->input('email',['label' => 'Email',  'prepend' => '<i class="fa fa-envelope" aria-hidden="true"></i>']);
                             echo $this->Form->input('password',['label' => 'Mot de passe',  'prepend' => '<i class="fa fa-key" aria-hidden="true"></i>']);
-                            echo $this->Form->input('birthday',  ['label' => 'Date de naissance', 'type'=>'text','prepend' => '<i class="fa fa-birthday-cake" aria-hidden="true"></i>']);
-                            echo $this->Form->input('city_id', ['type' => 'text', 'type' => 'hidden']);
-                            echo $this->Form->input('ville',  ['value'=>$user->city->city,'prepend' => '<i class="fa fa-globe" aria-hidden="true"></i>']);
-                            ?>
+                    echo $this->Form->input('birthday',  ['label' => 'Date de naissance', 'type'=>'text','prepend' => '<i class="fa fa-birthday-cake" aria-hidden="true"></i>']);
+                    echo $this->Form->input('city_id', ['type' => 'text', 'type' => 'hidden']);
+                    echo $this->Form->input('ville',  ['label'=>'Code postal / Ville', 'value'=>$user->city->city,'prepend' => '<i class="fa fa-globe" aria-hidden="true"></i>']);
+
+                    ?>
                 </div>
-                <div class="col-md-6 text-center voffset4">
+                <div class="col-md-6 text-center voffset2">
 
 
                     <div class="fileinput fileinput-new text-center" data-provides="fileinput">
@@ -39,17 +40,18 @@
                             <a href="javascript:;" class="btn btn-danger fileinput-exists" data-dismiss="fileinput"> Annuler </a>
                         </div>
                     </div>
-                    <br> <br> <br>
+                    <br><br><br><br>
                 </div>
 
 
 
                 <div class="row ">
-                    <div class="btn-toolbar text-center ">
+                    <div class="text-center ">
 
                         <?= $this->Form->button(' <i class="fa fa-check" aria-hidden="true"></i> Valider les modifications', [ 'id'=>'submit','class' => 'btn btn-success  ', 'div' => false]) ; ?>
 
                         <?= $this->Form->end() ?>
+                        <br>     <br>
                     </div>
                 </div>
 
@@ -67,7 +69,7 @@ $( "#submit" ).click(function() {
 });
 
 //mise en place du datepicker jQuery
-date('#deadline', '-30:-0', 'y');
+date('#birthday', '-120:-0', 'y');
 
 //format date
 $( document ).ready(function() {

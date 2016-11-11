@@ -1,7 +1,8 @@
+<?= $this->Html->css('animate.css') ?>
 <div class="row">
     <div class="col-md-4 ">
         <div class="col-md-12 profil-head ">
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <?php if ($user->avatar): ?>
                 <?= $this->Html->image("../uploads/avatars/$user->avatar" , ['class' => 'avatar-profil'])?>
                 <?php endif ?>
@@ -10,7 +11,7 @@
                 <?php endif ?>
             </div>
 
-            <div class="col-md-8">
+            <div class="col-md-7">
                 <p class="pseudo"><?= h($user->login) ?></p>
                 <p class="bold"><?= $user->role->groupname ?></p>
             </div>
@@ -20,7 +21,7 @@
                 <hr>
                 <p class="bold"> Inscrit depuis le <?= $user->created->i18nformat('dd MMM YYYY') ?> </p>
                 <?php if ($user->connected) : ?>
-                <p class="bold"> Dernière connexion le <?= $user->connected->i18nformat('dd MMM YYYY à hh:mm') ?> </p>
+                <p class="bold"> Dernière connexion le <?= $user->connected->i18nformat('dd MMM YYYY à HH:mm') ?> </p>
                 <?php else : ?>
                 <p class="bold"> Aucune connexion  </p>
                 <?php endif ?>
@@ -45,14 +46,20 @@
 
     <div class="col-md-8 ">
         <div class="row">
-            <div class="col-md-12 profil-head">
-                <h4 class="menuprofil">Activités</h4>
+            <div class="col-md-12 profil-head ">
+                <div class="list-inline">
+                    <li>   <span class="menuprofil activite"><i class="fa fa-comments-o" aria-hidden="true"></i> Activités</span></li>
+                    <li>   <span class="menuprofil actprofil"><i class="fa fa-pencil" aria-hidden="true"></i> Profil</span></li>
+                </div>
+
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-12 profil-head" id="lastpost">
-
+        <div  id="new"></div>
+        <div class="row"  id="lastpost">
+            <div class="col-md-12 profil-head">
+dsfgd<br>dsfgd<br>dsfgd<br>dsfgd<br>
+                dsfgd<br>dsfgd<br>dsfgd<br>dsfgd<br>
+                dsfgd<br>dsfgd<br>dsfgd<br>dsfgd<br>
                 <?php if (!empty($user->posts)): ?>
                 <table cellpadding="0" cellspacing="0">
                     <tr>
@@ -88,8 +95,35 @@
 </div>
 
 <script>
-
+    $(document).ready(function() {
+        var id ='<?= $user->id ?>';
 $('#edit').click(function () {
-$('#lastpost').fadeOut(0).show().load('/users/edit/5');
+$('#lastpost').css({
+    "-webkit-animation": "fadeOutRight 0.5s linear",
+    "animation": "fadeOutRight 0.5s linear"
 });
+
+  $('#new').load('/users/edit/'+id).css({
+      "-webkit-animation": "fadeInUp 1.2s linear",
+      "animation": "fadeInUp 1.2s linear"
+  });
+
+    setTimeout(
+            function()
+            {
+                $('#lastpost').hide();
+            }, 500);
+
+    $('.activite').css({
+        "border-bottom": "none",
+        "color":" black"
+    });
+
+    $('.actprofil').css({
+        "border-bottom": "5px solid #3498db",
+        "color":" #3498db"
+    });
+
+});
+    });
 </script>
