@@ -182,7 +182,7 @@ class UsersController extends AppController
                 $connected = $this->Users->patchEntity($connected,$data);
                 $this->Users->save($connected);
                 $this->Flash->success('Vous êtes maintenant connecté.');
-                return $this->redirect(['controller'=>'Contests', 'action' => 'index']);
+                return $this->redirect(['controller'=>'Contests', 'action' => 'home']);
             }
             $this->Flash->error('Votre identifiant ou mot de passe est incorrect.');
         }

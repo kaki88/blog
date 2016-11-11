@@ -43,6 +43,11 @@ class ContestsTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->hasMany('Posts', [
+            'foreignKey' => 'contest_id',
+            'dependent' => true,
+        ]);
+        
         $this->belongsTo('Categories', [
             'foreignKey' => 'category_id',
             'joinType' => 'INNER'

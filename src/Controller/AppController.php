@@ -54,19 +54,28 @@ class AppController extends Controller
             ],
             'loginAction' => [
                 'controller' => 'Users',
-                'action' => 'login'
+                'action' => 'login',
+                'prefix' => false
             ],
             'loginRedirect' => [
                 'controller' => 'Users',
-                'action' => 'index'
+                'action' => 'index',
+                   'prefix' => false
             ]
         ]);
     }
 
     public function beforeFilter(Event $event)
     {
-        $this->Auth->allow(['index', 'view', 'display']);
+        if (empty($this->request->params['prefix'])
+            || $this->request->params['prefix'] !== 'admin')
+    
+        {
+            $this->Auth->allow (['home']) ;
+        }
     }
+
+
     /**
      * Before render callback.
      *
