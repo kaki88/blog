@@ -1,31 +1,67 @@
-<?php foreach ($contests as $contest) :?>
 
 <div class="row">
-    <div class="col-md-9">
-        <div class="panel panel-primary panstyl">
-            <div class="panel-heading clearfix">
-                <div class="panel-title pull-left">
-                    <?= $contest->name ?>
-                </div>
-                <div class="panel-title pull-right linkcontest">
-                   # <?= $contest->id ?>   |
-                    Publié le <?= $contest->created->i18nformat('dd MMM YYYY') ?> |
-                    <strong>Clôture le  <?= $contest->deadline->i18nformat('dd MMM YYYY') ?></strong>
-                </div>
-            </div>
+    <div class="col-md-9 pull-right alltable">
+<?php foreach ($contests as $contest) :?>
 
-            <div class="panel-body pnbodytop">
 
-                <table class="table table-striped tbl-bt-marge">
+        <div class=" spacetbl">
+                <table class="table tbl-prin table-curved">
+
+
+                    <thead>
+                    <tr class="type">
+                        <th class="text-center "><?= $contest->category->type ?></th>
+                        <th colspan="2" >
+                            <span class="pull-left nom"><?= $contest->name ?></span>
+
+                                 <span class="pull-right">
+              <nav class="navbar navbar-default navbar-xs" role="navigation">
+                            <div class="collapse navbar-collapse mini" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav mininav">
+                                    <li class="dropdown">
+    <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-share-alt-square" aria-hidden="true"></i>
+    <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+    <ul class="dropdown-menu">
+        <li><a href="#"><i class="fa fa-facebook-square" aria-hidden="true"></i> <span class="share"> Facebook</span></a></li>
+        <li><a href="#"><i class="fa fa-twitter-square" aria-hidden="true"></i> <span class="share">Twitter</span></a></li>
+    </ul>
+</li>
+                                        <li><a href="#"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-times" aria-hidden="true"></i></i></a></li>
+                                    <li><a href="#"><i class="fa fa-check" aria-hidden="true"></i></a></li>
+
+                                </ul>
+                            </div><!-- /.navbar-collapse -->
+                        </nav>
+                                </span>
+
+                        </th>
+                    </tr>
+                    </thead>
+
+                    <tbody  class="bod">
                 <tr>
-                    <td width="20%"><span class="befprize">Lot(s) à gagner </span></td>
-                    <td width="60%"><span class="prize"><?= $contest->prize ?></span></td>
-                    <td width="20%" rowspan="5" class="hidden-xs ">
+                    <?php
+                    $row =3;
+                    if ($contest->restrictions) {$row++;};
+                    if ($contest->answer) {$row++;};
+                    ?>
+
+                    <td width="17%" rowspan="<?= $row ?>" class="hidden-xs rowimg">
+
                         <?php if ($contest->img_url): ?>
-                        <?= $this->Html->image("../uploads/img/$contest->img_url" , ['class' => 'contest-img'])?>
+                        <?= $this->Html->image("../uploads/img/$contest->img_url" , ['class' => 'contest-img zoom voffset3'])?>
                         <?php endif ?>
 
+
+
+
                     </td>
+                    <td width="20%"><span class="befprize">Lot(s) à gagner </span></td>
+                    <td width="63%"><span class="prize"><?= $contest->prize ?></span></td>
+
+
                 </tr>
                     <tr>
                     <td><span class="befprize">Principe </span></td>
@@ -39,6 +75,7 @@
                             <?php endforeach ?>
                         </span></td>
                     </tr>
+                    <?php if ($contest->restrictions) : ?>
                     <tr>
                         <td><span class="befprize">Restriction(s) </span></td>
                         <td><span class="befdescr">
@@ -47,24 +84,47 @@
                             <?php endforeach ?>
                         </span></td>
                     </tr>
+                    <?php endif ?>
+                    <?php if ($contest->answer) : ?>
                     <tr>
                         <td><span class="befprize">Réponse(s) </span></td>
                         <td><span class="befdescr">
                       <?= $contest->answer ?>
                         </span></td>
                     </tr>
-
+                    <?php endif ?>
                     <tr>
-                        <td colspan="3" >
 
-                            <div class="pull-left">
-                                <?php $ico = $contest->frequency->icon_url ?>
-                                <?= $this->Html->image("../uploads/icons/$ico" , ['class' => 'admin-ico-freq'])?>
+
+                        <td class="minimenu text-center" >
+                             <span class=" clos hidden-xs">
+                                <i class="fa fa-hourglass-end" aria-hidden="true"></i>
+                                 <?= $contest->deadline->i18nformat('dd MMMM YYYY') ?>
+                             </span>
+  <span class=" clos hidden-sm hidden-md hidden-lg">
+                                <i class="fa fa-hourglass-end" aria-hidden="true"></i>
+      <?= $contest->deadline->i18nformat('dd/MM/YY') ?>
+                             </span>
+</td>
+
+
+
+                        <td colspan="2" class="pubby" >
+
+                            <div class="pull-left margpub">
+
+                                <span class="publierle hidden-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  par <?= $contest->user->login ?> le <?= $contest->created->i18nformat('dd MMM ') ?>
+                                à   <?= $contest->created->i18nformat('HH:mm') ?></span>
+                                    <span class="publierle  hidden-sm hidden-md hidden-lg"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        <?= $contest->user->login ?> le <?= $contest->created->i18nformat('dd/MM ') ?></span>
+
                                 <?php if ($contest->on_facebook) : ?>
                                 <?= $this->Html->image('facebook.jpg', ['class' => 'admin-ico-freq']) ?>
                                 <?php endif ?>
                             </div>
                             <div class="pull-right">
+                                <?php $ico = $contest->frequency->icon_url ?>
+                                <?= $this->Html->image("../uploads/icons/$ico" , ['class' => 'admin-ico-freq'])?>
                             <?php if ($contest->rule_url) : ?>
                             <a href="<?= $contest->rule_url ?>" target="_blank">
                                 <button type="button" class="btn btn-sm btn-warning">
@@ -89,17 +149,17 @@
 
                         </td>
                     </tr>
+                    </tbody>
                 </table>
 
-
-            </div>
         </div>
-    </div>
-</div>
+
+
 
 <?php endforeach ?>
 
-
+    </div>
+</div>
 
 
     <ul class="pagination pagination-large">
@@ -120,6 +180,4 @@
                 return str_replace($a, $b, $words);
                 }
                 ?>
-
-
 

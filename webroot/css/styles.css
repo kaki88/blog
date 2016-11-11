@@ -127,11 +127,7 @@ a {
     font-size: 13px;
 }
 
-.contest-img{
-    width: 180px;
-    border-radius: 3px;
-    border: 1px solid grey;
-}
+
 
 
 .befprize{
@@ -147,8 +143,10 @@ a {
     padding : 0;
 }
 
-.tbl-bt-marge{
-    margin-bottom: 3px!important;
+
+.rowimg{
+    max-height: 150px;
+    background-color: #3498db;
 }
 
 .admin-ico-freq{
@@ -174,7 +172,7 @@ a {
 
 .profil-head{
     background-color: white;
-    padding-top: 15px;
+    padding-top: 5px;
     -webkit-box-shadow: 1px 1px 2px 0 #CCCCCC;
     -moz-box-shadow: 1px 1px 2px 0 #CCCCCC;
     -o-box-shadow: 1px 1px 2px 0 #CCCCCC;
@@ -210,34 +208,169 @@ hr{
 }
 
 .menuprofil{
-    color: #3498db;
     text-transform: uppercase;
-    margin-top: -4px;
+    font-size: 16px;
+    padding: 10px;
+    display: block;
+}
+
+.list-inline li{
+    padding: 0!important;
+}
+
+.activite{
+    border-bottom: 5px solid #3498db;
+    color: #3498db;
 }
 
 
-/*--------------------------------------------------------------------------------------------------------------------------------------------------ANIMATIONS*/
+.tbl-prin{
+    margin-bottom: 3px!important;
 
-#profil {
-    -webkit-animation: lightSpeedIn 1s linear ;
-    animation: lightSpeedIn 1s linear ;
 }
 
-#formation{
-    -webkit-animation: flipInX 1s linear ;
-    animation: flipInX 1s linear ;
+.spacetbl{
+    margin-bottom: 15px;
+    background-color: white;
 }
 
-#projet{
-    -webkit-animation: rollIn 1s linear ;
-    animation: rollIn 1s linear ;
+.type{
+    background-color: #707070;
+    color: white;
 }
 
-#contact{
-    -webkit-animation: zoomIn 0.1s linear 5;
-    animation: zoomIn 0.1s linear 5;
+.clos{
+    text-transform: lowercase;
+    background-color: crimson;
+    padding: 2px 5px 2px 5px;
+    border-radius: 3px;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
 }
-#avatar{
-    -webkit-animation: flipInX 2s linear ;
-    animation: flipInX 2s linear ;
+
+.nom{
+    padding: 2px 5px 2px 5px;
+    color: white;
+    font-size: 15px;
+}
+
+.contest-img{
+    width: 135px;
+    max-height: 135px;
+    border-radius: 3px;
+    border: 2px solid white;
+    z-index: 99999;
+
+}
+
+.zoom:hover {
+    opacity: 1;
+    -webkit-transform: scale(2.5);
+    -moz-transform: scale(2.5);
+    -o-transform: scale(2.5);
+    transform: scale(2.5);
+    z-index: auto;
+
+}
+
+.zoom {
+    -webkit-transition: opacity .3s ease-in-out,
+    -webkit-transform .3s ease-in-out,
+    background-color 1s ease-in-out;
+    -moz-transition: opacity .3s ease-in-out,
+    -moz-transform .3s ease-in-out,
+    background-color 1s ease-in-out;
+    -o-transition: opacity .3s ease-in-out,
+    -o-transform .3s ease-in-out,
+    background-color 1s ease-in-out;
+    transition: opacity .3s ease-in-out,
+    transform .3s ease-in-out,
+    background-color 1s ease-in-out;
+    z-index: auto;
+
+}
+
+.pubby{
+    background-color: lightgrey;
+}
+
+.alltable{
+    background-color: white;
+    padding: 15px;
+}
+
+.table-curved {
+    border-radius: 6px;
+}
+
+.table-curved th {
+    border-top: none;
+}
+.table-curved th:first-child {
+    border-radius: 4px 0 0 0;
+}
+.table-curved th:last-child {
+    border-radius: 0 6px 0 0;
+}
+.table-curved th:only-child{
+    border-radius: 4px 4px 0 0;
+}
+.table-curved tr:last-child td:first-child {
+    border-radius: 0 0 0 4px;
+}
+.table-curved tr:last-child td:last-child {
+    border-radius: 0 0 4px 0;
+}
+
+.bod{
+    background-color: #eee;
+}
+
+table td {
+    border-top: none !important;
+}
+
+.publierle {
+    text-transform: lowercase;
+    background-color: #348434;
+    padding: 3px 5px 3px 5px;
+    border-radius: 3px;
+    color: gainsboro;
+    font-size: 12px;
+}
+
+
+.navbar-xs {
+    min-height:22px;
+    border-radius:0;
+    margin-bottom: 0;
+}
+.navbar-xs .navbar-brand{ padding: 2px 8px;font-size: 14px;line-height: 14px; }
+.navbar-xs .navbar-nav > li > a { border-right:1px solid #ddd; padding-top: 2px; padding-bottom: 2px; line-height: 16px }
+
+.mini{
+    padding: 0;
+}
+
+.mininav > li > a {
+    position: relative;
+    display: block;
+    padding: 8px;
+}
+
+.minimenu{
+    background-color: #3498db;
+}
+
+.margpub{
+    margin-top: 8px;
+}
+
+.navbar-xs .navbar-nav > li > a:hover, .navbar-xs .navbar-nav > li > a:focus {
+    color: #3498db;;
+}
+
+.share{
+    font-size: 12px;
 }

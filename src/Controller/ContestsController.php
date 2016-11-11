@@ -17,10 +17,10 @@ class ContestsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Categories', 'Frequencies', 'Principles', 'Zones', 'Restrictions']
+            'contain' => ['Categories', 'Frequencies', 'Principles', 'Zones', 'Restrictions','Users']
         ];
         $contests = $this->paginate($this->Contests->find('all')
-            ->where(['active' => 1]));
+            ->where(['Contests.active' => 1]));
 
         $this->set(compact('contests'));
         $this->set('_serialize', ['contests']);
@@ -70,6 +70,7 @@ class ContestsController extends AppController
                 $this->request->data['img_url'] = $rename;
             }
             $contest = $this->Contests->patchEntity($contest, $this->request->data);
+            $contest->user_id = $this->request->session()->read('Auth.User.id');
             if ($this->Contests->save($contest)) {
                 $count = count($this->request->data['zones']['_ids']);
                 if ($this->request->data['zones']['_ids']){
