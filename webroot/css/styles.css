@@ -374,3 +374,25 @@ table td {
 .share{
     font-size: 12px;
 }
+
+/*_____________________________________________________________commentaires*/
+.titlecom{
+    background-color: lightgrey;
+    padding: 3px;
+    font-size: 12px;
+    margin-left: 40px;
+}
+
+.comments{
+    background-color: #eeeeee ;
+    padding: 7px;
+    margin-left: 40px;
+}
+
+.avatar-com{
+    width: 40px;
+    position: absolute;
+   border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+}
+

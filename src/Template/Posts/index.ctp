@@ -1,45 +1,41 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Post'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="posts index large-9 medium-8 columns content">
-    <h3><?= __('Posts') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
+
+
+
             <?php foreach ($posts as $post): ?>
-            <tr>
-                <td><?= $this->Number->format($post->id) ?></td>
-                <td><?= h($post->created) ?></td>
-                <td><?= h($post->modified) ?></td>
-                <td><?= $post->has('user') ? $this->Html->link($post->user->id, ['controller' => 'Users', 'action' => 'view', $post->user->id]) : '' ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $post->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $post->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $post->id], ['confirm' => __('Are you sure you want to delete # {0}?', $post->id)]) ?>
-                </td>
-            </tr>
+            <div class="row ">
+                <div class="col-md-12 voffset1">
+
+                    <?php $avatar = $post->user->avatar ?>
+                    <?= $this->Html->image("../uploads/avatars/$avatar" , ['class' => 'avatar-com ' ])?>
+
+                    <div class="titlecom">
+        <?= $post->user->login ?> le <?= $post->created->i18nformat('dd MMM YYYY') ?>
+        à <?= $post->created->i18nformat('HH:mm') ?>
+                    </div>
+
+
+        <div class="comments">
+            <?= $post->message ?>
+        </div>
+
+
+
+
+                </div>
+            </div>
+
             <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
+
+    <div class="pull-right">
+        <ul class="pagination pagination-large">
+            <?php
+                echo $this->Paginator->prev(__('Prec'), array('tag' => 'li'), null, array('tag' => 'li','class' =>
+            'disabled','disabledTag' => 'a'));
+            echo $this->Paginator->numbers(array('separator' => '','currentTag' => 'a', 'currentClass' =>
+            'active','tag' => 'li','first' => 1));
+            echo $this->Paginator->next(__('Suiv'), array('tag' => 'li','currentClass' => 'disabled'), null,
+            array('tag' => 'li','class' => 'disabled','disabledTag' => 'a'));
+            ?>
         </ul>
-        <p><?= $this->Paginator->counter() ?></p>
-    </div>
+
 </div>

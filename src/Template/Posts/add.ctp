@@ -1,20 +1,14 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Posts'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="posts form large-9 medium-8 columns content">
+<div class="row">
+<div class="col-md-12">
     <?= $this->Form->create($post) ?>
     <fieldset>
-        <legend><?= __('Add Post') ?></legend>
+
         <?php
-            echo $this->Form->input('message');
-            echo $this->Form->input('user_id', ['options' => $users]);
+
+            echo $this->Form->input('message',['type'=>'textarea']);
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button('Valider',['class' => 'btn btn-success']) ?>
     <?= $this->Form->end() ?>
+</div>
 </div>

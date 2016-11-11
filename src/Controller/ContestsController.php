@@ -14,11 +14,13 @@ class ContestsController extends AppController
 {
 
 
-    public function index()
+    public function home()
     {
         $this->paginate = [
-            'contain' => ['Categories', 'Frequencies', 'Principles', 'Zones', 'Restrictions','Users']
-        ];
+            'contain' => ['Categories', 'Frequencies', 'Principles', 'Zones', 'Restrictions','Users',
+                'Posts' => function($q) {
+                        return $q->select(['contest_id']);}]];
+
         $contests = $this->paginate($this->Contests->find('all')
             ->where(['Contests.active' => 1]));
 

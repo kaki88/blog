@@ -40,6 +40,11 @@ class PostsTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->belongsTo('Contests', [
+            'foreignKey' => 'contest_id',
+            'joinType' => 'INNER'
+        ]);
+        
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
             'joinType' => 'INNER'
