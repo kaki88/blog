@@ -156,6 +156,7 @@
 
 
 <?php endforeach ?>
+        <div class="row">
         <div class="pull-right">
             <ul class="pagination pagination-large">
                 <?php
@@ -169,7 +170,7 @@
             </ul>
         </div>
     </div>
-
+    </div>
 </div>
         <?php
                 function removeAccents($words) {
@@ -180,10 +181,9 @@
            ?>
 
 <script>
+    // afficher les commentaires
     $(document).on('click', '.bt-post', function () {
             var id = $(this).attr('id');
-        var counter = $('#count-'+id).text();
-        if ( counter !== '(0)' ) {
         if ($(this).hasClass('cacher')) {
             $('#'+id).removeClass('cacher').addClass('visibl');
             $('#post-' + id).load('/posts/index/'+id).show().css({
@@ -198,7 +198,6 @@
                 "-webkit-animation": "zoomOutUp 1s linear",
                 "animation": "zoomOutUp 1s linear"
             });
-        }
         }
         });
 </script>

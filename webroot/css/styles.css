@@ -264,7 +264,7 @@ hr{
 
 }
 
-.zoom:hover {
+.zoom:hover{
     opacity: 1;
     -webkit-transform: scale(2.5);
     -moz-transform: scale(2.5);
@@ -396,3 +396,33 @@ table td {
     border-top-left-radius: 3px;
 }
 
+.close-com{
+    margin: 20px 0;
+}
+
+.pagination{
+    margin : 20px!important;
+}
+
+
+.pagination {
+    display: block;
+    padding-left: 0;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.pagination > li:first-child > a, .pagination > li:first-child > span {
+    margin-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.pagination > li:last-child > a, .pagination > li:last-child > span {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.comfer{
+    margin-top: -17px;
+}

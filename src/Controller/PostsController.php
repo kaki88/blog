@@ -19,14 +19,15 @@ class PostsController extends AppController
     public function index($id= null)
     {
         $this->paginate = [
-            'contain' => ['Users']
+            'contain' => ['Users'],
+            'limit' => 5,
         ];
         $posts = $this->paginate($this->Posts->find('all')
         ->where(['contest_id' => $id])
             ->order(['Posts.created' => 'DESC'])
         );
 
-        $this->set(compact('posts'));
+        $this->set(compact('posts','id'));
         $this->set('_serialize', ['posts']);
     }
 
@@ -52,12 +53,13 @@ class PostsController extends AppController
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add($id= null)
+    public function add()
     {
         $post = $this->Posts->newEntity();
         if ($this->request->is('post')) {
             $post = $this->Posts->patchEntity($post, $this->request->data);
-            $post->contest_id = $id;
+            $post->contest_id = $this->request->data['id'];
+            $post->message = $this->request->data['message'];
             $post->user_id = $this->Auth->user('id');
            $this->Posts->save($post);
         }
