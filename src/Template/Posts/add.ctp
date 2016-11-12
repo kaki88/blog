@@ -1,14 +1,21 @@
-<div class="row">
-<div class="col-md-12">
-    <?= $this->Form->create($post) ?>
-    <fieldset>
+<div class="row ">
+    <div class="col-md-12 voffset1">
 
-        <?php
+        <?php $avatar = $post->user->avatar ?>
+        <?= $this->Html->image("../uploads/avatars/$avatar" , ['class' => 'avatar-com ' ])?>
 
-            echo $this->Form->input('message',['type'=>'textarea']);
-        ?>
-    </fieldset>
-    <?= $this->Form->button('Valider',['class' => 'btn btn-success']) ?>
-    <?= $this->Form->end() ?>
-</div>
+        <div class="titlecom">
+            <?= $post->user->login ?> le <?= $post->created->i18nformat('dd MMM YYYY') ?>
+            à <?= $post->created->i18nformat('HH:mm') ?>
+        </div>
+
+
+        <div class="comments">
+            <?= $post->message ?>
+        </div>
+
+
+
+
+    </div>
 </div>

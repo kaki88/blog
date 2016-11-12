@@ -16,7 +16,7 @@ class UsersController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['add', 'logout']);
+        $this->Auth->allow(['add', 'logout','index']);
     }
 
     /**
@@ -192,5 +192,23 @@ class UsersController extends AppController
     {
         $this->Flash->success('Vous êtes maintenant deconnecté.');
         return $this->redirect($this->Auth->logout());
+    }
+
+    public function isAuthorized($user)
+    {
+
+        // un membre peut éditer et supprimer uniquement son compte
+        if (in_array($this->request->action, ['edit', 'delete'])) {
+            $uid =  $this->Auth->user('id');
+            if ((int)$this->request->params['pass'][0] == $uid
+            || $user['role_id'] === 1) {
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        return parent::isAuthorized($user);
     }
 }

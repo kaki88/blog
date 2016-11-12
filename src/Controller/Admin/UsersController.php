@@ -6,28 +6,12 @@ use App\Controller\AppController;
 class UsersController extends AppController
 {
 
-    public function isAuthorized($user)
-    {
-        // Tous les utilisateurs enregistrés peuvent ajouter des articles
-        if ($this->request->action === 'add') {
-            return true;
-        }
-
-        // Le propriétaire d'un article peut l'éditer et le supprimer
-        if (in_array($this->request->action, ['edit', 'delete'])) {
-            $articleId = (int)$this->request->params['pass'][0];
-            if ($this->Articles->isOwnedBy($articleId, $user['id'])) {
-                return true;
-            }
-        }
-
-        return parent::isAuthorized($user);
-    }
 
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Cities', 'Roles']
+            'contain' => ['Cities', 'Roles'],
+            'limit' => 5,
         ];
         $users = $this->paginate($this->Users);
 
@@ -76,4 +60,5 @@ class UsersController extends AppController
         return $this->redirect($this->Auth->logout());
     }
 
+    
 }
