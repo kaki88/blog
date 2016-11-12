@@ -16,6 +16,29 @@ class ContestsController extends AppController
 
     public function home()
     {
+
+        if ($this->request->is('post')) {
+            $array = [];
+            if (!empty($this->request->data['category'])) {
+                $push = $this->request->data['category'];
+                $pushall = "category_id = '$push'";
+                array_push($array, $pushall);
+            }
+            if (!empty($this->request->data['name'])) {
+                $push = $this->request->data['name'];
+                $pushall = "name LIKE '%$push%'";
+                array_push($array, $pushall);
+            }
+            $this->paginate = [
+                'contain' => ['Categories', 'Frequencies', 'Principles', 'Zones', 'Restrictions','Users',
+                    'Posts' => function($q) {
+                        return $q->select(['contest_id']);}]];
+
+            $contests = $this->paginate($this->Contests->find('all')
+                ->where(['Contests.active' => 1, $array]));
+        }
+
+else{
         $this->paginate = [
             'contain' => ['Categories', 'Frequencies', 'Principles', 'Zones', 'Restrictions','Users',
                 'Posts' => function($q) {
@@ -23,7 +46,7 @@ class ContestsController extends AppController
 
         $contests = $this->paginate($this->Contests->find('all')
             ->where(['Contests.active' => 1]));
-
+}
         $this->set(compact('contests'));
         $this->set('_serialize', ['contests']);
     }

@@ -12,7 +12,7 @@
 .voffset9 { margin-top: 150px; }
 
 body{
-    background:#eee;
+    background:slategray;
 }
 
 .logo{
@@ -224,18 +224,14 @@ hr{
 }
 
 
-.tbl-prin{
-    margin-bottom: 3px!important;
 
-}
 
 .spacetbl{
     margin-bottom: 15px;
-    background-color: white;
 }
 
 .type{
-    background-color: #707070;
+    background-color: #505050;
     color: white;
 }
 
@@ -264,15 +260,15 @@ hr{
 
 }
 
-.zoom:hover{
-    opacity: 1;
-    -webkit-transform: scale(2.5);
-    -moz-transform: scale(2.5);
-    -o-transform: scale(2.5);
-    transform: scale(2.5);
-    z-index: auto;
+/*.zoom:hover{*/
+    /*opacity: 1;*/
+    /*-webkit-transform: scale(2.5);*/
+    /*-moz-transform: scale(2.5);*/
+    /*-o-transform: scale(2.5);*/
+    /*transform: scale(2.5);*/
+    /*z-index: auto;*/
 
-}
+/*}*/
 
 .zoom {
     -webkit-transition: opacity .3s ease-in-out,
@@ -361,6 +357,7 @@ table td {
 
 .minimenu{
     background-color: #3498db;
+    border-bottom-left-radius: 5px;
 }
 
 .margpub{
@@ -425,4 +422,38 @@ table td {
 
 .comfer{
     margin-top: -17px;
+    margin-right: 17px;
+}
+
+.table thead>tr>th {
+    vertical-align: bottom;
+    border-bottom: none;
+}
+
+
+
+
+.table {
+     margin-bottom: 0 !important;
+}
+
+.comspace{
+    margin: 5px;
+}
+
+.post{
+    background-color: white;
+    border-radius: 5px;
+
+}
+
+.postcom{
+    margin: 17px;
+}
+
+.tbl-prin {
+    margin-bottom: 0!important;
+    -moz-border-radius: 3px;
+    border-radius: 5px;
+    border: 1px solid black;
 }
