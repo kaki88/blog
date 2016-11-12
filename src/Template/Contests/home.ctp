@@ -1,12 +1,20 @@
 <?= $this->Html->css('animate.css') ?>
 <div class="row">
-    <div class="col-md-9 pull-right alltable">
+    <!--________________________________________recherche-->
+    <!--<?php $cell = $this->cell('Search') ?>-->
+    <!--<?= $cell ?>-->
+    <?= $this->element('menu')?>
+
+    <!--________________________________________liste des jeux-->
+    <div class="col-md-9 ">
+
+
+
 <?php foreach ($contests as $contest) :?>
 
 
-        <div class=" spacetbl">
-                <table class="table tbl-prin table-curved">
-
+        <div class=" spacetbl tbl-prin voffset2">
+                <table class="table  ">
 
                     <thead>
                     <tr class="type">
@@ -150,10 +158,10 @@
                     </tr>
                     </tbody>
                 </table>
-<div id="post-<?= $contest->id?>"></div>
+
         </div>
 
-
+        <div class="post" id="post-<?= $contest->id?>"></div>
 
 <?php endforeach ?>
         <div class="row">
@@ -188,7 +196,8 @@
             $('#'+id).removeClass('cacher').addClass('visibl');
             $('#post-' + id).load('/posts/index/'+id).show().css({
                 "-webkit-animation": "fadeInDown 2s linear",
-                "animation": "fadeInDown 2s linear"
+                "animation": "fadeInDown 2s linear",
+            "border": "1px solid black"
             });
 
         }

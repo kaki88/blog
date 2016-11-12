@@ -2,8 +2,8 @@
 <div class="new"></div>
 
             <?php foreach ($posts as $post): ?>
-            <div class="row ">
-                <div class="col-md-12 voffset1">
+            <div class="row comspace">
+                <div class="col-md-12 voffset1 ">
 
                     <?php $avatar = $post->user->avatar ?>
                     <?= $this->Html->image("../uploads/avatars/$avatar" , ['class' => 'avatar-com ' ])?>
@@ -26,8 +26,8 @@
 
             <?php endforeach; ?>
 
-<div class="row voffset2 hidden postcom<?= $id ?>">
-    <div class="col-md-12">
+
+    <div class="col-md-12 voffset2 hidden postcom<?= $id ?>">
         <?php echo $this->Form->input('message',['placeholder'=>'5 caractères minimum, pas d\'écriture SMS, merci :)',
         'label'=>'Votre message:','type'=>'textarea','class'=>'message'.$id]); ?>
         <div class="error<?= $id ?>"></div>
@@ -37,7 +37,7 @@
         ['class' => 'btn btn-sm btn-success btpost', 'escape'=> false]) ?>
 
     </div>
-</div>
+
 
 
 
