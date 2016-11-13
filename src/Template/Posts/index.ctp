@@ -5,8 +5,12 @@
             <div class="row comspace">
                 <div class="col-md-12 voffset1 ">
 
+                    <?php if ($avatar = $post->user->avatar) : ?>
                     <?php $avatar = $post->user->avatar ?>
                     <?= $this->Html->image("../uploads/avatars/$avatar" , ['class' => 'avatar-com ' ])?>
+                    <?php else : ?>
+                    <?= $this->Html->image("no-avatar.png" , ['class' => 'avatar-com ' ])?>
+                    <?php endif ?>
 
                     <div class="titlecom">
         <?= $post->user->login ?> le <?= $post->created->i18nformat('dd MMM YYYY') ?>

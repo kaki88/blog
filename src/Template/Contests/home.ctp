@@ -5,28 +5,52 @@
     <!--<?php $cell = $this->cell('Search') ?>-->
     <!--<?= $cell ?>-->
 <div class="row">
-    <div class="col-md-3  col-xs-12 ">
+    <div class="col-md-3  col-xs-12 menuspace ">
         <div class="row">
         <div  class="btn-group-vertical col-md-12 col-xs-12 ">
             <ul class="form">
 
+
+                <li id="li-tous"><a class="tous" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home']);  ?>">
+                    <?= $this->Html->image("menu/home.png" , ['class' => 'imgmenu'])?>
+                    Tous les jeux
+                    <span class="badgemenu badge pull-right" style="background-color: #505050">
+                      <?= $counttotal->count ?>
+                    </span>
+                </a></li>
+
+
                 <?php foreach ($categories as $categorie) : ?>
-                <li><a class="<?= $categorie->code ?>" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home', $categorie->id, $categorie->type]);  ?>">
+                <li id="li-<?= $categorie->id ?>"><a class="<?= $categorie->code ?>" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home', $categorie->id, strtolower(str_replace(' ', '-', removeAccents($categorie->type)))]);  ?>">
                     <?= $this->Html->image("menu/".$categorie->icon_url , ['class' => 'imgmenu'])?>
                     <?=  $categorie->type ?>
+                    <span class="badgemenu badge pull-right" style="background-color: <?= $categorie->color ?>">
+                        <?= count($categorie->contests) ?>
+                    </span>
                 </a></li>
 
                 <style>
-                    .form li a.<?= $categorie->code ?> {
-                        border-left:10px solid <?= $categorie->color ?>;
-                    }
                     .form li.selected a.<?= $categorie->code ?> {
                         background: <?= $categorie->color ?>;
                         color:  white;
                     }
+
+                    .form li a.<?= $categorie->code ?> {
+                        border-left:10px solid <?= $categorie->color ?>;
+                        background-image: linear-gradient(to left,
+                        transparent,
+                        transparent 50%,
+                        <?= $categorie->color ?> 50%,
+                        <?= $categorie->color ?>);
+                        background-position: 100% 0;
+                        background-size: 200% 100%;
+                        transition: all .25s ease-in;
+
+                    }
+
                     .form li a.<?= $categorie->code ?>:hover {
-                        background: <?= $categorie->color ?>;
                         color:  white;
+                        background-position: 0 0;
                     }
                 </style>
                 <?php endforeach ?>
@@ -55,7 +79,8 @@
 
                     <thead>
                     <tr class="type">
-                        <th class="text-center "><?= $contest->category->type ?></th>
+                        <th class="text-center hidden-xs"><?= $contest->category->type ?></th>
+                        <th class="text-center hidden-sm hidden-md hidden-lg"><?= $contest->category->code ?></th>
                         <th colspan="2" >
                             <span class="pull-left nom"><?= $contest->name ?></span>
 
@@ -115,18 +140,14 @@
                     <tr>
                         <td><span class="befprize">Zone(s) éligible(s) </span></td>
                         <td><span class="befdescr">
-                            <?php foreach ($contest->zones as $zone) : ?>
-                            <?= $zone->place ?>
-                            <?php endforeach ?>
+                         *
                         </span></td>
                     </tr>
                     <?php if ($contest->restrictions) : ?>
                     <tr>
                         <td><span class="befprize">Restriction(s) </span></td>
                         <td><span class="befdescr">
-                            <?php foreach ($contest->restrictions as $restriction) : ?>
-                            <?= $restriction->sort ?>
-                            <?php endforeach ?>
+                          *
                         </span></td>
                     </tr>
                     <?php endif ?>
@@ -141,17 +162,18 @@
                     <tr>
 
 
-                        <td class="minimenu text-center" >
-                             <span class=" clos hidden-xs">
+                        <td class="minimenu text-center hidden-xs" >
+                             <span class=" clos ">
                                 <i class="fa fa-hourglass-end" aria-hidden="true"></i>
                                  <?= $contest->deadline->i18nformat('dd MMMM YYYY') ?>
                              </span>
-  <span class=" clos hidden-sm hidden-md hidden-lg">
-                                <i class="fa fa-hourglass-end" aria-hidden="true"></i>
-      <?= $contest->deadline->i18nformat('dd/MM/YY') ?>
-                             </span>
-</td>
 
+                        <td class="minimenuxs text-center hidden-sm hidden-md hidden-lg" >
+                          <span class=" clos ">
+                                <i class="fa fa-hourglass-end" aria-hidden="true"></i>
+                              <?= $contest->deadline->i18nformat('dd/MM/YY') ?>
+                             </span>
+                    </td>
 
 
                         <td colspan="2" class="pubby" >
@@ -250,8 +272,17 @@
         });
 
 
-    $(document).on('click', 'li', function () {
+    $(document).on('click', '.form li', function () {
+        $('li').removeClass('selected');
         $(this).addClass('selected');
+    });
+
+    $( document ).ready(function() {
+        var id = '<?= $id ?>';
+        $('#li-'+id).addClass('selected');
+        if (id.length === 0){
+            $('#li-tous').addClass('selected');
+        }
     });
 </script>
 

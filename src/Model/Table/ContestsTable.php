@@ -125,6 +125,7 @@ class ContestsTable extends Table
             ->notEmpty('category_id');
 
 
+
         return $validator;
     }
 

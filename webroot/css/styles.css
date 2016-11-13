@@ -245,6 +245,7 @@ hr{
     font-weight: bold;
 }
 
+
 .nom{
     padding: 2px 5px 2px 5px;
     color: white;
@@ -356,7 +357,12 @@ table td {
 }
 
 .minimenu{
-    background-color: #3498db;
+     background-color: #3498db;
+     border-bottom-left-radius: 5px;
+ }
+
+.minimenuxs{
+    background-color: #d3d3d3;
     border-bottom-left-radius: 5px;
 }
 
@@ -381,7 +387,7 @@ table td {
 }
 
 .comments{
-    background-color: #eeeeee ;
+    background-color: white ;
     padding: 7px;
     margin-left: 40px;
 }
@@ -442,9 +448,8 @@ table td {
 }
 
 .post{
-    background-color: white;
+    background-color: #eeeeee;
     border-radius: 5px;
-
 }
 
 .postcom{
@@ -537,7 +542,7 @@ ul.form {
 }
 
 .imgmenu{
-    margin-left: -6px;
+    margin-right: 10px;
     width: 40px;
 }
 
@@ -545,3 +550,42 @@ ul.form {
     width: 25px;
 }
 
+.menuspace{
+    margin-top: 10px;
+}
+
+.badgemenu{
+    margin: 5px;
+    font-weight: bold;
+}
+
+footer{
+    height: 30px;
+}
+
+.form li.selected a.tous {
+    background: #505050;
+    color:  white;
+}
+
+.form li a.tous {
+                    border-left:10px solid #505050;
+    background-image: linear-gradient(to left,
+    transparent,
+    transparent 50%,
+    #505050 50%,
+    #505050);
+    background-position: 100% 0;
+    background-size: 200% 100%;
+    transition: all .25s ease-in;
+
+}
+
+.form li a.tous:hover {
+                    color:  white;
+    background-position: 0 0;
+}
+
+.inputadd{
+    min-width: 100%!important;
+}
