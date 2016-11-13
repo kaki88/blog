@@ -13,6 +13,7 @@ $cakeDescription = 'Blog';
     <?= $this->Html->meta('icon') ?>
 
     <?= $this->Html->css('bootstrap.css') ?>
+    <?= $this->Html->css('bootstrap-color.css') ?>
     <?= $this->Html->css('styles.css') ?>
     <?= $this->Html->css('themes/black-tie/jquery-ui.css') ?>
     <?= $this->Html->css('easy-autocomplete.css') ?>

@@ -2,7 +2,9 @@
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
-
+use Cake\I18n\Time;
+require_once(ROOT . DS . 'src'. DS . 'Controller'. DS . 'Component' . DS . 'ImageTool.php');
+use ImageTool;
 /**
  * Categories Controller
  *
@@ -50,13 +52,30 @@ class CategoriesController extends AppController
     {
         $category = $this->Categories->newEntity();
         if ($this->request->is('post')) {
+            # upload image
+            if (!empty($_FILES['icon_url']) ) {
+                $img = $_FILES['icon_url']['name'];
+                $extention = explode('.', $img);
+                $rename = str_replace($extention[0], Time::now()->format("Ymdhms"), $img);
+                $temp = $_FILES['icon_url']['tmp_name'];
+                $pathimg = WWW_ROOT . "img" . DS . "menu" . DS . $rename;
+                move_uploaded_file($temp, $pathimg);
+                ImageTool::resize(array(
+                    'input' => $pathimg,
+                    'output' => $pathimg,
+                    'width' =>40,
+                    'height' => 40,
+                    'mode' => 'fit'
+                ));
+                $this->request->data['icon_url'] = $rename;
+            }
             $category = $this->Categories->patchEntity($category, $this->request->data);
             if ($this->Categories->save($category)) {
-                $this->Flash->success(__('The category has been saved.'));
+                $this->Flash->success(__('La catégorie a été sauvegardé.'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The category could not be saved. Please, try again.'));
+                $this->Flash->error(__('La catégorie n\'a pas été sauvegardé. Svp, réessayez.'));
             }
         }
 

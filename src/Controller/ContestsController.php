@@ -14,7 +14,7 @@ class ContestsController extends AppController
 {
 
 
-    public function home()
+    public function home($id= null)
     {
 
         if ($this->request->is('post')) {
@@ -39,6 +39,17 @@ class ContestsController extends AppController
         }
 
 else{
+
+    if ($id){
+        $this->paginate = [
+            'contain' => ['Categories', 'Frequencies', 'Principles', 'Zones', 'Restrictions','Users',
+                'Posts' => function($q) {
+                    return $q->select(['contest_id']);}]];
+
+        $contests = $this->paginate($this->Contests->find('all')
+            ->where(['Contests.active' => 1, ['category_id '=> $id]]));
+    }
+    else{
         $this->paginate = [
             'contain' => ['Categories', 'Frequencies', 'Principles', 'Zones', 'Restrictions','Users',
                 'Posts' => function($q) {
@@ -47,7 +58,11 @@ else{
         $contests = $this->paginate($this->Contests->find('all')
             ->where(['Contests.active' => 1]));
 }
-        $this->set(compact('contests'));
+}
+
+        $categories = $this->Contests->Categories->find('all');
+
+        $this->set(compact('contests','categories'));
         $this->set('_serialize', ['contests']);
     }
 
@@ -88,8 +103,8 @@ else{
                 ImageTool::resize(array(
                     'input' => $pathimg,
                     'output' => $pathimg,
-                    'width' =>100,
-                    'height' => 100,
+                    'width' =>250,
+                    'height' => 250,
                     'mode' => 'fit'
                 ));
                 $this->request->data['img_url'] = $rename;
@@ -108,7 +123,7 @@ else{
                 }
                 }
                 $countt = count($this->request->data['zones']['_ids']);
-                if ($this->request->data['zones']['_ids']){
+                if ($this->request->data['restrictions']['_ids']){
                 foreach ($this->request->data['restrictions']['_ids'] as $id){
                     if (--$countt <= 0) {
                         break;
@@ -119,7 +134,7 @@ else{
             }
                 $this->Flash->success(__('The contest has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'home']);
             } else {
                 $this->Flash->error(__('The contest could not be saved. Please, try again.'));
             }
