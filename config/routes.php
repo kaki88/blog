@@ -91,6 +91,14 @@ Router::scope('/', function (RouteBuilder $routes) {
     );
     //   __________________________________________________________________Concours
     $routes->connect(
+        '/:id-:title',
+        ['controller' => 'Contests', 'action' => 'home'],
+        [
+            'pass' => ['id','title'],
+            'id' => '[0-9]+',
+        ]
+    );
+    $routes->connect(
         '/deposer-un-jeu',
         ['controller' => 'Contests', 'action' => 'add']
     );

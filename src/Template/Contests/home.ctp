@@ -1,14 +1,51 @@
 <?= $this->Html->css('animate.css') ?>
-<div class="row">
+
+
     <!--________________________________________recherche-->
     <!--<?php $cell = $this->cell('Search') ?>-->
     <!--<?= $cell ?>-->
-    <?= $this->element('menu')?>
+<div class="row">
+    <div class="col-md-3  col-xs-12 ">
+        <div class="row">
+        <div  class="btn-group-vertical col-md-12 col-xs-12 ">
+            <ul class="form">
+
+                <?php foreach ($categories as $categorie) : ?>
+                <li><a class="<?= $categorie->code ?>" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home', $categorie->id, $categorie->type]);  ?>">
+                    <?= $this->Html->image("menu/".$categorie->icon_url , ['class' => 'imgmenu'])?>
+                    <?=  $categorie->type ?>
+                </a></li>
+
+                <style>
+                    .form li a.<?= $categorie->code ?> {
+                        border-left:10px solid <?= $categorie->color ?>;
+                    }
+                    .form li.selected a.<?= $categorie->code ?> {
+                        background: <?= $categorie->color ?>;
+                        color:  white;
+                    }
+                    .form li a.<?= $categorie->code ?>:hover {
+                        background: <?= $categorie->color ?>;
+                        color:  white;
+                    }
+                </style>
+                <?php endforeach ?>
+
+
+
+            </ul>
+        </div>
+        </div>
+    </div>
+
+    <div class="row hidden-lg hidden-md">
+</div >
+
+
+
 
     <!--________________________________________liste des jeux-->
     <div class="col-md-9 ">
-
-
 
 <?php foreach ($contests as $contest) :?>
 
@@ -119,37 +156,39 @@
 
                         <td colspan="2" class="pubby" >
 
-                            <div class="pull-left margpub">
+                            <div class="pull-left voffset1">
 
-                                <span class="publierle hidden-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  par <?= $contest->user->login ?> le <?= $contest->created->i18nformat('dd MMM ') ?>
+                                <span class="publierle hidden-xs  hidden-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  par <?= $contest->user->login ?> le <?= $contest->created->i18nformat('dd MMM ') ?>
                                 à   <?= $contest->created->i18nformat('HH:mm') ?></span>
-                                    <span class="publierle  hidden-sm hidden-md hidden-lg"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    <span class="publierle  hidden-xs  hidden-md hidden-lg"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                         <?= $contest->user->login ?> le <?= $contest->created->i18nformat('dd/MM ') ?></span>
 
+                                <?php $ico = $contest->frequency->icon_url ?>
+                                <?= $this->Html->image("../uploads/icons/$ico" , ['class' => 'admin-ico-freq'])?>
                                 <?php if ($contest->on_facebook) : ?>
                                 <?= $this->Html->image('facebook.jpg', ['class' => 'admin-ico-freq']) ?>
                                 <?php endif ?>
+
                             </div>
                             <div class="pull-right">
-                                <?php $ico = $contest->frequency->icon_url ?>
-                                <?= $this->Html->image("../uploads/icons/$ico" , ['class' => 'admin-ico-freq'])?>
+
                             <?php if ($contest->rule_url) : ?>
                             <a href="<?= $contest->rule_url ?>" target="_blank">
-                                <button type="button" class="btn btn-sm btn-warning">
+                                <button type="button" class="btn btn-sm red">
                                     <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                                 </button>
                             </a>
                             <?php endif ?>
 
 
-                                <button type="button" class="btn btn-sm btn-success bt-post cacher" id="<?= $contest->id?>" >
+                                <button type="button" class="btn btn-sm  btn-warning bt-post cacher" id="<?= $contest->id?>" >
                                     <i class="fa fa-comments" aria-hidden="true"></i> <span id="count-<?= $contest->id?>">(<?= count($contest->posts) ?>)</span>
                                 </button>
 
 
                             <a href="<?= $contest->game_url ?>" target="_blank">
-                                <button type="button" class="btn btn-sm btn-primary">
-                                    <i class="fa fa-external-link" aria-hidden="true"></i> Participer
+                                <button type="button" class="btn btn-sm blue">
+                                 <strong>   <i class="fa fa-external-link" aria-hidden="true"></i> PARTICIPER</strong>
                                 </button>
                             </a>
                             </div>
@@ -209,5 +248,10 @@
             });
         }
         });
+
+
+    $(document).on('click', 'li', function () {
+        $(this).addClass('selected');
+    });
 </script>
 
