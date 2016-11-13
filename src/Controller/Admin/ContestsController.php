@@ -13,7 +13,7 @@ class ContestsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Categories', 'Frequencies', 'Principles', 'Zones', 'Restrictions']
+            'contain' => ['Categories', 'Frequencies', 'Principles']
         ];
         $contests = $this->paginate($this->Contests);
 

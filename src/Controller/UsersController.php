@@ -89,7 +89,7 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
                 $this->Flash->success(__("L'utilisateur a été sauvegardé."));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller'=>'Contests','action' => 'home']);
             }
             $this->Flash->error(__("Impossible d'ajouter l'utilisateur."));
         }

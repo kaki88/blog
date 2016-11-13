@@ -30,7 +30,7 @@ class ContestsController extends AppController
                 array_push($array, $pushall);
             }
             $this->paginate = [
-                'contain' => ['Categories', 'Frequencies', 'Principles', 'Zones', 'Restrictions','Users',
+                'contain' => ['Categories', 'Frequencies', 'Principles','Users',
                     'Posts' => function($q) {
                         return $q->select(['contest_id']);}]];
 
@@ -42,7 +42,7 @@ else{
 
     if ($id){
         $this->paginate = [
-            'contain' => ['Categories', 'Frequencies', 'Principles', 'Zones', 'Restrictions','Users',
+            'contain' => ['Categories', 'Frequencies', 'Principles','Users',
                 'Posts' => function($q) {
                     return $q->select(['contest_id']);}]];
 
@@ -51,7 +51,7 @@ else{
     }
     else{
         $this->paginate = [
-            'contain' => ['Categories', 'Frequencies', 'Principles', 'Zones', 'Restrictions','Users',
+            'contain' => ['Categories', 'Frequencies', 'Principles','Users',
                 'Posts' => function($q) {
                         return $q->select(['contest_id']);}]];
 
@@ -60,9 +60,15 @@ else{
 }
 }
 
-        $categories = $this->Contests->Categories->find('all');
+        $categories = $this->Contests->Categories->find('all')
+        ->contain(['Contests' => function($q) {
+            return $q->select(['Contests.category_id']);}
+        ]);
 
-        $this->set(compact('contests','categories'));
+        $countquery  = $this->Contests->find();
+        $counttotal = $countquery->select(['count' => $countquery->func()->count('*')])->first();
+
+        $this->set(compact('contests','categories','id','counttotal'));
         $this->set('_serialize', ['contests']);
     }
 
@@ -109,41 +115,49 @@ else{
                 ));
                 $this->request->data['img_url'] = $rename;
             }
+
+            $this->request->data['zone'] = '';
+            $this->request->data['restriction'] = '';
+
+            if (isset($this->request->data['zonez'])){
+                $zones = $this->request->data['zonez'];
+                $zon = [];
+                if ($zones){
+                    foreach ($zones as $zone){
+                        array_push($zon, $zone);
+                    }
+                }
+                $totext = implode(",", $zon);
+                $this->request->data['zone'] = $totext;
+            }
+
+            if (isset($this->request->data['restrictionz'])){
+                $restrictions = $this->request->data['restrictionz'];
+                $restrict = [];
+                if ($restrictions){
+                    foreach ($restrictions as $restriction){
+                        array_push($restrict, $restriction);
+                    }
+                }
+                $restricttotext = implode(",", $restrict);
+                $this->request->data['restriction'] = $restricttotext;
+            }
             $contest = $this->Contests->patchEntity($contest, $this->request->data);
             $contest->user_id = $this->request->session()->read('Auth.User.id');
             if ($this->Contests->save($contest)) {
-                $count = count($this->request->data['zones']['_ids']);
-                if ($this->request->data['zones']['_ids']){
-                foreach ($this->request->data['zones']['_ids'] as $id){
-                    if (--$count <= 0) {
-                        break;
-                    }
-                    $query = $this->Contests->ContestsZones->query();
-                    $query->insert(['contest_id','zone_id'])->values(['contest_id' => $contest->id,'zone_id' => $id])->execute();
-                }
-                }
-                $countt = count($this->request->data['zones']['_ids']);
-                if ($this->request->data['restrictions']['_ids']){
-                foreach ($this->request->data['restrictions']['_ids'] as $id){
-                    if (--$countt <= 0) {
-                        break;
-                    }
-                    $query = $this->Contests->ContestsRestrictions->query();
-                    $query->insert(['contest_id','restriction_id'])->values(['contest_id' => $contest->id,'restriction_id' => $id])->execute();
-                }
-            }
-                $this->Flash->success(__('The contest has been saved.'));
+
+                $this->Flash->success(__('Le concours a été sauvegardé.'));
 
                 return $this->redirect(['action' => 'home']);
             } else {
-                $this->Flash->error(__('The contest could not be saved. Please, try again.'));
+                $this->Flash->error(__('Le concours n\'a pas pu être sauvegardé. Svp, réessayez.'));
             }
         }
         $categories = $this->Contests->Categories->find('list', ['limit' => 200]);
         $frequencies = $this->Contests->Frequencies->find('list', ['limit' => 200]);
-        $restrictions = $this->Contests->Restrictions->find('list', ['limit' => 200]);
+        $restrictions = $this->Contests->Restrictions->find('all');
+        $zones = $this->Contests->Zones->find('all');
         $principles = $this->Contests->Principles->find('list', ['limit' => 200]);
-        $zones = $this->Contests->Zones->find('list', ['limit' => 200]);
         $this->set(compact('contest', 'categories', 'frequencies', 'restrictions', 'zones', 'principles'));
         $this->set('_serialize', ['contest']);
     }
@@ -157,9 +171,7 @@ else{
      */
     public function edit($id = null)
     {
-        $contest = $this->Contests->get($id, [
-            'contain' => ['Restrictions', 'Zones']
-        ]);
+        $contest = $this->Contests->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
 
             $img = $contest->img_url;
@@ -180,41 +192,47 @@ else{
                 ));
                 $img = $rename;
             }
-            
+
+            $this->request->data['zone'] = '';
+            $this->request->data['restriction'] = '';
+
+            if (isset($this->request->data['zonez'])){
+            $zones = $this->request->data['zonez'];
+                $zon = [];
+                if ($zones){
+                    foreach ($zones as $zone){
+                        array_push($zon, $zone);
+                    }
+                }
+                $totext = implode(",", $zon);
+                $this->request->data['zone'] = $totext;
+            }
+
+            if (isset($this->request->data['restrictionz'])){
+            $restrictions = $this->request->data['restrictionz'];
+                $restrict = [];
+                if ($restrictions){
+                    foreach ($restrictions as $restriction){
+                        array_push($restrict, $restriction);
+                    }
+                }
+                $restricttotext = implode(",", $restrict);
+                $this->request->data['restriction'] = $restricttotext;
+            }
             $contest = $this->Contests->patchEntity($contest, $this->request->data);
             $contest->img_url = $img;
             if ($this->Contests->save($contest)) {
-                $count = count($this->request->data['zones']['_ids']);
-                if ($this->request->data['zones']['_ids']){
-                    foreach ($this->request->data['zones']['_ids'] as $id){
-                        if (--$count <= 0) {
-                            break;
-                        }
-                        $query = $this->Contests->ContestsZones->query();
-                        $query->insert(['contest_id','zone_id'])->values(['contest_id' => $contest->id,'zone_id' => $id])->execute();
-                    }
-                }
-                $countt = count($this->request->data['zones']['_ids']);
-                if ($this->request->data['zones']['_ids']){
-                    foreach ($this->request->data['restrictions']['_ids'] as $id){
-                        if (--$countt <= 0) {
-                            break;
-                        }
-                        $query = $this->Contests->ContestsRestrictions->query();
-                        $query->insert(['contest_id','restriction_id'])->values(['contest_id' => $contest->id,'restriction_id' => $id])->execute();
-                    }
-                }
-                $this->Flash->success(__('The contest has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                $this->Flash->success(__('Le concours a été modifié.'));
+                return $this->redirect(['action' => 'home']);
             } else {
-                $this->Flash->error(__('The contest could not be saved. Please, try again.'));
+                $this->Flash->error(__('Le concours n\'a pas pu être sauvegardé. Svp, réessayez.'));
             }
         }
         $categories = $this->Contests->Categories->find('list', ['limit' => 200]);
         $frequencies = $this->Contests->Frequencies->find('list', ['limit' => 200]);
-        $restrictions = $this->Contests->Restrictions->find('list', ['limit' => 200]);
-        $zones = $this->Contests->Zones->find('list', ['limit' => 200]);
+        $restrictions = $this->Contests->Restrictions->find('all');
+        $zones = $this->Contests->Zones->find('all');
         $principles = $this->Contests->Principles->find('list', ['limit' => 200]);
         $this->set(compact('contest', 'categories', 'frequencies', 'restrictions', 'zones','principles'));
         $this->set('_serialize', ['contest']);
