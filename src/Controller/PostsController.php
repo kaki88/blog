@@ -31,6 +31,7 @@ class PostsController extends AppController
         $this->set('_serialize', ['posts']);
     }
 
+
     /**
      * View method
      *

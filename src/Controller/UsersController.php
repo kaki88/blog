@@ -48,20 +48,38 @@ class UsersController extends AppController
         $ugp =  $this->Auth->User('role_id');
 
         $user = $this->Users->get($id, [
-            'contain' => ['Cities', 'Roles', 'Posts']
+            'contain' => ['Cities', 'Roles']
         ]);
 
+        $this->paginate = [
+            'contain' => ['Contests'],
+            'limit' => 5,
+        ];
+
+        $posts = $this->paginate($this->Users->Posts->find('all')
+            ->where(['Posts.user_id' => 5]));
+
+        $this->set('posts', $posts);
         $this->set('user', $user);
         $this->set('uid', $uid);
         $this->set('ugp', $ugp);
         $this->set('_serialize', ['user']);
     }
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
-     */
+    public function lastcom($id = null)
+    {
+        $this->paginate = [
+            'contain' => ['Contests'],
+            'limit' => 5,
+        ];
+
+        $posts = $this->paginate($this->Users->Posts->find('all')
+            ->where(['Posts.user_id' => $id]));
+
+        $this->set('posts', $posts);
+        $this->set('id', $id);
+    }
+
     public function add()
     {
         $user = $this->Users->newEntity();

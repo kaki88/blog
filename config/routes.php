@@ -28,6 +28,7 @@ Router::defaultRouteClass(DashedRoute::class);
 
 
 Router::scope('/', function (RouteBuilder $routes) {
+    $routes->connect('/', ['controller' => 'Contests', 'action' => 'home']);
     $routes->connect('/accueil', ['controller' => 'Contests', 'action' => 'home']);
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
 
