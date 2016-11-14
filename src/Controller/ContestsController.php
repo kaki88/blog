@@ -67,8 +67,9 @@ else{
 
         $countquery  = $this->Contests->find();
         $counttotal = $countquery->select(['count' => $countquery->func()->count('*')])->first();
-
-        $this->set(compact('contests','categories','id','counttotal'));
+        $restrictions = $this->Contests->Restrictions->find('all');
+        $zones = $this->Contests->Zones->find('all');
+        $this->set(compact('contests','categories','id','counttotal','restrictions','zones'));
         $this->set('_serialize', ['contests']);
     }
 

@@ -28,7 +28,12 @@
                             <i class="fa fa-globe" aria-hidden="true"></i></span>
                     <select data-width="75%" class="selectpicker" multiple name="zonez[]" title="---- Choisissez de(s) zone(s) ----">
                         <?php foreach ($zones as $zone) : ?>
-                        <option value="<?= $zone->id ?>"><?= $zone->place ?></option>
+                        <?php $zonearray =  explode(",",$contest->zone);?>
+                        <option value="<?= $zone->id ?>"
+                        <?php if( in_array( $zone->id ,$zonearray ) ) : ?>
+                       selected = "selected"
+                        <?php endif ?>
+                        ><?= $zone->place ?></option>
                         <?php endforeach ?>
                     </select>
                         </div>
@@ -40,7 +45,12 @@
                             <i class="fa fa-exclamation-circle" aria-hidden="true"></i></span>
                             <select data-width="75%" class="selectpicker" multiple name="restrictionz[] " title="---- Choisissez de(s) restriction(s) ----">
                                 <?php foreach ($restrictions as $restriction) : ?>
-                                <option value="<?= $restriction->id ?>"><?= $restriction->sort ?></option>
+                                <?php $restarray =  explode(",",$contest->restriction);?>
+                                <option value="<?= $restriction->id ?>"
+                                <?php if( in_array( $restriction->id ,$restarray ) ) : ?>
+                                selected = "selected"
+                                <?php endif ?>
+                                ><?= $restriction->sort ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
