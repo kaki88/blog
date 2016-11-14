@@ -88,6 +88,8 @@
 
                             <span class=" nom"><?= $contest->name ?></span>
 
+
+
                                  <span class="pull-right">
               <nav class="navbar navbar-default navbar-xs" role="navigation">
                             <div class="collapse navbar-collapse mini" id="bs-example-navbar-collapse-1">
@@ -102,8 +104,8 @@
 </li>
                                         <li><a href="#"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a></li>
                                     <li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-times" aria-hidden="true"></i></i></a></li>
-                                    <li><a href="#"><i class="fa fa-check" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-times" aria-hidden="true"></i></a></li>
+                                    <li id="marker-<?= $contest->id?>" class="markers"><a href="#"><i class="fa fa-check" aria-hidden="true"></i></a></li>
 
                                 </ul>
                             </div><!-- /.navbar-collapse -->
@@ -141,6 +143,9 @@
                     <tr>
                     <td><span class="befprize">Principe </span></td>
                     <td><span class="befdescr"><?= $contest->principle->description ?></span></td>
+                        <div style="position: absolute; right: 0; margin-top: 52px;margin-right: 17px">
+                            <?= $this->Html->image("jouer.png" , ['class' => 'dejajouer'])?>
+                        </div>
                 </tr>
                 <?php if ($contest->zone) : ?>
                     <tr>
@@ -258,6 +263,9 @@
     </div>
     </div>
 </div>
+
+
+<!--remplacer les accents-->
         <?php
                 function removeAccents($words) {
                 $a = array('À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'ß', 'à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'ÿ', 'Ā', 'ā', 'Ă', 'ă', 'Ą', 'ą', 'Ć', 'ć', 'Ĉ', 'ĉ', 'Ċ', 'ċ', 'Č', 'č', 'Ď', 'ď', 'Đ', 'đ', 'Ē', 'ē', 'Ĕ', 'ĕ', 'Ė', 'ė', 'Ę', 'ę', 'Ě', 'ě', 'Ĝ', 'ĝ', 'Ğ', 'ğ', 'Ġ', 'ġ', 'Ģ', 'ģ', 'Ĥ', 'ĥ', 'Ħ', 'ħ', 'Ĩ', 'ĩ', 'Ī', 'ī', 'Ĭ', 'ĭ', 'Į', 'į', 'İ', 'ı', 'Ĳ', 'ĳ', 'Ĵ', 'ĵ', 'Ķ', 'ķ', 'Ĺ', 'ĺ', 'Ļ', 'ļ', 'Ľ', 'ľ', 'Ŀ', 'ŀ', 'Ł', 'ł', 'Ń', 'ń', 'Ņ', 'ņ', 'Ň', 'ň', 'ŉ', 'Ō', 'ō', 'Ŏ', 'ŏ', 'Ő', 'ő', 'Œ', 'œ', 'Ŕ', 'ŕ', 'Ŗ', 'ŗ', 'Ř', 'ř', 'Ś', 'ś', 'Ŝ', 'ŝ', 'Ş', 'ş', 'Š', 'š', 'Ţ', 'ţ', 'Ť', 'ť', 'Ŧ', 'ŧ', 'Ũ', 'ũ', 'Ū', 'ū', 'Ŭ', 'ŭ', 'Ů', 'ů', 'Ű', 'ű', 'Ų', 'ų', 'Ŵ', 'ŵ', 'Ŷ', 'ŷ', 'Ÿ', 'Ź', 'ź', 'Ż', 'ż', 'Ž', 'ž', 'ſ', 'ƒ', 'Ơ', 'ơ', 'Ư', 'ư', 'Ǎ', 'ǎ', 'Ǐ', 'ǐ', 'Ǒ', 'ǒ', 'Ǔ', 'ǔ', 'Ǖ', 'ǖ', 'Ǘ', 'ǘ', 'Ǚ', 'ǚ', 'Ǜ', 'ǜ', 'Ǻ', 'ǻ', 'Ǽ', 'ǽ', 'Ǿ', 'ǿ', 'Ά', 'ά', 'Έ', 'έ', 'Ό', 'ό', 'Ώ', 'ώ', 'Ί', 'ί', 'ϊ', 'ΐ', 'Ύ', 'ύ', 'ϋ', 'ΰ', 'Ή', 'ή');
@@ -272,7 +280,7 @@
             var id = $(this).attr('id');
         if ($(this).hasClass('cacher')) {
             $('#'+id).removeClass('cacher').addClass('visibl');
-            $('#post-' + id).load('/posts/index/'+id).show().css({
+            $('#post-' + id).load('<?= $this->Url->build(["controller" => "Posts","action" => "index", "prefix" => false]); ?>/index/'+id).show().css({
                 "-webkit-animation": "fadeInDown 2s linear",
                 "animation": "fadeInDown 2s linear",
             "border": "1px solid black"
@@ -288,7 +296,7 @@
         }
         });
 
-
+// effet sur le menu
     $(document).on('click', '.form li', function () {
         $('li').removeClass('selected');
         $(this).addClass('selected');
@@ -301,5 +309,20 @@
             $('#li-tous').addClass('selected');
         }
     });
+
+// marquer comme deja joué
+    $(document).on('click', '.markers', function () {
+        var contest_id = $(this).attr('id').substring(7);
+        $.ajax({
+            type: 'post',
+            url: '<?= $this->Url->build(["controller" => "Users","action" => "addfav", "prefix" => false]); ?>',
+            data: 'id=' + contest_id,
+            error: function(html){
+                alert(html);
+            }
+        });
+
+    });
+
 </script>
 

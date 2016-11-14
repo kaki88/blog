@@ -65,6 +65,16 @@
 
         $('#activ').click(function () {
 
+            $('.actprofil').css({
+                "border-bottom": "none",
+                "color":" black"
+            });
+
+            $('.activite').css({
+                "border-bottom": "5px solid #3498db",
+                "color":" #3498db"
+            });
+
             $('#editload').css({
                 "-webkit-animation": "fadeOutDown 1s linear",
                 "animation": "fadeOutDown 1s linear"
@@ -79,7 +89,7 @@
             setTimeout(
                     function()
                     {
-            $('#new').load('/users/lastcom/'+id).css({
+            $('#new').load('<?= $this->Url->build(["controller" => "Users","action" => "lastcom", "prefix" => false]); ?>/'+id).css({
                 "-webkit-animation": "fadeInRight 2s linear",
                 "animation": "fadeInRight 2s linear"
             });
@@ -96,7 +106,7 @@ $('#lastpost').css({
             function()
             {
                 $('#new').empty();
-                $('#editload').load('/users/edit/'+id).css({
+                $('#editload').load('<?= $this->Url->build(["controller" => "Users","action" => "edit", "prefix" => false]); ?>/'+id).css({
                     "-webkit-animation": "fadeInUp 2s linear",
                     "animation": "fadeInUp 2s linear"
                 });
@@ -116,7 +126,7 @@ $('#lastpost').css({
 });
 
         //charge les derniers posts
-        $('#new').load('/users/lastcom/'+id);
+        $('#new').load('<?= $this->Url->build(["controller" => "Users","action" => "lastcom", "prefix" => false]); ?>/'+id);
 
     });
 
