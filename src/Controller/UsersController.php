@@ -5,7 +5,9 @@ use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\I18n\Time;
 require_once(ROOT . DS . 'src'. DS . 'Controller'. DS . 'Component' . DS . 'ImageTool.php');
+use Cake\ORM\TableRegistry;
 use ImageTool;
+use Cake\Database\Query;
 /**
  * Users Controller
  *
@@ -229,4 +231,21 @@ class UsersController extends AppController
 
         return parent::isAuthorized($user);
     }
+
+    public function addfav()
+    {
+        $this->autoRender = false;
+
+        if ($this->request->is('post')) {
+            $tblmarker = TableRegistry::get('UsersMarkers');
+            $mark = $tblmarker->query();
+            $mark->insert(['contest_id','user_id'])
+                ->values([
+                    'contest_id' => $this->request->data['id'],
+                    'user_id' => $this->Auth->User('id')
+                ])
+                ->execute();
+        }
+    }
+
 }
