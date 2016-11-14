@@ -98,9 +98,6 @@ class ContestsTable extends Table
             ->requirePresence('game_url', 'create')
             ->notEmpty('game_url');
 
-        $validator
-            ->requirePresence('rule_url', 'create')
-            ->notEmpty('rule_url');
 
         $validator
             ->date('deadline')

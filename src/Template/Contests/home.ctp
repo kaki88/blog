@@ -79,10 +79,14 @@
 
                     <thead>
                     <tr class="type">
-                        <th class="text-center hidden-xs"><?= $contest->category->type ?></th>
-                        <th class="text-center hidden-sm hidden-md hidden-lg"><?= $contest->category->code ?></th>
-                        <th colspan="2" >
-                            <span class="pull-left nom"><?= $contest->name ?></span>
+                        <th colspan="3" >
+                            <span style="color: <?= $contest->category->color ?>;
+                            background-color:  #eeeeee;padding: 2px 5px  2px 5px;
+                            border-radius: 4px;
+                            ; font-size: 14px" ><?= $contest->category->code ?></span>
+
+
+                            <span class=" nom"><?= $contest->name ?></span>
 
                                  <span class="pull-right">
               <nav class="navbar navbar-default navbar-xs" role="navigation">
@@ -113,8 +117,9 @@
                     <tbody  class="bod">
                 <tr>
                     <?php
-                    $row =3;
-                    if ($contest->restrictions) {$row++;};
+                    $row = 2;
+                     if ($contest->zone) {$row++;};
+                    if ($contest->restriction) {$row++;};
                     if ($contest->answer) {$row++;};
                     ?>
 
@@ -137,17 +142,29 @@
                     <td><span class="befprize">Principe </span></td>
                     <td><span class="befdescr"><?= $contest->principle->description ?></span></td>
                 </tr>
+                <?php if ($contest->zone) : ?>
                     <tr>
                         <td><span class="befprize">Zone(s) éligible(s) </span></td>
                         <td><span class="befdescr">
-                         *
+                         <?php $zonearray =  explode(",",$contest->zone);
+                            foreach ($zones as $zone) : ?>
+                            <?php if( in_array( $zone->id ,$zonearray ) ) : ?>
+                            <?= $zone->place ?> |
+                            <?php endif ?>
+                            <?php endforeach ?>
                         </span></td>
                     </tr>
-                    <?php if ($contest->restrictions) : ?>
+                <?php endif ?>
+                    <?php if ($contest->restriction) : ?>
                     <tr>
                         <td><span class="befprize">Restriction(s) </span></td>
                         <td><span class="befdescr">
-                          *
+                           <?php $array =  explode(",",$contest->restriction);
+                            foreach ($restrictions as $restriction) : ?>
+                            <?php if( in_array( $restriction->id ,$array ) ) : ?>
+                            <?= $restriction->sort ?>  |
+                            <?php endif ?>
+                            <?php endforeach ?>
                         </span></td>
                     </tr>
                     <?php endif ?>
