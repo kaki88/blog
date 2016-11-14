@@ -214,8 +214,18 @@ hr{
     display: block;
 }
 
+.menuprofil:hover{
+    font-size: 16px;
+    padding: 10px;
+    display: block;
+    border-bottom: 5px solid #3498db;
+    color: #3498db;
+}
+
+
 .list-inline li{
     padding: 0!important;
+    cursor: pointer!important;
 }
 
 .activite{
@@ -588,4 +598,32 @@ footer{
 
 .inputadd{
     min-width: 100%!important;
+}
+
+/*____________________________________________________________________messages de l'utilisateur*/
+
+.userpostcontest{
+    background-color: #505050;
+    color: white;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    padding: 5px;
+}
+
+.userpostmessage{
+    background-color: #f8f8f8;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    padding: 5px;
+}
+
+.userpostcontestall{
+    margin-bottom: 5px;
+    margin-top: 5px;
+    border: solid 1px black;
+    border-radius: 4px;
+}
+
+.margepag{
+    margin:0!important;
 }

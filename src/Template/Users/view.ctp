@@ -48,71 +48,60 @@
         <div class="row">
             <div class="col-md-12 profil-head ">
                 <div class="list-inline">
-                    <li>   <span class="menuprofil activite"><i class="fa fa-comments-o" aria-hidden="true"></i> Activités</span></li>
-                    <li>   <span class="menuprofil actprofil"><i class="fa fa-pencil" aria-hidden="true"></i> Profil</span></li>
+                    <li  id="activ">  <span class="menuprofil activite"><i class="fa fa-comments-o" aria-hidden="true"></i> Activités</span></li>
+                    <li id="liprofil">   <span class="menuprofil actprofil"><i class="fa fa-pencil" aria-hidden="true"></i> Profil</span></li>
                 </div>
 
             </div>
         </div>
         <div  id="new"></div>
-        <div class="row"  id="lastpost">
-            <div class="col-md-12 profil-head">
-dsfgd<br>dsfgd<br>dsfgd<br>dsfgd<br>
-                dsfgd<br>dsfgd<br>dsfgd<br>dsfgd<br>
-                dsfgd<br>dsfgd<br>dsfgd<br>dsfgd<br>
-                <?php if (!empty($user->posts)): ?>
-                <table cellpadding="0" cellspacing="0">
-                    <tr>
-                        <th scope="col"><?= __('Id') ?></th>
-                        <th scope="col"><?= __('Message') ?></th>
-                        <th scope="col"><?= __('Created') ?></th>
-                        <th scope="col"><?= __('Modified') ?></th>
-                        <th scope="col"><?= __('User Id') ?></th>
-                        <th scope="col" class="actions"><?= __('Actions') ?></th>
-                    </tr>
-                    <?php foreach ($user->posts as $posts): ?>
-                    <tr>
-                        <td><?= h($posts->id) ?></td>
-                        <td><?= h($posts->message) ?></td>
-                        <td><?= h($posts->created) ?></td>
-                        <td><?= h($posts->modified) ?></td>
-                        <td><?= h($posts->user_id) ?></td>
-                        <td class="actions">
-                            <?= $this->Html->link(__('View'), ['controller' => 'Posts', 'action' => 'view', $posts->id])
-                            ?>
-                            <?= $this->Html->link(__('Edit'), ['controller' => 'Posts', 'action' => 'edit', $posts->id])
-                            ?>
-                            <?= $this->Form->postLink(__('Delete'), ['controller' => 'Posts', 'action' => 'delete',
-                            $posts->id], ['confirm' => __('Are you sure you want to delete # {0}?', $posts->id)]) ?>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </table>
-                <?php endif; ?>
-            </div>
-        </div>
+        <div  id="editload"></div>
     </div>
 </div>
 
 <script>
     $(document).ready(function() {
         var id ='<?= $user->id ?>';
-$('#edit').click(function () {
+
+        $('#activ').click(function () {
+
+            $('#editload').css({
+                "-webkit-animation": "fadeOutDown 1s linear",
+                "animation": "fadeOutDown 1s linear"
+            });
+            setTimeout(
+                    function()
+                    {
+            $('#editload').empty();
+                    },1000);
+
+
+            setTimeout(
+                    function()
+                    {
+            $('#new').load('/users/lastcom/'+id).css({
+                "-webkit-animation": "fadeInRight 2s linear",
+                "animation": "fadeInRight 2s linear"
+            });
+                    },1000);
+            });
+$('#edit,#liprofil').click(function () {
 $('#lastpost').css({
-    "-webkit-animation": "fadeOutRight 0.5s linear",
-    "animation": "fadeOutRight 0.5s linear"
+    "-webkit-animation": "fadeOutRight 1s linear",
+    "animation": "fadeOutRight 1s linear"
 });
 
-  $('#new').load('/users/edit/'+id).css({
-      "-webkit-animation": "fadeInUp 1.2s linear",
-      "animation": "fadeInUp 1.2s linear"
-  });
 
     setTimeout(
             function()
             {
-                $('#lastpost').hide();
-            }, 500);
+                $('#new').empty();
+                $('#editload').load('/users/edit/'+id).css({
+                    "-webkit-animation": "fadeInUp 2s linear",
+                    "animation": "fadeInUp 2s linear"
+                });
+
+            },900);
 
     $('.activite').css({
         "border-bottom": "none",
@@ -125,5 +114,12 @@ $('#lastpost').css({
     });
 
 });
+
+        //charge les derniers posts
+        $('#new').load('/users/lastcom/'+id);
+
     });
+
+
+
 </script>
