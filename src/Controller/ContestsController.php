@@ -74,11 +74,20 @@ else{
             array_push($markerlist, $item->contest_id);
         }
 
+        $favos = $this->loadModel('UsersFavorites');
+        $fav = $favos->find('all')
+            ->select('contest_id')
+            ->where(['UsersFavorites.user_id' => $this->Auth->User('id')]);
+        $favlist = [];
+        foreach ( $fav as $item) {
+            array_push($favlist, $item->contest_id);
+        }
+
         $countquery  = $this->Contests->find();
         $counttotal = $countquery->select(['count' => $countquery->func()->count('*')])->first();
         $restrictions = $this->Contests->Restrictions->find('all');
         $zones = $this->Contests->Zones->find('all');
-        $this->set(compact('contests','categories','id','counttotal','restrictions','zones','markerlist'));
+        $this->set(compact('contests','categories','id','counttotal','restrictions','zones','markerlist','favlist'));
         $this->set('_serialize', ['contests']);
     }
 

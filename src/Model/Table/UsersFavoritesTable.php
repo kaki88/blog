@@ -34,6 +34,7 @@ class UsersFavoritesTable extends Table
         parent::initialize($config);
 
         $this->table('users_favorites');
+        $this->primaryKey('user_id');
 
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
