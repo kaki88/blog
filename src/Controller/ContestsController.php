@@ -65,11 +65,20 @@ else{
             return $q->select(['Contests.category_id']);}
         ]);
 
+        $markers = $this->loadModel('UsersMarkers');
+        $marker = $markers->find('all')
+            ->select('contest_id')
+            ->where(['UsersMarkers.user_id' => $this->Auth->User('id')]);
+        $markerlist = [];
+        foreach ( $marker as $item) {
+            array_push($markerlist, $item->contest_id);
+        }
+
         $countquery  = $this->Contests->find();
         $counttotal = $countquery->select(['count' => $countquery->func()->count('*')])->first();
         $restrictions = $this->Contests->Restrictions->find('all');
         $zones = $this->Contests->Zones->find('all');
-        $this->set(compact('contests','categories','id','counttotal','restrictions','zones'));
+        $this->set(compact('contests','categories','id','counttotal','restrictions','zones','markerlist'));
         $this->set('_serialize', ['contests']);
     }
 

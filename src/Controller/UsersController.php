@@ -248,4 +248,18 @@ class UsersController extends AppController
         }
     }
 
+    public function removefav()
+    {
+        $this->autoRender = false;
+
+        if ($this->request->is('post')) {
+            $tblmarker = TableRegistry::get('UsersMarkers');
+            $mark = $tblmarker->query();
+            $mark->delete()
+                ->where(['user_id' => $this->Auth->User('id')])
+                ->andWhere(['contest_id' => $this->request->data['id']])
+                ->execute();
+        }
+    }
+
 }

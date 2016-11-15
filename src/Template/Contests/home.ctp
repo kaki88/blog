@@ -104,7 +104,7 @@
 </li>
                                         <li><a href="#"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a></li>
                                     <li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-times" aria-hidden="true"></i></a></li>
+                                    <li id="remove-<?= $contest->id?>" class="removes"><a href="#"><i class="fa fa-times" aria-hidden="true"></i></a></li>
                                     <li id="marker-<?= $contest->id?>" class="markers"><a href="#"><i class="fa fa-check" aria-hidden="true"></i></a></li>
 
                                 </ul>
@@ -143,9 +143,7 @@
                     <tr>
                     <td><span class="befprize">Principe </span></td>
                     <td><span class="befdescr"><?= $contest->principle->description ?></span></td>
-                        <div style="position: absolute; right: 0; margin-top: 52px;margin-right: 17px">
-                            <?= $this->Html->image("jouer.png" , ['class' => 'dejajouer'])?>
-                        </div>
+
                 </tr>
                 <?php if ($contest->zone) : ?>
                     <tr>
@@ -215,6 +213,14 @@
 
                             </div>
                             <div class="pull-right">
+                                <div class="dejouerplace deja-<?= $contest->id?> hidden">
+                                    <?= $this->Html->image("jouer.png" , ['class' => 'dejajouer'])?>
+                                </div>
+                                <?php if (in_array($contest->id, $markerlist))  :?>
+                                <div class="dejouerplace deja-<?= $contest->id?>" >
+                                    <?= $this->Html->image("jouer.png" , ['class' => 'dejajouer'])?>
+                                </div>
+                                <?php endif ?>
 
                             <?php if ($contest->rule_url) : ?>
                             <a href="<?= $contest->rule_url ?>" target="_blank">
@@ -321,7 +327,23 @@
                 alert(html);
             }
         });
+        $('.deja-'+contest_id).removeClass('hidden');
+return false;
+    });
 
+    // retirer le marqueur deja joué
+    $(document).on('click', '.removes', function () {
+        var contest_id = $(this).attr('id').substring(7);
+        $.ajax({
+            type: 'post',
+            url: '<?= $this->Url->build(["controller" => "Users","action" => "removefav", "prefix" => false]); ?>',
+            data: 'id=' + contest_id,
+            error: function(html){
+                alert(html);
+            }
+        });
+        $('.deja-'+contest_id).addClass('hidden');
+        return false;
     });
 
 </script>
