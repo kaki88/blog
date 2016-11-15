@@ -103,9 +103,26 @@
     </ul>
 </li>
                                         <li><a href="#"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a></li>
-                                    <li id="remove-<?= $contest->id?>" class="removes"><a href="#"><i class="fa fa-times" aria-hidden="true"></i></a></li>
-                                    <li id="marker-<?= $contest->id?>" class="markers"><a href="#"><i class="fa fa-check" aria-hidden="true"></i></a></li>
+
+
+                                    <li id="fav-<?= $contest->id?>" class="favs"><a href="#">
+                                        <?php if (in_array($contest->id, $favlist))  :?>
+                                        <i class="fa fa-heartbeat" aria-hidden="true"></i>
+                                        <?php else :?>
+                                        <i class="fa fa-heart" aria-hidden="true"></i>
+                                        <?php endif ?>
+                                    </a></li>
+
+
+
+
+<li id="marker-<?= $contest->id?>" class="markers"><a href="#">
+                                    <?php if (in_array($contest->id, $markerlist))  :?>
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                    <?php else :?>
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                    <?php endif ?>
+</a></li>
 
                                 </ul>
                             </div><!-- /.navbar-collapse -->
@@ -222,6 +239,15 @@
                                 </div>
                                 <?php endif ?>
 
+                                <div class="enfav enfav-<?= $contest->id?> hidden">
+                                    <?= $this->Html->image("fav.png" , ['class' => 'dejafav'])?>
+                                </div>
+                                <?php if (in_array($contest->id, $favlist))  :?>
+                                <div class="enfav enfav-<?= $contest->id?>" >
+                                    <?= $this->Html->image("fav.png" , ['class' => 'dejafav'])?>
+                                </div>
+                                <?php endif ?>
+
                             <?php if ($contest->rule_url) : ?>
                             <a href="<?= $contest->rule_url ?>" target="_blank">
                                 <button type="button" class="btn btn-sm red">
@@ -319,32 +345,63 @@
 // marquer comme deja joué
     $(document).on('click', '.markers', function () {
         var contest_id = $(this).attr('id').substring(7);
+        if ($(this).find('i').hasClass('fa-check')){
         $.ajax({
             type: 'post',
-            url: '<?= $this->Url->build(["controller" => "Users","action" => "addfav", "prefix" => false]); ?>',
+            url: '<?= $this->Url->build(["controller" => "Users","action" => "addmark", "prefix" => false]); ?>',
             data: 'id=' + contest_id,
             error: function(html){
                 alert(html);
             }
         });
-        $('.deja-'+contest_id).removeClass('hidden');
+            $('.deja-'+contest_id).removeClass('hidden');
+            $(this).find('i').removeClass('fa-check').addClass('fa-times');
+        }
+        else{
+            $.ajax({
+                type: 'post',
+                url: '<?= $this->Url->build(["controller" => "Users","action" => "removemark", "prefix" => false]); ?>',
+                data: 'id=' + contest_id,
+                error: function(html){
+                    alert(html);
+                }
+            });
+            $('.deja-'+contest_id).addClass('hidden');
+            $(this).find('i').removeClass('fa-times').addClass('fa-check');
+        }
 return false;
     });
 
-    // retirer le marqueur deja joué
-    $(document).on('click', '.removes', function () {
-        var contest_id = $(this).attr('id').substring(7);
-        $.ajax({
-            type: 'post',
-            url: '<?= $this->Url->build(["controller" => "Users","action" => "removefav", "prefix" => false]); ?>',
-            data: 'id=' + contest_id,
-            error: function(html){
-                alert(html);
-            }
-        });
-        $('.deja-'+contest_id).addClass('hidden');
+    // favoris
+    $(document).on('click', '.favs', function () {
+        var c_id = $(this).attr('id').substring(4);
+        if ($(this).find('i').hasClass('fa-heart')){
+            $.ajax({
+                type: 'post',
+                url: '<?= $this->Url->build(["controller" => "Users","action" => "addfav", "prefix" => false]); ?>',
+                data: 'id=' + c_id,
+                error: function(html){
+                    alert(html);
+                }
+            });
+            $('.enfav-'+c_id).removeClass('hidden');
+            $(this).find('i').removeClass('fa-heart').addClass('fa-heartbeat');
+        }
+        else{
+            $.ajax({
+                type: 'post',
+                url: '<?= $this->Url->build(["controller" => "Users","action" => "removefav", "prefix" => false]); ?>',
+                data: 'id=' + c_id,
+                error: function(html){
+                    alert(html);
+                }
+            });
+            $('.enfav-'+c_id).addClass('hidden');
+            $(this).find('i').removeClass('fa-heartbeat').addClass('fa-heart');
+        }
         return false;
     });
+
 
 </script>
 

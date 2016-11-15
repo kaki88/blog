@@ -232,7 +232,7 @@ class UsersController extends AppController
         return parent::isAuthorized($user);
     }
 
-    public function addfav()
+    public function addmark()
     {
         $this->autoRender = false;
 
@@ -248,7 +248,7 @@ class UsersController extends AppController
         }
     }
 
-    public function removefav()
+    public function removemark()
     {
         $this->autoRender = false;
 
@@ -261,5 +261,36 @@ class UsersController extends AppController
                 ->execute();
         }
     }
+
+    public function addfav()
+    {
+        $this->autoRender = false;
+
+        if ($this->request->is('post')) {
+            $tblfav = TableRegistry::get('UsersFavorites');
+            $fav = $tblfav->query();
+            $fav->insert(['contest_id','user_id'])
+                ->values([
+                    'contest_id' => $this->request->data['id'],
+                    'user_id' => $this->Auth->User('id')
+                ])
+                ->execute();
+        }
+    }
+
+    public function removefav()
+    {
+        $this->autoRender = false;
+
+        if ($this->request->is('post')) {
+            $tblfav = TableRegistry::get('UsersFavorites');
+            $fav = $tblfav->query();
+            $fav->delete()
+                ->where(['user_id' => $this->Auth->User('id')])
+                ->andWhere(['contest_id' => $this->request->data['id']])
+                ->execute();
+        }
+    }
+
 
 }

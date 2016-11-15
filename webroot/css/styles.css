@@ -636,5 +636,12 @@ footer{
     position: absolute;
     right: 0;
     margin-top: -118px;
-    margin-right: 16px
+    margin-right: 16px;
+}
+
+.enfav{
+    position: absolute;
+    right: 0;
+    margin-top: -38px;
+    margin-right: 26px
 }
