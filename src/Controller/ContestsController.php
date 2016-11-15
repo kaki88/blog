@@ -101,10 +101,37 @@ else{
     public function view($id = null)
     {
         $contest = $this->Contests->get($id, [
-            'contain' => ['Categories', 'Frequencies', 'Principles', 'Zones', 'Restrictions']
+            'contain' => ['Categories', 'Frequencies', 'Principles']
         ]);
 
-        $this->set('contest', $contest);
+        $categories = $this->Contests->Categories->find('all')
+            ->contain(['Contests' => function($q) {
+                return $q->select(['Contests.category_id']);}
+            ]);
+
+        $markers = $this->loadModel('UsersMarkers');
+        $marker = $markers->find('all')
+            ->select('contest_id')
+            ->where(['UsersMarkers.user_id' => $this->Auth->User('id')]);
+        $markerlist = [];
+        foreach ( $marker as $item) {
+            array_push($markerlist, $item->contest_id);
+        }
+
+        $favos = $this->loadModel('UsersFavorites');
+        $fav = $favos->find('all')
+            ->select('contest_id')
+            ->where(['UsersFavorites.user_id' => $this->Auth->User('id')]);
+        $favlist = [];
+        foreach ( $fav as $item) {
+            array_push($favlist, $item->contest_id);
+        }
+
+        $countquery  = $this->Contests->find();
+        $counttotal = $countquery->select(['count' => $countquery->func()->count('*')])->first();
+        $restrictions = $this->Contests->Restrictions->find('all');
+        $zones = $this->Contests->Zones->find('all');
+        $this->set(compact('contest','categories','id','counttotal','restrictions','zones','markerlist','favlist'));
         $this->set('_serialize', ['contest']);
     }
 

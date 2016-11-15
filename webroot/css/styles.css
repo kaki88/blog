@@ -629,13 +629,13 @@ footer{
 }
 
 .dejajouer{
-    width: 140px;
+    width: 120px;
 }
 
 .dejouerplace{
     position: absolute;
     right: 0;
-    margin-top: -118px;
+    margin-top: -101px;
     margin-right: 16px;
 }
 
