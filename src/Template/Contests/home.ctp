@@ -1,9 +1,68 @@
 <?= $this->Html->css('animate.css') ?>
 
 
-    <!--________________________________________recherche-->
-    <!--<?php $cell = $this->cell('Search') ?>-->
-    <!--<?= $cell ?>-->
+
+<div class="modal fade" id="alert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Signaler une erreur sur la fiche concours : <br>
+                        <span id="gettitle"></span>
+                </h4>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+
+                <form class="form-horizontal" role="form">
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <select class="form-control" id="sel1">
+                                <option disabled="disabled" selected="selected">---- Objet de votre demande----</option>
+                                <option>le jeu est terminé</option>
+                                <option>le lien est erroné</option>
+                                <option>la fiche est erronée</option>
+                                <option>autre problème</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-md-12">
+                    <textarea class="form-control" rows="5" id="textarea" placeholder="Si nécessaire, précisez."></textarea>
+                    </div>
+                    </div>
+                </form>
+
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                    Annuler
+                </button>
+                <button type="button" class="btn btn-primary">
+                    Envoyer
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+        <!-- Modal -->
+
+
+
+
+
+
 <div class="row">
     <div class="col-md-3  col-xs-12 menuspace ">
         <div class="row">
@@ -91,7 +150,9 @@
 
 
                                  <span class="pull-right">
-              <nav class="navbar navbar-default navbar-xs" role="navigation">
+
+
+                            <nav class="navbar navbar-default navbar-xs" role="navigation">
                             <div class="collapse navbar-collapse mini" id="bs-example-navbar-collapse-1">
                                 <ul class="nav navbar-nav mininav">
                                     <li class="dropdown">
@@ -100,9 +161,10 @@
     <ul class="dropdown-menu">
         <li><a href="#"><i class="fa fa-facebook-square" aria-hidden="true"></i> <span class="share"> Facebook</span></a></li>
         <li><a href="#"><i class="fa fa-twitter-square" aria-hidden="true"></i> <span class="share">Twitter</span></a></li>
+
     </ul>
 </li>
-                                        <li><a href="#"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a></li>
+                                        <li><a id="modal-<?= $contest->id?>" class="btmodal" data-target="#alert" data-toggle="modal" href="#"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a></li>
 
 
                                     <li id="fav-<?= $contest->id?>" class="favs"><a href="#">
@@ -208,7 +270,7 @@
                         <td class="minimenuxs text-center hidden-sm hidden-md hidden-lg" >
                           <span class=" clos ">
                                 <i class="fa fa-hourglass-end" aria-hidden="true"></i>
-                              <?= $contest->deadline->i18nformat('dd/MM/YY') ?>
+                              <?= $contest->deadline->i18nformat('dd/MM') ?>
                              </span>
                     </td>
 
@@ -223,9 +285,9 @@
                                         <?= $contest->user->login ?> le <?= $contest->created->i18nformat('dd/MM ') ?></span>
 
                                 <?php $ico = $contest->frequency->icon_url ?>
-                                <?= $this->Html->image("../uploads/icons/$ico" , ['class' => 'admin-ico-freq'])?>
+                                <?= $this->Html->image("../uploads/icons/$ico" , ['class' => 'admin-ico-freq hidden-xs'])?>
                                 <?php if ($contest->on_facebook) : ?>
-                                <?= $this->Html->image('facebook.jpg', ['class' => 'admin-ico-freq']) ?>
+                                <?= $this->Html->image('facebook.jpg', ['class' => 'admin-ico-freq hidden-xs']) ?>
                                 <?php endif ?>
 
                             </div>
@@ -250,7 +312,7 @@
 
                             <?php if ($contest->rule_url) : ?>
                             <a href="<?= $contest->rule_url ?>" target="_blank">
-                                <button type="button" class="btn btn-sm red">
+                                <button type="button" class="btn btn-sm red hidden-xs">
                                     <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                                 </button>
                             </a>
@@ -402,6 +464,12 @@ return false;
         return false;
     });
 
-
+    // signaler
+    $(document).on('click', '.btmodal', function () {
+        var a_id = $(this).attr('id').substring(6);
+        var title = $(this).closest('tr th .nom').text();
+        $('#gettitle').text(title);
+        return false;
+    });
 </script>
 

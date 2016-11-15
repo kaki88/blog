@@ -30,6 +30,7 @@ $cakeDescription = 'Blog';
     <?= $this->fetch('script') ?>
 
 
+
 </head>
 <body>
 
