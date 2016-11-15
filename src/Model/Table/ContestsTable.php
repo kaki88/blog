@@ -76,6 +76,7 @@ class ContestsTable extends Table
             'targetForeignKey' => 'zone_id',
             'joinTable' => 'contests_zones'
         ]);
+
     }
 
     /**
