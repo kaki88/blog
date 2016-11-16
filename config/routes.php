@@ -104,8 +104,8 @@ Router::scope('/', function (RouteBuilder $routes) {
         ['controller' => 'Contests', 'action' => 'add']
     );
     $routes->connect(
-        '/jeu-concours/:id',
-        ['controller' => 'Contests', 'action' => 'view'],
+        '/jeu-concours/:id-:title',
+        ['controller' => 'Contests', 'action' => 'gameview'],
         [
             'pass' => ['id','title'],
             'id' => '[0-9]+',

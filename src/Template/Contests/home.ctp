@@ -1,3 +1,4 @@
+<?php $this->assign('title', 'Accueil'); ?>
 <?= $this->Html->css('animate.css') ?>
 
 
@@ -145,8 +146,11 @@
                             ; font-size: 14px" ><?= $contest->category->code ?></span>
 
 
+                            <a href="<?= $this->Url->build(['controller' => 'Contests', 'action' => 'gameview',$contest->id,
+                            strtolower(str_replace(' ', '-', removeAccents($contest->name))),'prefix' => false]); ?>" target="_blank"
+                            style="text-decoration: none">
                             <span class=" nom"><?= $contest->name ?></span>
-
+                            </a>
 
 
                                  <span class="pull-right">
@@ -159,8 +163,12 @@
     <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-share-alt-square" aria-hidden="true"></i>
     <i class="fa fa-caret-down" aria-hidden="true"></i></a>
     <ul class="dropdown-menu">
-        <li><a href="#"><i class="fa fa-facebook-square" aria-hidden="true"></i> <span class="share"> Facebook</span></a></li>
-        <li><a href="#"><i class="fa fa-twitter-square" aria-hidden="true"></i> <span class="share">Twitter</span></a></li>
+        <?php $link = 'http://olivierp.simplon-epinal.tk/blog/jeu-concours/'.$contest->id.'-'.strtolower(str_replace(' ', '-', removeAccents($contest->name))); ?>
+        <li><a target="_blank" OnClick="window.open(this.href,'targetWindow','toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250'); return false;" href="https://www.facebook.com/sharer/sharer.php?u=<?= $link ?>">
+            <i class="fa fa-facebook-square" aria-hidden="true"></i> <span class="share"> Facebook</span></a></li>
+        <li>
+            <a href="#">
+            <i class="fa fa-twitter-square" aria-hidden="true"></i> <span class="share">Twitter</span></a></li>
 
     </ul>
 </li>

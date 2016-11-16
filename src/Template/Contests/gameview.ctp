@@ -1,6 +1,42 @@
-<div class="col-md-9 ">
 
-<div class=" spacetbl tbl-prin voffset2">
+<?php $this->assign('title', 'Jeu Concours '.$contest->name); ?>
+<?php $this->assign('meta', '
+        <meta property="og:image" content="http://olivierp.simplon-epinal.tk/blog/uploads/img/'.$contest->img_url.'" />
+        <meta property="og:title" content="Jeu Concours '.$contest->name.'" />
+        <meta property="og:description" content="'.$contest->prize.'" />
+        <meta property="og:url" content="http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']  .  '" />
+        <meta property="og:app_id" content="420776134976881" />
+        ') ?>
+
+
+<div class="row">
+<!--___________________________________________________________________profil-->
+
+<div class="col-md-3 ">
+    <div class="col-md-12 profil-head ">
+        <div style="float: left">
+
+            <?php if ($contest->user->avatar): ?>
+            <?= $this->Html->image("../uploads/avatars/".$contest->user->avatar , ['class' => 'avatar-profil'])?>
+            <?php endif ?>
+            <?php if (empty($contest->user->avatar)): ?>
+            <img src="<?= $this->Url->image('no-avatar.png') ?>" class="avatar-profil">
+            <?php endif ?>
+        </div>
+        <div style="float: right">
+            <p class="pseudo"><?= h($contest->user->login) ?></p>
+            <p class="bold"><?= $contest->user->role->groupname ?></p>
+
+        </div>
+
+
+    </div>
+</div>
+
+
+        <div class="col-md-9">
+
+<div class="  tbl-prin ">
     <table class="table  ">
 
         <thead>
@@ -17,9 +53,9 @@
 
 
                 <span class="pull-right">
- <a href="http://www.facebook.com/share.php?u=http://olivierp.simplon-epinal.tk/blog/" target="_blank" title="">
-     test
- </a>
+ <!--<a href="http://www.facebook.com/share.php?u=http://olivierp.simplon-epinal.tk/blog/" target="_blank" title="">-->
+     <!--test-->
+ <!--</a>-->
 
 
 
@@ -150,10 +186,7 @@
 
                 <div class="pull-left voffset1">
 
-                                <span class="publierle hidden-xs  hidden-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  par <?= $contest->user->login ?> le <?= $contest->created->i18nformat('dd MMM ') ?>
-                                à   <?= $contest->created->i18nformat('HH:mm') ?></span>
-                    <span class="publierle  hidden-xs  hidden-md hidden-lg"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                        <?= $contest->user->login ?> le <?= $contest->created->i18nformat('dd/MM') ?></span>
+
 
                     <?php $ico = $contest->frequency->icon_url ?>
                     <?= $this->Html->image("../uploads/icons/$ico" , ['class' => 'admin-ico-freq hidden-xs'])?>
@@ -190,11 +223,6 @@
                     <?php endif ?>
 
 
-                    <button type="button" class="btn btn-sm  btn-warning bt-post cacher" id="<?= $contest->id?>" >
-                        <i class="fa fa-comments" aria-hidden="true"></i> <span id="count-<?= $contest->id?>">(<?= count($contest->posts) ?>)</span>
-                    </button>
-
-
                     <a href="<?= $contest->game_url ?>" target="_blank">
                         <button type="button" class="btn btn-sm blue">
                             <strong>   <i class="fa fa-external-link" aria-hidden="true"></i> PARTICIPER</strong>
@@ -209,6 +237,171 @@
 
 </div>
 
-<div class="post" id="post-<?= $contest->id?>"></div>
+
+            <div class="col-md-12 voffset1 post">
+                <div class="post" id="post-<?= $contest->id?>"></div>
+            <?php foreach ($posts as $post): ?>
+            <div class="row comspace">
+
+
+                    <?php if ($avatar = $post->user->avatar) : ?>
+                    <?php $avatar = $post->user->avatar ?>
+                    <?= $this->Html->image("../uploads/avatars/$avatar" , ['class' => 'avatar-com ' ])?>
+                    <?php else : ?>
+                    <?= $this->Html->image("no-avatar.png" , ['class' => 'avatar-com ' ])?>
+                    <?php endif ?>
+
+                    <div class="titlecom">
+                        <?= $post->user->login ?> le <?= $post->created->i18nformat('dd MMM YYYY') ?>
+                        à <?= $post->created->i18nformat('HH:mm') ?>
+                    </div>
+
+
+                    <div class="comments">
+                        <?= $post->message ?>
+                    </div>
+                </div>
+
+
+            <?php endforeach; ?>
+            </div>
+                <div class="row ">
+                    <div class="col-md-12 ">
+                        <div class="pagination left">
+                            <?php
+                                    echo $this->Paginator->prev(__('Prec'), array('tag' => 'li'), null, array('tag' => 'li','class' =>
+                                    'disabled','disabledTag' => 'a'));
+                                    echo $this->Paginator->numbers(array('separator' => '','currentTag' => 'a', 'currentClass' =>
+                                    'active','tag' => 'li','first' => 1));
+                                    echo $this->Paginator->next(__('Suiv'), array('tag' => 'li','currentClass' => 'disabled'), null,
+                                    array('tag' => 'li','class' => 'disabled','disabledTag' => 'a'));
+                                    ?>
+                        </div>
+
+
+                        <div class="pull-right comfer" style="margin-top: 2px">
+                            <button type="button" class="btn btn-sm btn-primary  open-com" id="<?= $id ?>" >
+                                <i class="fa fa-pencil" aria-hidden="true"></i> Commenter </button>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 voffset2 hidden postcom<?= $id ?>">
+                    <?php echo $this->Form->input('message',['placeholder'=>'5 caractères minimum, pas d\'écriture SMS, merci :)',
+                            'label'=>'Votre message:','type'=>'textarea','class'=>'message'.$id]); ?>
+                    <div class="error<?= $id ?>"></div>
+
+
+                    <?= $this->Form->button(' <i class="fa fa-check" aria-hidden="true"></i> Poster le commentaire',
+                    ['class' => 'btn btn-sm btn-success btpost', 'escape'=> false]) ?>
+
+                </div>
+
+
+
+        </div>
 
 </div>
+
+<script>
+
+
+// marquer comme deja joué
+$(document).on('click', '.markers', function () {
+    var contest_id = $(this).attr('id').substring(7);
+    if ($(this).find('i').hasClass('fa-check')){
+        $.ajax({
+            type: 'post',
+            url: '<?= $this->Url->build(["controller" => "Users","action" => "addmark", "prefix" => false]); ?>',
+            data: 'id=' + contest_id,
+            error: function(html){
+                alert(html);
+            }
+        });
+        $('.deja-'+contest_id).removeClass('hidden');
+        $(this).find('i').removeClass('fa-check').addClass('fa-times');
+    }
+    else{
+        $.ajax({
+            type: 'post',
+            url: '<?= $this->Url->build(["controller" => "Users","action" => "removemark", "prefix" => false]); ?>',
+            data: 'id=' + contest_id,
+            error: function(html){
+                alert(html);
+            }
+        });
+        $('.deja-'+contest_id).addClass('hidden');
+        $(this).find('i').removeClass('fa-times').addClass('fa-check');
+    }
+    return false;
+});
+
+// favoris
+$(document).on('click', '.favs', function () {
+    var c_id = $(this).attr('id').substring(4);
+    if ($(this).find('i').hasClass('fa-heart')){
+        $.ajax({
+            type: 'post',
+            url: '<?= $this->Url->build(["controller" => "Users","action" => "addfav", "prefix" => false]); ?>',
+            data: 'id=' + c_id,
+            error: function(html){
+                alert(html);
+            }
+        });
+        $('.enfav-'+c_id).removeClass('hidden');
+        $(this).find('i').removeClass('fa-heart').addClass('fa-heartbeat');
+    }
+    else{
+        $.ajax({
+            type: 'post',
+            url: '<?= $this->Url->build(["controller" => "Users","action" => "removefav", "prefix" => false]); ?>',
+            data: 'id=' + c_id,
+            error: function(html){
+                alert(html);
+            }
+        });
+        $('.enfav-'+c_id).addClass('hidden');
+        $(this).find('i').removeClass('fa-heartbeat').addClass('fa-heart');
+    }
+    return false;
+});
+
+// signaler
+$(document).on('click', '.btmodal', function () {
+    var a_id = $(this).attr('id').substring(6);
+    var title = $(this).closest('tr th .nom').text();
+    $('#gettitle').text(title);
+    return false;
+});
+
+//deposer un commentaire
+$( ".btpost" ).click(function() {
+    var contest_id = '<?= $id ?>';
+    var message = $('.message'+contest_id).val();
+    if (message.length < 5){
+        $('.error'+contest_id).html('<div class="alert alert-danger">Votre message doit contenir au moins 5 caractères !</div>')
+        $(".alert-danger").fadeTo(2000, 500).slideUp(500, function(){
+            $(this).slideUp(500);
+        });
+    }
+    else{
+        $.ajax({
+            type: 'post',
+            url: '<?= $this->Url->build(["controller" => "Posts","action" => "add", "prefix" => false]); ?>',
+            data: 'id=' + contest_id +'&message='+message,
+            success: function(){
+                location.reload();
+            }
+        });
+    }
+});
+
+//aficher le formulaire pour deposer un commentaire
+$(document).on('click', '.open-com', function () {
+    var openid = $(this).attr('id');
+    $(this).hide();
+    $('.postcom'+openid).removeClass('hidden');
+});
+</script>
