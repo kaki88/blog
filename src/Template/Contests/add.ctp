@@ -115,4 +115,31 @@
 <script>
 //mise en place du datepicker jQuery
 date('#deadline', '-30:-0', 'y');
+
+
+// autocomplete ville
+var options_ac = {
+
+    url: "<?php echo $this->request->webroot . 'js/cities.json'; ?>",
+    getValue: function(element) {
+        return element.zipcode + ' | ' + element.city.toUpperCase();
+    },
+    list: {
+        onSelectItemEvent: function() {
+            var index = $("#ville").getSelectedItemData().id;
+            $("#city-id").val(index).trigger("change");
+        },
+        maxNumberOfElements: 100,
+        match: {
+            enabled: true
+        }
+    },
+    theme: "square"
+};
+$( document ).ready(function() {
+    $("#ville").easyAutocomplete(options_ac);
+    function reset() {
+        document.getElementById("form").reset();
+    }
+});
 </script>

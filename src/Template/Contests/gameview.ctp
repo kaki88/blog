@@ -6,6 +6,9 @@
         <meta property="og:description" content="'.$contest->prize.'" />
         <meta property="og:url" content="http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']  .  '" />
         <meta property="og:app_id" content="420776134976881" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@jeux-concours.fr" />
+        <meta name="twitter:creator" content="@kaki" />
         ') ?>
 
 

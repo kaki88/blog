@@ -152,7 +152,7 @@
                             <span class=" nom"><?= $contest->name ?></span>
                             </a>
 
-
+<?php if ($this->request->session()->read('Auth.User.id')) :?>
                                  <span class="pull-right">
 
 
@@ -167,7 +167,7 @@
         <li><a target="_blank" OnClick="window.open(this.href,'targetWindow','toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250'); return false;" href="https://www.facebook.com/sharer/sharer.php?u=<?= $link ?>">
             <i class="fa fa-facebook-square" aria-hidden="true"></i> <span class="share"> Facebook</span></a></li>
         <li>
-            <a href="#">
+            <a href="https://twitter.com/intent/tweet?url=<?= $link ?>">
             <i class="fa fa-twitter-square" aria-hidden="true"></i> <span class="share">Twitter</span></a></li>
 
     </ul>
@@ -198,7 +198,7 @@
                             </div><!-- /.navbar-collapse -->
                         </nav>
                                 </span>
-
+                            <?php endif ?>
                         </th>
                     </tr>
                     </thead>
@@ -475,7 +475,7 @@ return false;
     // signaler
     $(document).on('click', '.btmodal', function () {
         var a_id = $(this).attr('id').substring(6);
-        var title = $(this).closest('tr th .nom').text();
+        var title = $(this).closest('.nom').text();
         $('#gettitle').text(title);
         return false;
     });
