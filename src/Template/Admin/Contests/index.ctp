@@ -22,34 +22,34 @@
                                 <td><?= $contest->category->type ?></td>
                                 <?php if ($contest->active == 1) : ?>
                                 <td id="<?= $contest->id ?>" class="publier">
-                                <button type="button" class="publier action btn btn-xs btn-success bt-w">
+                                <button type="button" class="publier action btn btn-sm btn-success bt-w">
                                     <i class="fa fa-eye" aria-hidden="true"></i> Publier
                                 </button>
                                 <?php endif ?>
                                 <?php if ($contest->active == 0) : ?>
                                 <td id="<?= $contest->id ?>" class="retirer">
-                                    <button type="button" class="retirer action btn btn-xs btn-danger bt-w">
+                                    <button type="button" class="retirer action btn btn-sm btn-danger bt-w">
                                         <i class="fa fa-eye-slash" aria-hidden="true"></i> Cacher
                                     </button>
                                     <?php endif ?>
                                 </td>
                                 <td>
                                     <a href="<?= $this->Url->build([ 'controller' => 'Contests',
-                             'action' => 'view',$contest->id, strtolower(str_replace(' ', '-', removeAccents($contest->name))), 'prefix'=>false]); ?>" target="_blank">
-                                        <button type="button" class="btn btn-xs btn-info">
+                             'action' => 'gameview',$contest->id, strtolower(str_replace(' ', '-', removeAccents($contest->name))), 'prefix'=>false]); ?>" target="_blank">
+                                        <button type="button" class="btn btn-sm btn-info">
                                             <i class="fa fa-external-link" aria-hidden="true"></i> Fiche
                                         </button>
                                     </a>
                                     <a href="<?= $this->Url->build([ 'controller' => 'Contests',
                              'action' => 'edit',$contest->id, strtolower(str_replace(' ', '-', removeAccents($contest->name))), 'prefix'=>false]); ?>" target="_blank">
-                                        <button type="button" class="btn btn-xs btn-warning hidden-xs">
+                                        <button type="button" class="btn btn-sm btn-warning hidden-xs">
                                             <i class="fa fa-pencil" aria-hidden="true"></i> Edition
                                         </button>
                                     </a>
                                     <?= $this->Form->postLink(__('<i class="fa fa-trash" aria-hidden="true"></i>'),
                                     ['controller' => 'Contests', 'action' => 'delete', $contest->id],
                                     ['confirm' => __('Souhaitez-vous vraiment supprimer le jeu : {0}?', $contest->name),
-                                    'escape' => false, 'class' => 'btn btn-xs btn-danger hidden-xs']) ?>
+                                    'escape' => false, 'class' => 'btn btn-sm btn-danger hidden-xs']) ?>
                                 </td>
 
 
@@ -96,11 +96,11 @@
             data: 'id=' + id,
             success: function() {
                 if ($('#'+id+'').hasClass('retirer')){
-                    $('#'+id+'').html('<button type="button" class="action btn btn-xs btn-success bt-w"><i class="fa fa-eye" aria-hidden="true"></i> Publier</button>')
+                    $('#'+id+'').html('<button type="button" class="action btn btn-sm btn-success bt-w"><i class="fa fa-eye" aria-hidden="true"></i> Publier</button>')
                     .removeClass('retirer').addClass('publier');
                 }
                 else {
-                    $('#'+id+'').html('<button type="button" class="action btn btn-xs btn-danger bt-w"><i class="fa fa-eye-slash" aria-hidden="true"></i> Cacher</button>')
+                    $('#'+id+'').html('<button type="button" class="action btn btn-sm btn-danger bt-w"><i class="fa fa-eye-slash" aria-hidden="true"></i> Cacher</button>')
                     .removeClass('publier').addClass('retirer');
                 }
             }

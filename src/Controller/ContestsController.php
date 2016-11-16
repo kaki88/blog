@@ -98,16 +98,12 @@ else{
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function gameview($id = null)
     {
         $contest = $this->Contests->get($id, [
-            'contain' => ['Categories', 'Frequencies', 'Principles']
+            'contain' => ['Categories', 'Frequencies', 'Principles', 'Users.Roles']
         ]);
 
-        $categories = $this->Contests->Categories->find('all')
-            ->contain(['Contests' => function($q) {
-                return $q->select(['Contests.category_id']);}
-            ]);
 
         $markers = $this->loadModel('UsersMarkers');
         $marker = $markers->find('all')
@@ -127,12 +123,23 @@ else{
             array_push($favlist, $item->contest_id);
         }
 
-        $countquery  = $this->Contests->find();
-        $counttotal = $countquery->select(['count' => $countquery->func()->count('*')])->first();
+        $this->paginate = [
+            'contain' => ['Users'],
+            'limit' => 20,
+        ];
+        $posts = $this->paginate($this->Contests->Posts->find('all')
+            ->where(['contest_id' => $id])
+            ->order(['Posts.created' => 'DESC'])
+        );
+
+
+
         $restrictions = $this->Contests->Restrictions->find('all');
         $zones = $this->Contests->Zones->find('all');
-        $this->set(compact('contest','categories','id','counttotal','restrictions','zones','markerlist','favlist'));
+        $this->set(compact('contest','id','restrictions','zones','markerlist','favlist'));
         $this->set('_serialize', ['contest']);
+        $this->set(compact('posts','id'));
+        $this->set('_serialize', ['posts']);
     }
 
     /**
@@ -155,8 +162,8 @@ else{
                 ImageTool::resize(array(
                     'input' => $pathimg,
                     'output' => $pathimg,
-                    'width' =>250,
-                    'height' => 250,
+                    'width' =>350,
+                    'height' => 350,
                     'mode' => 'fit'
                 ));
                 $this->request->data['img_url'] = $rename;
