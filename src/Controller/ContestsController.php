@@ -5,6 +5,7 @@ use App\Controller\AppController;
 use Cake\I18n\Time;
 require_once(ROOT . DS . 'src'. DS . 'Controller'. DS . 'Component' . DS . 'ImageTool.php');
 use ImageTool;
+
 /**
  * Contests Controller
  *
@@ -239,8 +240,8 @@ else{
                 ImageTool::resize(array(
                     'input' => $pathimg,
                     'output' => $pathimg,
-                    'width' =>100,
-                    'height' => 100,
+                    'width' =>350,
+                    'height' => 350,
                     'mode' => 'fit'
                 ));
                 $img = $rename;

@@ -89,7 +89,7 @@
                         url: '<?= $this->Url->build(["controller" => "Posts","action" => "add", "prefix" => false]); ?>',
                         data: 'id=' + contest_id +'&message='+message,
                         success: function(){
-                            $('#post-' + contest_id).load('/posts/index/'+contest_id).unbind();
+                            $('#post-' + contest_id).load('<?= $this->Url->build(["controller" => "Posts","action" => "index", "prefix" => false]); ?>/index/'+contest_id).unbind();
                         }
                     });
                     }
