@@ -35,6 +35,10 @@ Router::scope('/', function (RouteBuilder $routes) {
     Router::prefix('admin', function ($routes) {
         //   __________________________________________________________________Admin
         $routes->connect(
+            '/alertes',
+            ['controller' => 'Users', 'action' => 'alert']
+        );
+        $routes->connect(
             '/categories',
             ['controller' => 'Categories', 'action' => 'add']
         );

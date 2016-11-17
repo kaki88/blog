@@ -26,6 +26,9 @@
                         <li><?= $this->Html->link('<i class="fa fa-list-alt" aria-hidden="true"></i> Concours',
                             ['controller' => 'Contests', 'action' => 'index','prefix'=> 'admin'],['escape' => false]); ?></li>
                         <li class="divider"></li>
+                        <li><?= $this->Html->link('<i class="fa fa-list-alt" aria-hidden="true"></i> Alertes',
+                            ['controller' => 'Users', 'action' => 'alert','prefix'=> 'admin'],['escape' => false]); ?></li>
+                        <li class="divider"></li>
                         <li><?= $this->Html->link('Catégories',
                             ['controller' => 'Categories', 'action' => 'add','prefix'=> 'admin']); ?></li>
                         <li><?= $this->Html->link('Fréquences',
@@ -40,8 +43,10 @@
                 </li>
                 <?php endif ?>
 
-
+                <?php $alert = $this->cell('Alert');
+                        echo $alert; ?>
             </ul>
+
 
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="<?= $this->Url->build(['controller' => 'Contests','action' => 'add' , 'prefix' => false ]); ?>"><i class="fa fa-plus-square" aria-hidden="true"></i>

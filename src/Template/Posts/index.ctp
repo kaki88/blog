@@ -78,7 +78,7 @@
                     var contest_id = '<?= $id ?>';
                     var message = $('.message'+contest_id).val();
                     if (message.length < 5){
-                        $('.error'+contest_id).html('<div class="alert alert-danger">Votre message doit contenir au moins 5 caractères !</div>')
+                        $('.error'+contest_id).html('<div class="alert alert-danger">Votre message doit contenir au moins 5 caractères !</div>');
                         $(".alert-danger").fadeTo(2000, 500).slideUp(500, function(){
                             $(this).slideUp(500);
                         });

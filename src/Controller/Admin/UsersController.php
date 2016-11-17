@@ -2,7 +2,7 @@
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
-
+use Cake\ORM\TableRegistry;
 class UsersController extends AppController
 {
 
@@ -60,5 +60,27 @@ class UsersController extends AppController
         return $this->redirect($this->Auth->logout());
     }
 
+    public function alert()
+    {
+        $tblalert = TableRegistry::get('Alerts');
+        $alerts = $tblalert->find('all')
+        ->contain(['Users','Contests']);
+
+        $this->set(compact('alerts'));
+    }
+
+    public function delalert($id = null)
+    {
+        $tblalert = TableRegistry::get('Alerts');
+        $this->request->allowMethod(['post', 'delete']);
+        $alert = $tblalert->get($id);
+        if ($tblalert->delete($alert)) {
+            $this->Flash->success(__('L\'alerte a été supprimé.'));
+        } else {
+            $this->Flash->error(__('L\alerte n\'a pas été supprimé, Svp, réessayez.'));
+        }
+
+        return $this->redirect(['action' => 'alert']);
+    }
     
 }
