@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-
+use Cake\ORM\TableRegistry;
 /**
  * Posts Controller
  *
@@ -114,5 +114,22 @@ class PostsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function alert()
+    {
+        $this->autoRender = false;
+
+        if ($this->request->is('post')) {
+            $tblalert = TableRegistry::get('Alerts');
+            $alert = $tblalert->query();
+            $alert->insert(['contest_id','user_id', 'text'])
+                ->values([
+                    'contest_id' => $this->request->data['id'],
+                    'user_id' => $this->Auth->User('id'),
+                    'text' => $this->request->data['text']
+                ])
+                ->execute();
+        }
     }
 }

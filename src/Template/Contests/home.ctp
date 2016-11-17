@@ -14,8 +14,7 @@
                     <span class="sr-only">Close</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel">
-                    Signaler une erreur sur la fiche concours : <br>
-                        <span id="gettitle"></span>
+                    Signaler une erreur sur la fiche :
                 </h4>
             </div>
 
@@ -26,19 +25,26 @@
 
                     <div class="col-md-12">
                         <div class="form-group">
-                            <select class="form-control" id="sel1">
-                                <option disabled="disabled" selected="selected">---- Objet de votre demande----</option>
-                                <option>le jeu est terminé</option>
-                                <option>le lien est erroné</option>
-                                <option>la fiche est erronée</option>
-                                <option>autre problème</option>
+                            <input name="title" class="form-control" id="gettitle" disabled >
+                            <input name="id" class="form-control" id="id" type="hidden" >
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div id="alert-error"></div>
+                        <div class="form-group">
+                            <select name="object" class="form-control" id="sel1" required>
+                                <option value="0" disabled="disabled" selected="selected">---- Objet de votre requête----</option>
+                                <option value="1">le jeu est terminé</option>
+                                <option value="2">le lien ne fonctionne pas</option>
+                                <option value="3">la description est erronée ou incomplète</option>
+                                <option value="4">autre problème</option>
                             </select>
                         </div>
                     </div>
                     <div class="row">
-                    <div class="col-md-12">
-                    <textarea class="form-control" rows="5" id="textarea" placeholder="Si nécessaire, précisez."></textarea>
-                    </div>
+                        <div class="col-md-12">
+                            <textarea name="text" class="form-control" rows="5" id="textarea" placeholder="Si nécessaire, précisez."></textarea>
+                        </div>
                     </div>
                 </form>
 
@@ -50,7 +56,7 @@
                         data-dismiss="modal">
                     Annuler
                 </button>
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary" id="send-alert">
                     Envoyer
                 </button>
             </div>
@@ -74,7 +80,7 @@
                 <li id="li-tous"><a class="tous" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home']);  ?>">
                     <?= $this->Html->image("menu/home.png" , ['class' => 'imgmenu'])?>
                     Tous les jeux
-                    <span class="badgemenu badge pull-right" style="background-color: #505050">
+                    <span class="badgemenu label label-default pull-right" style="color: black">
                       <?= $counttotal->count ?>
                     </span>
                 </a></li>
@@ -84,7 +90,7 @@
                 <li id="li-<?= $categorie->id ?>"><a class="<?= $categorie->code ?>" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home', $categorie->id, strtolower(str_replace(' ', '-', removeAccents($categorie->type)))]);  ?>">
                     <?= $this->Html->image("menu/".$categorie->icon_url , ['class' => 'imgmenu'])?>
                     <?=  $categorie->type ?>
-                    <span class="badgemenu badge pull-right" style="background-color: <?= $categorie->color ?>">
+                    <span class="badgemenu label label-default  pull-right" style="color: black">
                         <?= count($categorie->contests) ?>
                     </span>
                 </a></li>
@@ -132,7 +138,7 @@
     <div class="col-md-9 ">
 
 <?php foreach ($contests as $contest) :?>
-
+        <div class="alertetat voffset2" id="alertetat-<?= $contest->id?>"></div>
 
         <div class=" spacetbl tbl-prin voffset2">
                 <table class="table  ">
@@ -205,6 +211,7 @@
 
                     <tbody  class="bod">
                 <tr>
+
                     <?php
                     $row = 2;
                      if ($contest->zone) {$row++;};
@@ -228,7 +235,9 @@
 
                 </tr>
                     <tr>
-                    <td><span class="befprize">Principe </span></td>
+                    <td>
+
+                        <span class="befprize">Principe </span></td>
                     <td><span class="befdescr"><?= $contest->principle->description ?></span></td>
 
                 </tr>
@@ -472,12 +481,41 @@ return false;
         return false;
     });
 
-    // signaler
+    // ouvrir modal signaler
     $(document).on('click', '.btmodal', function () {
         var a_id = $(this).attr('id').substring(6);
-        var title = $(this).closest('.nom').text();
-        $('#gettitle').text(title);
+        var title = $(this).closest('th').find('.nom').html();
+        $('#gettitle').val(title);
+        $('#id').val(a_id);
         return false;
+    });
+
+    // envoyer une alerte
+    $(document).on('click', '#send-alert', function () {
+        var id = $('#id').val();
+        var select =$('#sel1 option:selected');
+        var text = select.text() +': '+$('#textarea').val();
+        if(select.val() == 0){
+            $('#alert-error').html('<div class="alert alert-danger">Veuillez choisir une valeur svp, merci.</div>')
+                    .fadeTo(2000, 500).slideUp(500, function(){
+                $(this).slideUp(500);
+            });
+            return false;
+        }
+        else{
+        $.ajax({
+            type: 'post',
+            url: '<?= $this->Url->build(["controller" => "Posts","action" => "alert", "prefix" => false]); ?>',
+            data: 'id=' + id +'&text='+text,
+            success: function(){
+                $('#alert').modal('hide');
+                $('#alertetat-'+id).html('<div class="alert alert-success">Votre requête a été envoyé, merci.</div>')
+                        .fadeTo(2000, 500).slideUp(500, function(){
+                    $(this).slideUp(500);
+                });
+            }
+        });
+        }
     });
 </script>
 
