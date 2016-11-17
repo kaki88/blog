@@ -51,7 +51,9 @@ class UsersTable extends Table
             'joinType' => 'INNER'
         ]);
         $this->hasMany('Posts', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
+            'dependent' => true,
+            'cascadeCallbacks' => true
         ]);
     }
 

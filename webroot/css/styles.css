@@ -474,6 +474,21 @@ table td {
 }
 
 /*menu latéral*/
+.miniform{
+    position:relative;
+    background:#eeeeee;
+    margin:3px;
+    padding:2px;
+    width: 32%;
+    list-style: none;
+    overflow:hidden;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+    box-shadow:  1px 1px 10px rgba(0, 0, 0, 0.1);
+}
 
 ul.form {
     position:relative;
@@ -553,7 +568,7 @@ ul.form {
 
 .imgmenu{
     margin-right: 10px;
-    width: 40px;
+    width: 30px;
 }
 
 .imgmenuadmin{
@@ -569,6 +584,9 @@ ul.form {
     font-weight: bold;
 }
 
+.menufont{
+    font-size: 12px;
+}
 footer{
     height: 30px;
 }
@@ -579,7 +597,7 @@ footer{
 }
 
 .form li a.tous {
-                    border-left:10px solid #505050;
+                    border-left:7px solid #505050;
     background-image: linear-gradient(to left,
     transparent,
     transparent 50%,
