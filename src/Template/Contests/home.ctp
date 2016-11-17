@@ -71,15 +71,15 @@
 
 
 <div class="row">
-    <div class="col-md-3  col-xs-12 menuspace ">
+    <div class="col-md-3 menuspace hidden-xs hidden-sm">
         <div class="row">
         <div  class="btn-group-vertical col-md-12 col-xs-12 ">
             <ul class="form">
 
 
-                <li id="li-tous"><a class="tous" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home']);  ?>">
+                <li id="li-tous"><a class=" tous" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home']);  ?>">
                     <?= $this->Html->image("menu/home.png" , ['class' => 'imgmenu'])?>
-                    Tous les jeux
+                    <span class="menufont">Tous les jeux</span>
                     <span class="badgemenu label label-default pull-right" style="color: black">
                       <?= $counttotal->count ?>
                     </span>
@@ -87,9 +87,9 @@
 
 
                 <?php foreach ($categories as $categorie) : ?>
-                <li id="li-<?= $categorie->id ?>"><a class="<?= $categorie->code ?>" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home', $categorie->id, strtolower(str_replace(' ', '-', removeAccents($categorie->type)))]);  ?>">
+                <li id="li-<?= $categorie->id ?>"><a class="menufont <?= $categorie->code ?>" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home', $categorie->id, strtolower(str_replace(' ', '-', removeAccents($categorie->type)))]);  ?>">
                     <?= $this->Html->image("menu/".$categorie->icon_url , ['class' => 'imgmenu'])?>
-                    <?=  $categorie->type ?>
+                    <span class="menufont"><?=  $categorie->type ?></span>
                     <span class="badgemenu label label-default  pull-right" style="color: black">
                         <?= count($categorie->contests) ?>
                     </span>
@@ -102,7 +102,7 @@
                     }
 
                     .form li a.<?= $categorie->code ?> {
-                        border-left:10px solid <?= $categorie->color ?>;
+                        border-left:7px solid <?= $categorie->color ?>;
                         background-image: linear-gradient(to left,
                         transparent,
                         transparent 50%,
@@ -127,6 +127,19 @@
         </div>
         </div>
     </div>
+    <div class="col-md-12 menuspace hidden-md hidden-lg">
+
+        <?php foreach ($categories as $categorie) : ?>
+        <ul class=" miniform col-sm-4 col-xs-4 menuspace hidden-md hidden-lg">
+        <div id="li-<?= $categorie->id ?>"><a class="menufont <?= $categorie->code ?>" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home', $categorie->id, strtolower(str_replace(' ', '-', removeAccents($categorie->type)))]);  ?>">
+            <?= $this->Html->image("menu/".$categorie->icon_url , ['class' => 'imgmenu'])?>
+            <span class="menufont"><?=  $categorie->code ?></span>
+
+        </a></div>
+        </ul >
+        <?php endforeach ?>
+    </div >
+
 
     <div class="row hidden-lg hidden-md">
 </div >
@@ -159,21 +172,22 @@
                             </a>
 
 <?php if ($this->request->session()->read('Auth.User.id')) :?>
-                                 <span class="pull-right">
+                                 <div class="pull-right hidden-xs">
 
 
                             <nav class="navbar navbar-default navbar-xs" role="navigation">
                             <div class="collapse navbar-collapse mini" id="bs-example-navbar-collapse-1">
                                 <ul class="nav navbar-nav mininav">
                                     <li class="dropdown">
-    <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-share-alt-square" aria-hidden="true"></i>
-    <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+    <a href="#" data-toggle="dropdown" class="dropdown-toggle"> <i class="fa fa-caret-down" aria-hidden="true"></i>
+        <i class="fa fa-share-alt-square" aria-hidden="true"></i>
+   </a>
     <ul class="dropdown-menu">
         <?php $link = 'http://olivierp.simplon-epinal.tk/blog/jeu-concours/'.$contest->id.'-'.strtolower(str_replace(' ', '-', removeAccents($contest->name))); ?>
         <li><a target="_blank" OnClick="window.open(this.href,'targetWindow','toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250'); return false;" href="https://www.facebook.com/sharer/sharer.php?u=<?= $link ?>">
             <i class="fa fa-facebook-square" aria-hidden="true"></i> <span class="share"> Facebook</span></a></li>
         <li>
-            <a href="https://twitter.com/intent/tweet?url=<?= $link ?>">
+            <a href="https://twitter.com/intent/tweet?url=<?= $link ?>" OnClick="window.open(this.href,'targetWindow','toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250'); return false;">
             <i class="fa fa-twitter-square" aria-hidden="true"></i> <span class="share">Twitter</span></a></li>
 
     </ul>
@@ -203,7 +217,7 @@
                                 </ul>
                             </div><!-- /.navbar-collapse -->
                         </nav>
-                                </span>
+                                </div>
                             <?php endif ?>
                         </th>
                     </tr>
@@ -335,11 +349,11 @@
                             </a>
                             <?php endif ?>
 
-
+                                <?php if ($this->request->session()->read('Auth.User.id')) :?>
                                 <button type="button" class="btn btn-sm  btn-warning bt-post cacher" id="<?= $contest->id?>" >
                                     <i class="fa fa-comments" aria-hidden="true"></i> <span id="count-<?= $contest->id?>">(<?= count($contest->posts) ?>)</span>
                                 </button>
-
+                                <?php endif ?>
 
                             <a href="<?= $contest->game_url ?>" target="_blank">
                                 <button type="button" class="btn btn-sm blue">

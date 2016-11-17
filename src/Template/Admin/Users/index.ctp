@@ -26,7 +26,7 @@
                     <img src="<?= $this->Url->image('no-avatar.png') ?>" >
                     <?php endif ?>
 
-                    <a href="#" class="user-link"><?= h($user->login) ?></a>
+                    <a target="_blank" href="<?= $this->Url->build(['controller'=>'Users', 'action'=>'view',$user->id, $user->login, 'prefix' => false ]); ?>" class="user-link"><?= h($user->login) ?></a>
                     <span class="user-subhead"><?= $user->role->groupname ?></span>
                 </td>
                 <td width="15%"><?= $user->created->i18nformat('dd MMM YYYY') ?></td>
@@ -45,10 +45,8 @@
                 </td>
                 <td width="25%" class="hidden-xs"><?= h($user->email) ?></td>
                 <td width="15%">
-                    <?= $this->Html->link(__('<i class="fa fa-eye" aria-hidden="true"></i>'), ['action' => 'view', $user->id , $user->login] , ['escape' => false , 'class' => 'btn btn-xs btn-info']) ?>
-                    <?= $this->Html->link(__('<i class="fa fa-pencil" aria-hidden="true"></i>'), ['action' => 'edit', $user->id, $user->login] , ['escape' => false , 'class' => 'btn btn-xs btn-warning']) ?>
-                    <?= $this->Form->postLink(__('<i class="fa fa-trash" aria-hidden="true"></i>
-                    '), ['action' => 'delete', $user->id], ['escape' => false , 'class' => 'btn btn-xs btn-danger','confirm' => __('Are you sure you want to delete # {0}?', $user->id)] ) ?>
+                <?= $this->Form->postLink(__('<i class="fa fa-trash" aria-hidden="true"></i>
+                    '), ['action' => 'delete', $user->id], ['escape' => false , 'class' => 'btn btn-sm btn-danger','confirm' => __('Souhaitez-vous vraiment supprimer l\'utilisateur : {0}?', $user->login)] ) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

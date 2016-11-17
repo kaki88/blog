@@ -8,8 +8,8 @@
                     <h4><?= __("Merci de rentrer vos nom d'utilisateur et mot de passe") ?></h4>
             </div>
             <div class="panel-body">
-                <?= $this->Form->input('login') ?>
-                <?= $this->Form->input('password') ?>
+                <?= $this->Form->input('login',['label'=>'Identifiant']) ?>
+                <?= $this->Form->input('password',['label'=>'Mot de passe']) ?>
                 </fieldset>
             </div>
             <div class="panel-footer text-center">

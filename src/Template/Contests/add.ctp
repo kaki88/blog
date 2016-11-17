@@ -1,7 +1,8 @@
 <?= $this->Html->css('bootstrap-fileinput.css') ?>
 <?= $this->Html->css('bootstrap-select.min.css') ?>
 <?= $this->Html->script('bootstrap-fileinput.js') ?>
-<?= $this->Html->script('bootstrap-select.min.js') ?>
+        <?= $this->Html->script('bootstrap-select.min.js') ?>
+
 <div class="row">
 <div class="col-md-12">
     <div class="panel panel-primary panstyl">
@@ -98,6 +99,8 @@
                 <div class="col-md-12">
                     <div class="btn-toolbar text-center ">
 
+
+
                         <?= $this->Form->button(' <i class="fa fa-times" aria-hidden="true"></i> Effacer', ['onclick' => 'reset()' , 'type'=>'button','class' => 'btn btn-danger ']) ; ?>
                         <?= $this->Form->button(' <i class="fa fa-check" aria-hidden="true"></i> Valider', ['type'=>'submit' , 'class' => 'btn btn-success  ', 'div' => false]) ; ?>
                         <?= $this->Form->end() ?>
@@ -114,7 +117,7 @@
 <?= $this->Html->script('jquery-ui.js')?>
 <script>
 //mise en place du datepicker jQuery
-date('#deadline', '-30:-0', 'y');
+date('#deadline', '-0:+10', 'y');
 
 
 // autocomplete ville
@@ -142,4 +145,6 @@ $( document ).ready(function() {
         document.getElementById("form").reset();
     }
 });
+
+
 </script>
