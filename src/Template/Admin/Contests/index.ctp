@@ -1,16 +1,23 @@
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12">
+<?php $this->assign('title', 'Liste des concours'); ?>
+
+
+<?php $cell = $this->cell('Search');
+        echo $cell; ?>
+
+
+<div class="hidden-lg hidden-md voffset2"></div>
+        <div class="col-md-9">
             <div class="main-box no-header clearfix">
                 <div class="main-box-body clearfix">
                     <div class="table-responsive">
                         <table class="table user-list">
                             <thead>
                             <tr>
-                                <th width="40%"><span><?= $this->Paginator->sort('name', ['label' => 'Nom de l\'opération']) ?></span></th>
-                                <th width="20%"><span><?= $this->Paginator->sort('category_id', ['label' => 'Type']) ?></span></th>
-                                <th width="15%"><span><?= $this->Paginator->sort('active', ['label' => 'Etat']) ?></span></th>
-                                <th width="25%"><span><?= $this->Paginator->sort('created', ['label' => 'Action']) ?></span></th>
+                                <th width="50%"><span><?= $this->Paginator->sort('name', ['label' => 'Nom de l\'opération']) ?></span></th>
+                                <th width="20%"><span><?= $this->Paginator->sort('created', ['label' => 'Déposer le']) ?></span></th>
+                                <th width="10%"><span><?= $this->Paginator->sort('category_id', ['label' => 'Type']) ?></span></th>
+                                <th width="10%"><span><?= $this->Paginator->sort('active', ['label' => 'Etat']) ?></span></th>
+                                <th width="10%"></th>
 
                             </tr>
                             </thead>
@@ -19,7 +26,9 @@
 
                             <tr >
                                 <td><?= $contest->name ?></td>
-                                <td><?= $contest->category->type ?></td>
+                                <td><?= $contest->created->i18nformat('dd MMM à HH:mm') ?></td>
+                                <td><?= $contest->category->code ?></td>
+
                                 <?php if ($contest->active == 1) : ?>
                                 <td id="<?= $contest->id ?>" class="publier">
                                 <button type="button" class="publier action btn btn-sm btn-success bt-w">
@@ -34,22 +43,26 @@
                                     <?php endif ?>
                                 </td>
                                 <td>
-                                    <a href="<?= $this->Url->build([ 'controller' => 'Contests',
-                             'action' => 'gameview',$contest->id, strtolower(str_replace(' ', '-', removeAccents($contest->name))), 'prefix'=>false]); ?>" target="_blank">
-                                        <button type="button" class="btn btn-sm btn-info">
-                                            <i class="fa fa-external-link" aria-hidden="true"></i> Fiche
-                                        </button>
-                                    </a>
-                                    <a href="<?= $this->Url->build([ 'controller' => 'Contests',
-                             'action' => 'edit',$contest->id, strtolower(str_replace(' ', '-', removeAccents($contest->name))), 'prefix'=>false]); ?>" target="_blank">
-                                        <button type="button" class="btn btn-sm btn-warning hidden-xs">
-                                            <i class="fa fa-pencil" aria-hidden="true"></i> Edition
-                                        </button>
-                                    </a>
-                                    <?= $this->Form->postLink(__('<i class="fa fa-trash" aria-hidden="true"></i>'),
-                                    ['controller' => 'Contests', 'action' => 'delete', $contest->id],
-                                    ['confirm' => __('Souhaitez-vous vraiment supprimer le jeu : {0}?', $contest->name),
-                                    'escape' => false, 'class' => 'btn btn-sm btn-danger hidden-xs']) ?>
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Action
+                                            <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="<?= $this->Url->build([ 'controller' => 'Contests',
+                             'action' => 'gameview',$contest->id, strtolower(str_replace(' ', '-', removeAccents($contest->name))),
+                              'prefix'=>false]); ?>" target="_blank"><i class="fa fa-eye" aria-hidden="true"></i> Consulter</a></li>
+                                            <li><a href="<?= $this->Url->build([ 'controller' => 'Contests',
+                             'action' => 'edit',$contest->id, strtolower(str_replace(' ', '-', removeAccents($contest->name))),
+                              'prefix'=>false]); ?>" target="_blank"><i class="fa fa-pencil" aria-hidden="true"></i> Edition</a></li>
+                                            <li>
+                                                <?= $this->Form->postLink(__('<i class="fa fa-trash" aria-hidden="true"></i> Supprimer'),
+                                                ['controller' => 'Contests', 'action' => 'delete', $contest->id],
+                                                ['confirm' => __('Souhaitez-vous vraiment supprimer le jeu : {0}?', $contest->name),
+                                                'escape' => false]) ?>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+
                                 </td>
 
 
@@ -63,8 +76,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+
 
     <ul class="pagination pagination-large pull-right">
         <?php

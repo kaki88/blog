@@ -1,3 +1,4 @@
+<?php $this->assign('title', 'Principes'); ?>
 <!--_________________________________________________________________ajouter un principe-->
 <div class="row">
     <div class="col-md-3">

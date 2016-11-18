@@ -1,3 +1,5 @@
+
+<?php $this->assign('title', 'Restrictions'); ?>
 <!--_________________________________________________________________ajouter une restrictions-->
 <div class="row">
     <div class="col-md-3">

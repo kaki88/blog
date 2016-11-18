@@ -1,6 +1,9 @@
-
+<?php $this->assign('title', 'Créer un compte'); ?>
 <?= $this->Html->css('bootstrap-fileinput.css') ?>
 <?= $this->Html->script('bootstrap-fileinput.js') ?>
+
+<div class="alerte voffset2" id="alerte"></div>
+
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-primary panstyl">
@@ -32,12 +35,12 @@
                             <div>
                                                                                 <span class="btn default btn-file">
                                                                                     <span class="fileinput-new btn btn-primary"> Ajouter un avatar </span>
-                                                                                    <span class="fileinput-exists btn btn-success"> Modifier </span>
+                                                                                    <span class="fileinput-exists btn btn-warning"> Modifier </span>
                                                                                     <input type="file" name="avatar"> </span>
-                                <a href="javascript:;" class="btn btn-danger fileinput-exists" data-dismiss="fileinput"> Annuler </a>
+                                <a href="javascript:;" class="btn btn-danger fileinput-exists" data-dismiss="fileinput"> <i class="fa fa-trash" aria-hidden="true"></i> </a>
                             </div>
                         </div>
-                    <br> <br> <br>
+                    <br> <br> <br><br>
                 </div>
 
 
@@ -46,7 +49,7 @@
                     <div class="btn-toolbar text-center ">
 
                         <?= $this->Form->button(' <i class="fa fa-times" aria-hidden="true"></i> Effacer', ['onclick' => 'reset()' , 'type'=>'button','class' => 'btn btn-danger ']) ; ?>
-                        <?= $this->Form->button(' <i class="fa fa-check" aria-hidden="true"></i> Valider', ['type'=>'submit' , 'class' => 'btn btn-success  ', 'div' => false]) ; ?>
+                        <?= $this->Form->button(' <i class="fa fa-check" aria-hidden="true"></i> Valider', ['type'=>'submit' , 'class' => 'btn btn-success  ', 'id'=>'sub','div' => false]) ; ?>
                         <?= $this->Form->end() ?>
                     </div>
                 </div>
@@ -87,5 +90,17 @@ $( document ).ready(function() {
 
 //mise en place du datepicker jQuery
 date('#birthday', '-30:-0', 'y');
+
+// vérifier si la ville a bien été choisi parmis la liste déroulante
+$("#sub").click(function(e) {
+   if ($('input[name=city_id]').val() == '' ){
+       $('#alerte').html('<div class="alert alert-danger">Sélectionner une ville parmis la liste déroulante, merci.</div>')
+               .fadeTo(2000, 500).slideUp(500, function(){
+                   $(this).slideUp(500);
+               });
+       return false;
+   }
+});
+
 
 </script>

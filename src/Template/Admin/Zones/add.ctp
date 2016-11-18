@@ -1,3 +1,4 @@
+<?php $this->assign('title', 'Zones'); ?>
 <!--_________________________________________________________________ajouter une zone-->
 <div class="row">
     <div class="col-md-3">

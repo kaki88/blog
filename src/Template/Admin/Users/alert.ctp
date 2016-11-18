@@ -1,3 +1,4 @@
+<?php $this->assign('title', 'Alertes'); ?>
 <div class="col-md-12">
     <div class="panel panel-primary panstyl">
         <div class="panel-heading clearfix">

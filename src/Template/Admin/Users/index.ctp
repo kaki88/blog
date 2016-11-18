@@ -1,3 +1,5 @@
+<?php $this->assign('title', 'Liste des membres'); ?>
+
 <div class="container">
     <div class="row">
         <div class="col-lg-12">

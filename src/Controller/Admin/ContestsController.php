@@ -1,6 +1,6 @@
 <?php
 namespace App\Controller\Admin;
-
+use Cake\I18n\Time;
 use App\Controller\AppController;
 /**
  * Contests Controller
@@ -15,11 +15,46 @@ class ContestsController extends AppController
         $this->paginate = [
             'contain' => ['Categories', 'Frequencies', 'Principles']
         ];
-        $contests = $this->paginate($this->Contests);
 
-        $this->set(compact('contests'));
-        $this->set('_serialize', ['contests']);
-    }
+        if ($this->request->is('get')) {
+            $array = [];
+            if (!empty($this->request->query['category'])) {
+                $push = $this->request->query['category'];
+                $pushall = "Contests.category_id = $push";
+                array_push($array, $pushall);
+            }
+            if (!empty($this->request->query['active'])) {
+                if ($this->request->query['active'] == 'publie'){
+                    $pushall = "Contests.active = 1";
+                    array_push($array, $pushall);
+                }
+                if ($this->request->query['active'] == 'nonpublie'){
+                    $pushall = "Contests.active = 0";
+                    array_push($array, $pushall);
+                }
+            }
+            if (!empty($this->request->query['name'])) {
+                $push = $this->request->query['name'];
+                $pushall = "Contests.name LIKE '%$push%'";
+                array_push($array, $pushall);
+            }
+
+            $contests = $this->paginate($this->Contests->find('all')
+                ->where([ $array]));
+            $this->set(compact('contests'));
+            $this->set('_serialize', ['contests']);
+        }
+
+            else{
+
+                $contests = $this->paginate($this->Contests->find('all'));
+                $this->set(compact('contests'));
+                $this->set('_serialize', ['contests']);
+            }
+
+
+
+        }
 
     public function activate($id =null)
     {

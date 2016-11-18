@@ -1,3 +1,5 @@
+<?php $this->assign('title', 'Catégories'); ?>
+
 <!--_________________________________________________________________ajouter une catégorie-->
 <?= $this->Html->css('bootstrap-fileinput.css') ?>
 <?= $this->Html->css('colorpicker.css') ?>

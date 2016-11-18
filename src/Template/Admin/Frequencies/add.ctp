@@ -1,3 +1,4 @@
+<?php $this->assign('title', 'Fréquences'); ?>
 <!--_________________________________________________________________ajouter une frequences-->
 <?= $this->Html->css('bootstrap-fileinput.css') ?>
 <?= $this->Html->script('bootstrap-fileinput.js') ?>
