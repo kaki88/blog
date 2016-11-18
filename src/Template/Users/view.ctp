@@ -1,3 +1,5 @@
+<?php $this->assign('title', 'Profil de '.$user->login.''); ?>
+
 <?= $this->Html->css('animate.css') ?>
 <div class="row">
     <div class="col-md-4 ">

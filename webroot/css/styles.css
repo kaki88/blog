@@ -474,12 +474,15 @@ table td {
 }
 
 /*menu latéral*/
+.centermini{
+margin: auto;
+    width: 100%;
+}
 .miniform{
     position:relative;
     background:#eeeeee;
-    margin:3px;
-    padding:2px;
-    width: 32%;
+    width: 49%;
+    margin: 3px;
     list-style: none;
     overflow:hidden;
     -webkit-border-radius: 5px;
@@ -489,6 +492,22 @@ table td {
     -moz-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
     box-shadow:  1px 1px 10px rgba(0, 0, 0, 0.1);
 }
+
+.vminiform{
+    position:relative;
+    background:#eeeeee;
+    width: 47%;
+    margin: 3px;
+    list-style: none;
+    overflow:hidden;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+    box-shadow:  1px 1px 10px rgba(0, 0, 0, 0.1);
+}
+
 
 ul.form {
     position:relative;
@@ -662,4 +681,15 @@ footer{
     right: 0;
     margin-top: -38px;
     margin-right: 26px
+}
+
+.search{
+    border: 0;
+    -webkit-box-shadow: 1px 1px 2px 0 #CCCCCC;
+    -moz-box-shadow: 1px 1px 2px 0 #CCCCCC;
+    -o-box-shadow: 1px 1px 2px 0 #CCCCCC;
+    box-shadow: 1px 1px 2px 0 #CCCCCC;
+    margin-bottom: 8px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
 }

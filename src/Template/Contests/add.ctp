@@ -1,3 +1,4 @@
+<?php $this->assign('title', 'Déposer un jeu'); ?>
 <?= $this->Html->css('bootstrap-fileinput.css') ?>
 <?= $this->Html->css('bootstrap-select.min.css') ?>
 <?= $this->Html->script('bootstrap-fileinput.js') ?>

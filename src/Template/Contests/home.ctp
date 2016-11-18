@@ -126,16 +126,45 @@
             </ul>
         </div>
         </div>
+
+
+
     </div>
-    <div class="col-md-12 menuspace hidden-md hidden-lg">
+
+
+
+
+
+    <div class="col-sm-12 menuspace centermini hidden-xs hidden-md hidden-lg">
 
         <?php foreach ($categories as $categorie) : ?>
-        <ul class=" miniform col-sm-4 col-xs-4 menuspace hidden-md hidden-lg">
-        <div id="li-<?= $categorie->id ?>"><a class="menufont <?= $categorie->code ?>" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home', $categorie->id, strtolower(str_replace(' ', '-', removeAccents($categorie->type)))]);  ?>">
+        <ul class=" miniform col-sm-4 col-xs-4  hidden-md hidden-lg">
+        <li id="li-<?= $categorie->id ?>"><a style="display: block;text-decoration: none" class="menufont <?= $categorie->code ?>" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home', $categorie->id, strtolower(str_replace(' ', '-', removeAccents($categorie->type)))]);  ?>">
             <?= $this->Html->image("menu/".$categorie->icon_url , ['class' => 'imgmenu'])?>
             <span class="menufont"><?=  $categorie->code ?></span>
+            <span class="badgemenu label label-default  pull-right" style="color: black">
+                        <?= count($categorie->contests) ?>
+                    </span>
+        </a></li>
+        </ul >
+        <?php endforeach ?>
 
-        </a></div>
+
+
+
+    </div >
+
+    <div class="col-xs-12 menuspace hidden-sm hidden-md hidden-lg">
+
+        <?php foreach ($categories as $categorie) : ?>
+        <ul class=" vminiform col-xs-12  hidden-sm hidden-md hidden-lg">
+            <li id="li-<?= $categorie->id ?>"><a style="display: block;text-decoration: none" class="menufont <?= $categorie->code ?>" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home', $categorie->id, strtolower(str_replace(' ', '-', removeAccents($categorie->type)))]);  ?>">
+                <?= $this->Html->image("menu/".$categorie->icon_url , ['class' => 'imgmenu'])?>
+                <span class="menufont"><?=  $categorie->code ?></span>
+                <span class="badgemenu label label-default  pull-right" style="color: black">
+                        <?= count($categorie->contests) ?>
+                    </span>
+            </a></li>
         </ul >
         <?php endforeach ?>
     </div >
@@ -143,6 +172,7 @@
 
     <div class="row hidden-lg hidden-md">
 </div >
+
 
 
 
