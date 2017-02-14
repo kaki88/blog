@@ -693,3 +693,56 @@ footer{
     -moz-border-radius: 3px;
     border-radius: 3px;
 }
+
+/*____________________________________________________________________navbar custom*/
+.navbar-custom{
+    background-image: url("../img/logohd.png");
+    background-repeat: no-repeat;
+    background-position: left;
+    height: 100px;
+    background-size: 1000px 100px;
+    margin-bottom: 0!important;
+}
+
+.navbar-right-custom li a{
+    color: black;!important;
+}
+
+.wrap{
+    background-image: url("../img/logoextend.png");
+    background-size: 100% 100px;
+}
+
+.vertical {
+    display: inline-block;
+    width: 100px;
+    height: 10px;
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+.vertical {
+    box-shadow: inset 0px 4px 6px #ccc;
+  position: absolute;
+    margin-top: -58px;
+}
+
+.progress-bar {
+    box-shadow: inset 0px 4px 6px rgba(100,100,100,0.6);
+}
+
+.bt-vote{
+     height: 30px;
+     width: 30px;
+     padding: 5px;
+ }
+
+.pourcent{
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.contain-pourcent{
+    position: absolute;
+    margin-top: -50px;
+}

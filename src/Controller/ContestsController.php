@@ -5,6 +5,7 @@ use App\Controller\AppController;
 use Cake\I18n\Time;
 require_once(ROOT . DS . 'src'. DS . 'Controller'. DS . 'Component' . DS . 'ImageTool.php');
 use ImageTool;
+use Cake\ORM\TableRegistry;
 
 /**
  * Contests Controller
@@ -311,4 +312,6 @@ else{
 
         return $this->redirect(['action' => 'index']);
     }
+
+
 }

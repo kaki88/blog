@@ -279,18 +279,56 @@ class UsersController extends AppController
     }
 
     public function removefav()
+{
+    $this->autoRender = false;
+
+    if ($this->request->is('post')) {
+        $tblfav = TableRegistry::get('UsersFavorites');
+        $fav = $tblfav->query();
+        $fav->delete()
+            ->where(['user_id' => $this->Auth->User('id')])
+            ->andWhere(['contest_id' => $this->request->data['id']])
+            ->execute();
+    }
+}
+
+    public function addvote()
     {
         $this->autoRender = false;
 
         if ($this->request->is('post')) {
-            $tblfav = TableRegistry::get('UsersFavorites');
+            $tblfav = TableRegistry::get('UsersVotes');
+            $tblcontestvote = TableRegistry::get('Contests');
             $fav = $tblfav->query();
-            $fav->delete()
-                ->where(['user_id' => $this->Auth->User('id')])
-                ->andWhere(['contest_id' => $this->request->data['id']])
+
+            if ($this->request->data['result'] == 'p' ){
+                $value = 1;
+                $query = $tblcontestvote->query();
+                $query->update()
+                    ->set($query->newExpr('vote = vote + 1'))
+                    ->where(['id' => $this->request->data['id']])
+                    ->execute();
+            }
+            
+            if ($this->request->data['result'] == 'm' ){
+                $value = 0;
+                $query = $tblcontestvote->query();
+                $query->update()
+                    ->set($query->newExpr('vote = vote - 1'))
+                    ->where(['id' => $this->request->data['id']])
+                    ->execute();
+            }
+
+
+
+            $fav->insert(['contest_id','user_id','result'])
+                ->values([
+                    'contest_id' => $this->request->data['id'],
+                    'user_id' => $this->Auth->User('id'),
+                    'result' => $value
+                ])
                 ->execute();
         }
     }
-
 
 }

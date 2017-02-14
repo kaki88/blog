@@ -2,7 +2,6 @@
 <?= $this->Html->css('animate.css') ?>
 
 
-
 <div class="modal fade" id="alert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -67,13 +66,13 @@
 
 
 
-
-
-
 <div class="row">
     <div class="col-md-3 menuspace hidden-xs hidden-sm">
         <div class="row">
         <div  class="btn-group-vertical col-md-12 col-xs-12 ">
+
+
+
             <ul class="form">
 
 
@@ -188,7 +187,7 @@
 
                     <thead>
                     <tr class="type">
-                        <th colspan="3" >
+                        <th colspan="4" >
                             <span style="color: <?= $contest->category->color ?>;
                             background-color:  #eeeeee;padding: 2px 5px  2px 5px;
                             border-radius: 4px;
@@ -274,7 +273,25 @@
 
                     </td>
                     <td width="20%"><span class="befprize">Lot(s) à gagner </span></td>
-                    <td width="63%"><span class="prize"><?= $contest->prize ?></span></td>
+                    <td width="51%"><span class="prize"><?= $contest->prize ?></span></td>
+                    <td width="12%"  rowspan="<?= $row ?>">
+
+                        <div class="contain-pourcent">
+                        <div><button class="btn btn-danger bt-vote plus"  id="votep-<?= $contest->id?>"><i class="fa fa-plus" aria-hidden="true"></i>
+                        </button></div>
+                        <div class="pourcent"><?= $contest->vote ?>°</div>
+                        <div><button class="btn btn-primary bt-vote minus" id="votem-<?= $contest->id?>"><i class="fa fa-minus" aria-hidden="true"></i>
+                        </button></div>
+                        <div class="progress vertical">
+                            <?php
+                            $vote = ($contest->vote) * 2 ;
+                            ?>
+                            <div class="progress-bar progress-bar-info" role="progressbar" style="width: <?= $vote ?>%;">
+                            </div>
+                        </div>
+                            </div>
+
+                    </td>
 
 
                 </tr>
@@ -336,7 +353,7 @@
                     </td>
 
 
-                        <td colspan="2" class="pubby" >
+                        <td colspan="3" class="pubby" >
 
                             <div class="pull-left voffset1">
 
@@ -561,5 +578,33 @@ return false;
         });
         }
     });
+
+
+
+    // voter
+    $(document).on('click', '.plus', function () {
+        var vote_id = $(this).attr('id').substring(6);
+        var result = 'p';
+        $.ajax({
+            type: 'post',
+            url: '<?= $this->Url->build(["controller" => "Users","action" => "addvote", "prefix" => false]); ?>',
+            data: 'id=' + vote_id +'&result='+result,
+            success: function(){
+            }
+        });
+    });
+
+    $(document).on('click', '.minus', function () {
+        var vote_id = $(this).attr('id').substring(6);
+        var result = 'm';
+        $.ajax({
+            type: 'post',
+            url: '<?= $this->Url->build(["controller" => "Users","action" => "addvote", "prefix" => false]); ?>',
+            data: 'id=' + vote_id +'&result='+result,
+            success: function(){
+            }
+        });
+    });
+
 </script>
 

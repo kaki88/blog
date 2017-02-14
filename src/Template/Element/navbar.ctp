@@ -1,3 +1,30 @@
+<div class="wrap">
+<nav class="navbar navbar-custom" role="navigation">
+    <div class="container">
+
+        <ul class="nav navbar-nav hidden-sm hidden-md hidden-lg"  style="position: absolute; right: 90px; top: 0;">
+            <li class="dropdown">
+                <?php $cell = $this->cell('Login');
+                echo $cell; ?>
+            </li></ul>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+
+            <ul class="nav navbar-nav navbar-right navbar-right-custom">
+                <li class="dropdown hidden-xs">
+                    <?php $cell = $this->cell('Login');
+                    echo $cell; ?>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>
+
+
+
+
+
 <nav class="navbar navbar-default" role="navigation">
     <div class="container">
         <div class="navbar-header">
@@ -7,20 +34,27 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="<?= $this->Url->build(['controller' => 'Contests', 'action' => 'home','prefix'=> false]) ?>">Accueil</a>
+            <a class="navbar-brand" href="<?= $this->Url->build(['controller' => 'Contests', 'action' => 'home','prefix'=> false]) ?>">
+                <i class="fa fa-home" aria-hidden="true"></i>
+            </a>
         </div>
 
         <ul class="nav navbar-nav hidden-sm hidden-md hidden-lg"  style="position: absolute; right: 90px; top: 0;">
             <li class="dropdown">
                 <?php $cell = $this->cell('Login');
-                        echo $cell; ?>
+                echo $cell; ?>
             </li></ul>
 
-        <div class="collapse navbar-collapse" id="navbar-collapse">
+        <div class="collapse navbar-collapse" id="navbar-collapse-2">
             <ul class="nav navbar-nav">
+                <li><a href="<?= $this->Url->build(['controller' => 'Contests','action' => 'add' , 'prefix' => false ]); ?>">
+                    Nouveaux</a></li>
+                <li><a href="<?= $this->Url->build(['controller' => 'Contests','action' => 'add' , 'prefix' => false ]); ?>">
+                    Hot</a></li>
+                <li><a href="<?= $this->Url->build(['controller' => 'Contests','action' => 'add' , 'prefix' => false ]); ?>">
+                    Favoris</a></li>
 
-
-                <?php if ($this->request->session()->read('Auth.User.role_id') == 1) : ?>
+                <?php if ($this->request->session()->read('Auth.User.role_id') == 11) : ?>
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-cogs" aria-hidden="true"></i> Admin</a>
@@ -43,24 +77,27 @@
                             ['controller' => 'Principles', 'action' => 'add','prefix'=> 'admin']); ?></li>
                     </ul>
                 </li>
-                <?php endif ?>
-
                 <?php $alert = $this->cell('Alert');
-                        echo $alert; ?>
+                echo $alert; ?>
+                <?php endif ?>
             </ul>
 
-
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="<?= $this->Url->build(['controller' => 'Contests','action' => 'add' , 'prefix' => false ]); ?>"><i class="fa fa-plus-square" aria-hidden="true"></i>
-                    Proposer un jeu</a></li>
-                <li class="dropdown hidden-xs">
-                    <?php $cell = $this->cell('Login');
-                            echo $cell; ?>
+            <ul class="nav navbar-nav navbar-right navbar-right-custom">
+                <li>
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Rechercher">
+                        </div>
+                        <button type="submit" class="btn btn-default">Ok</button>
+                    </form>
                 </li>
             </ul>
+
         </div>
     </div>
 </nav>
+
+
 
 
 
