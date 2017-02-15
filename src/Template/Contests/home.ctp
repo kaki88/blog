@@ -24,17 +24,15 @@
 
                     <div class="col-md-12">
                         <div class="form-group">
-                            <input name="title" class="form-control" id="gettitle" disabled>
-                            <input name="id" class="form-control" id="id" type="hidden">
+                            <input name="title" class="form-control" id="gettitle" disabled >
+                            <input name="id" class="form-control" id="id" type="hidden" >
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div id="alert-error"></div>
                         <div class="form-group">
                             <select name="object" class="form-control" id="sel1" required>
-                                <option value="0" disabled="disabled" selected="selected">---- Objet de votre
-                                    requête----
-                                </option>
+                                <option value="0" disabled="disabled" selected="selected">---- Objet de votre requête----</option>
                                 <option value="1">le jeu est terminé</option>
                                 <option value="2">le lien ne fonctionne pas</option>
                                 <option value="3">la description est erronée ou incomplète</option>
@@ -44,8 +42,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <textarea name="text" class="form-control" rows="5" id="textarea"
-                                      placeholder="Si nécessaire, précisez."></textarea>
+                            <textarea name="text" class="form-control" rows="5" id="textarea" placeholder="Si nécessaire, précisez."></textarea>
                         </div>
                     </div>
                 </form>
@@ -68,17 +65,18 @@
 <!-- Modal -->
 
 
+
 <div class="row">
     <div class="col-md-3 menuspace hidden-xs hidden-sm">
         <div class="row">
-            <div class="btn-group-vertical col-md-12 col-xs-12 ">
+            <div  class="btn-group-vertical col-md-12 col-xs-12 ">
+
 
 
                 <ul class="form">
 
 
-                    <li id="li-tous"><a class=" tous"
-                                        href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home']);  ?>">
+                    <li id="li-tous"><a class=" tous" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home']);  ?>">
                         <?= $this->Html->image("menu/home.png" , ['class' => 'imgmenu'])?>
                         <span class="menufont">Tous les jeux</span>
                     <span class="badgemenu label label-default pull-right" style="color: black">
@@ -88,8 +86,7 @@
 
 
                     <?php foreach ($categories as $categorie) : ?>
-                    <li id="li-<?= $categorie->id ?>"><a class="menufont <?= $categorie->code ?>"
-                                                         href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home', $categorie->id, strtolower(str_replace(' ', '-', removeAccents($categorie->type)))]);  ?>">
+                    <li id="li-<?= $categorie->id ?>"><a class="menufont <?= $categorie->code ?>" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home', $categorie->id, strtolower(str_replace(' ', '-', removeAccents($categorie->type)))]);  ?>">
                         <?= $this->Html->image("menu/".$categorie->icon_url , ['class' => 'imgmenu'])?>
                         <span class="menufont"><?=  $categorie->type ?></span>
                     <span class="badgemenu label label-default  pull-right" style="color: black">
@@ -98,45 +95,31 @@
                     </a></li>
 
                     <style>
-                        .form li.selected a.<
+                        .form li.selected a.<?= $categorie->code ?> {
+                                                     background: <?= $categorie->color ?>;
+                                                     color:  white;
+                                                 }
 
-                        ?
-                        =
-                        $
-                        categorie- > code ? > {
-                            background: < ? = $ categorie- > color ? >;
-                            color: white;
-                        }
+                        .form li a.<?= $categorie->code ?> {
+                                            border-left:7px solid <?= $categorie->color ?>;
+                                            background-image: linear-gradient(to left,
+                                            transparent,
+                                            transparent 50%,
+                                            <?= $categorie->color ?> 50%,
+                                            <?= $categorie->color ?>);
+                                            background-position: 100% 0;
+                                            background-size: 200% 100%;
+                                            transition: all .25s ease-in;
 
-                        .form li a.<
+                                        }
 
-                        ?
-                        =
-                        $
-                        categorie- > code ? > {
-                            border-left: 7px solid < ? = $ categorie- > color ? >;
-                            background-image: linear-gradient(to left,
-                            transparent,
-                            transparent 50%,
-                            < ?=$ categorie- > color ? > 50%,
-                            < ?=$ categorie- > color ? >);
-                            background-position: 100% 0;
-                            background-size: 200% 100%;
-                            transition: all .25s ease-in;
-
-                        }
-
-                        .form li a.<
-
-                        ?
-                        =
-                        $
-                        categorie- > code ? > :hover {
-                            color: white;
-                            background-position: 0 0;
-                        }
+                        .form li a.<?= $categorie->code ?>:hover {
+                                            color:  white;
+                                            background-position: 0 0;
+                                        }
                     </style>
                     <?php endforeach ?>
+
 
 
                 </ul>
@@ -144,48 +127,51 @@
         </div>
 
 
+
     </div>
+
+
+
 
 
     <div class="col-sm-12 menuspace centermini hidden-xs hidden-md hidden-lg">
 
         <?php foreach ($categories as $categorie) : ?>
         <ul class=" miniform col-sm-4 col-xs-4  hidden-md hidden-lg">
-            <li id="li-<?= $categorie->id ?>"><a style="display: block;text-decoration: none"
-                                                 class="menufont <?= $categorie->code ?>"
-                                                 href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home', $categorie->id, strtolower(str_replace(' ', '-', removeAccents($categorie->type)))]);  ?>">
+            <li id="li-<?= $categorie->id ?>"><a style="display: block;text-decoration: none" class="menufont <?= $categorie->code ?>" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home', $categorie->id, strtolower(str_replace(' ', '-', removeAccents($categorie->type)))]);  ?>">
                 <?= $this->Html->image("menu/".$categorie->icon_url , ['class' => 'imgmenu'])?>
                 <span class="menufont"><?=  $categorie->code ?></span>
             <span class="badgemenu label label-default  pull-right" style="color: black">
                         <?= count($categorie->contests) ?>
                     </span>
             </a></li>
-        </ul>
+        </ul >
         <?php endforeach ?>
 
 
-    </div>
+
+
+    </div >
 
     <div class="col-xs-12 menuspace hidden-sm hidden-md hidden-lg">
 
         <?php foreach ($categories as $categorie) : ?>
         <ul class=" vminiform col-xs-12  hidden-sm hidden-md hidden-lg">
-            <li id="li-<?= $categorie->id ?>"><a style="display: block;text-decoration: none"
-                                                 class="menufont <?= $categorie->code ?>"
-                                                 href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home', $categorie->id, strtolower(str_replace(' ', '-', removeAccents($categorie->type)))]);  ?>">
+            <li id="li-<?= $categorie->id ?>"><a style="display: block;text-decoration: none" class="menufont <?= $categorie->code ?>" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home', $categorie->id, strtolower(str_replace(' ', '-', removeAccents($categorie->type)))]);  ?>">
                 <?= $this->Html->image("menu/".$categorie->icon_url , ['class' => 'imgmenu'])?>
                 <span class="menufont"><?=  $categorie->code ?></span>
                 <span class="badgemenu label label-default  pull-right" style="color: black">
                         <?= count($categorie->contests) ?>
                     </span>
             </a></li>
-        </ul>
+        </ul >
         <?php endforeach ?>
-    </div>
+    </div >
 
 
     <div class="row hidden-lg hidden-md">
-    </div>
+    </div >
+
 
 
     <!--________________________________________liste des jeux-->
@@ -326,9 +312,19 @@
                                 <?php
                             $vote = ($contest->vote) * 2 ;
                                 ?>
+
+                                <?php if ($vote >= 0) :?>
+                                <?php if ($vote > 100) { $vote = 100; } ?>
                                 <div class="progress-bar progress-bar-info progress-<?= $contest->id?>"
                                      role="progressbar" style="width: <?= $vote ?>%;">
                                 </div>
+                                <?php else :?>
+                                <?php $vote = abs($vote) ; ?>
+                                <?php if ($vote > 100) { $vote = 100; } ?>
+                                <div class="progress-bar progress-bar-cold  progress-bar-info progress-<?= $contest->id?>"
+                                     role="progressbar" style="width: <?= $vote ?>%;">
+                                </div>
+                                <?php endif ?>
                             </div>
                         </div>
                     </td>
@@ -635,17 +631,25 @@
     $(document).on('click', '.plus', function () {
         var vote_id = $(this).attr('id').substring(6);
         var result = 'p';
-        var update = parseInt($('.pourcentid' + vote_id).text()) + 1;
+        var score =  $('.pourcentid' + vote_id);
+        var number = parseInt(score.text()) + 1;
         var getprogress = $('.progress-' + vote_id);
-        var progress = getprogress.attr('style').replace(/[^0-9]/g, '');
-        var updatebar = parseInt(progress) + 2;
+        if (number < 0 ){
+            var updatebar = Math.abs(parseInt(number) * 2);
+        }
+        else{
+            var updatebar = parseInt(number) * 2;
+        }
+        if (updatebar > 100 ){
+            var updatebar = 100;
+        }
         getprogress.css("width", updatebar + '%');
         $.ajax({
             type: 'post',
             url: '<?= $this->Url->build(["controller" => "Users","action" => "addvote", "prefix" => false]); ?>',
             data: 'id=' + vote_id + '&result=' + result,
             success: function () {
-                $('.pourcentid' + vote_id).text(update);
+                $('.pourcentid' + vote_id).text(number);
                 $('#votep-' + vote_id).attr("disabled", true);
                 $('#votem-' + vote_id).css("background-color", "grey").attr("disabled", true);
             }
@@ -655,17 +659,25 @@
     $(document).on('click', '.minus', function () {
         var vote_id = $(this).attr('id').substring(6);
         var result = 'm';
-        var update = parseInt($('.pourcentid' + vote_id).text()) - 1;
+        var score =  $('.pourcentid' + vote_id);
+        var number = parseInt(score.text()) - 1;
         var getprogress = $('.progress-' + vote_id);
-        var progress = getprogress.attr('style').replace(/[^0-9]/g, '');
-        var updatebar = parseInt(progress) - 2;
+        if (number < 0 ){
+            var updatebar = Math.abs(parseInt(number) * 2);
+        }
+        else{
+            var updatebar = parseInt(number) * 2;
+        }
+        if (updatebar > 100 ){
+            var updatebar = 100;
+        }
         getprogress.css("width", updatebar + '%');
         $.ajax({
             type: 'post',
             url: '<?= $this->Url->build(["controller" => "Users","action" => "addvote", "prefix" => false]); ?>',
             data: 'id=' + vote_id + '&result=' + result,
             success: function () {
-                $('.pourcentid' + vote_id).text(update);
+                $('.pourcentid' + vote_id).text(number);
                 $('#votep-' + vote_id).css("background-color", "grey").attr("disabled", true);
                 $('#votem-' + vote_id).attr("disabled", true);
             }
