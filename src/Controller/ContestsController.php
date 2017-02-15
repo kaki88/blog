@@ -32,7 +32,7 @@ class ContestsController extends AppController
                 array_push($array, $pushall);
             }
             $this->paginate = [
-                'contain' => ['Categories', 'Frequencies', 'Principles','Users',
+                'contain' => ['Categories', 'Frequencies', 'Principles','Users','UsersVotes',
                     'Posts' => function($q) {
                         return $q->select(['contest_id']);}]];
 
@@ -44,7 +44,7 @@ else{
 
     if ($id){
         $this->paginate = [
-            'contain' => ['Categories', 'Frequencies', 'Principles','Users',
+            'contain' => ['Categories', 'Frequencies', 'Principles','Users','UsersVotes',
                 'Posts' => function($q) {
                     return $q->select(['contest_id']);}]];
 
@@ -53,7 +53,7 @@ else{
     }
     else{
         $this->paginate = [
-            'contain' => ['Categories', 'Frequencies', 'Principles','Users',
+            'contain' => ['Categories', 'Frequencies', 'Principles','Users','UsersVotes',
                 'Posts' => function($q) {
                         return $q->select(['contest_id']);}]];
 
@@ -85,11 +85,19 @@ else{
             array_push($favlist, $item->contest_id);
         }
 
+        $votes = $this->loadModel('UsersVotes');
+        $vot = $votes->find('all')
+            ->where(['UsersVotes.user_id' => $this->Auth->User('id')]);
+        $votelist = [];
+        foreach ( $vot as $item) {
+            array_push($votelist,  $item->contest_id);
+        }
+
         $countquery  = $this->Contests->find();
         $counttotal = $countquery->select(['count' => $countquery->func()->count('*')])->first();
         $restrictions = $this->Contests->Restrictions->find('all');
         $zones = $this->Contests->Zones->find('all');
-        $this->set(compact('contests','categories','id','counttotal','restrictions','zones','markerlist','favlist'));
+        $this->set(compact('contests','categories','id','counttotal','restrictions','zones','markerlist','favlist','votelist'));
         $this->set('_serialize', ['contests']);
     }
 

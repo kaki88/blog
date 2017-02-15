@@ -44,6 +44,11 @@ class ContestsTable extends Table
         $this->addBehavior('Timestamp');
 
         $this->hasMany('Posts', [
+        'foreignKey' => 'contest_id',
+        'dependent' => true,
+    ]);
+
+        $this->hasMany('UsersVotes', [
             'foreignKey' => 'contest_id',
             'dependent' => true,
         ]);
