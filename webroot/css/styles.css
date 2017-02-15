@@ -715,7 +715,7 @@ footer{
 
 .vertical {
     display: inline-block;
-    width: 100px;
+    width: 105px;
     height: 10px;
     -webkit-transform: rotate(-90deg);
     transform: rotate(-90deg);
@@ -735,6 +735,7 @@ footer{
      height: 30px;
      width: 30px;
      padding: 5px;
+
  }
 
 .pourcent{
@@ -745,4 +746,5 @@ footer{
 .contain-pourcent{
     position: absolute;
     margin-top: -50px;
+    padding-left: 8px;
 }
