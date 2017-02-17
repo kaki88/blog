@@ -331,4 +331,22 @@ class UsersController extends AppController
         }
     }
 
+    public function win()
+    {
+        $this->autoRender = false;
+
+        if ($this->request->is('post')) {
+            $tblalert = TableRegistry::get('UsersDotations');
+            $alert = $tblalert->query();
+            $alert->insert(['contest_id','user_id', 'description', 'date'])
+                ->values([
+                    'contest_id' => $this->request->data['id'],
+                    'user_id' => $this->Auth->user('id'),
+                    'description' => $this->request->data['desc'],
+                    'date' => $this->request->data['time']
+                ])
+                ->execute();
+        }
+    }
+
 }

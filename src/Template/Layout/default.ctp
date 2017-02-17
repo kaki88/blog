@@ -18,12 +18,15 @@ $cakeDescription = 'Blog dédié au jeux concours';
     <?= $this->Html->css('themes/black-tie/jquery-ui.css') ?>
     <?= $this->Html->css('easy-autocomplete.css') ?>
     <?= $this->Html->css('font-awesome.min.css') ?>
+    <?= $this->Html->css('jquery-ui-timepicker-addon.css') ?>
 
     <?= $this->Html->script('jquery-min.js')?>
+    <?= $this->Html->script('jquery-ui.js')?>
     <?= $this->Html->script('bootstrap-min.js')?>
     <?= $this->Html->script('scripts.js') ?>
     <?= $this->Html->script('tooltip.js') ?>
     <?= $this->Html->script('jquery.easy-autocomplete.js') ?>
+    <?= $this->Html->script('jquery-ui-timepicker-addon.js') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>

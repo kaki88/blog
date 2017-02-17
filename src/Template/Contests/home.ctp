@@ -1,7 +1,7 @@
 <?php $this->assign('title', 'Accueil'); ?>
 <?= $this->Html->css('animate.css') ?>
 
-
+<!-- Alert modal -->
 <div class="modal fade" id="alert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -56,6 +56,63 @@
                     Annuler
                 </button>
                 <button type="button" class="btn btn-primary" id="send-alert">
+                    Envoyer
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+
+
+<!-- Win modal -->
+<div class="modal fade" id="win" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="winmyModalLabel">
+                    Déclarer un gain concours :
+                </h4>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+
+                <form class="form-horizontal" role="form">
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input name="title" class="form-control" id="wingettitle" disabled >
+                            <input name="id" class="form-control" id="winid" type="hidden" >
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                        <input name="windate" class="form-control" id="windate"  value="<?= $time ?>">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <textarea name="text" class="form-control" rows="5" id="wintextarea" placeholder="Description du lot remporté"></textarea>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                    Annuler
+                </button>
+                <button type="button" class="btn btn-primary" id="winsend-alert">
                     Envoyer
                 </button>
             </div>
@@ -230,6 +287,11 @@
                                         </li>
                                         <li><a id="modal-<?= $contest->id?>" class="btmodal" data-target="#alert"
                                                data-toggle="modal" href="#"><i class="fa fa-exclamation-triangle"
+                                                                               aria-hidden="true"></i></a></li>
+
+
+                                        <li><a id="modalwin-<?= $contest->id?>" class="btmodal" data-target="#win"
+                                               data-toggle="modal" href="#"><i class="fa fa-trophy"
                                                                                aria-hidden="true"></i></a></li>
 
 
@@ -589,6 +651,15 @@
         return false;
     });
 
+    // ouvrir modal win
+    $(document).on('click', '.btmodal', function () {
+        var a_id = $(this).attr('id').substring(6);
+        var title = $(this).closest('th').find('.nom').html();
+        $('#wingettitle').val(title);
+        $('#winid').val(a_id);
+        return false;
+    });
+
     // ouvrir modal signaler
     $(document).on('click', '.btmodal', function () {
         var a_id = $(this).attr('id').substring(6);
@@ -684,6 +755,35 @@
         });
     });
 
+    // datetimepicker win
+ $('#windate').datetimepicker({
+        timeOnlyTitle: 'Heure',
+        timeText: 'Gagner à ',
+        hourText: 'Heure',
+        minuteText: 'Minute',
+        secondText: 'Minute',
+        currentText: 'Actualiser',
+        closeText: 'Ok'
+    });
 
+    // declarer un lot
+    $(document).on('click', '#winsend-alert', function () {
+        var id = $('#winid').val().substring(3);
+        var desc = $('#wintextarea').val();
+        var time = $('#windate').val();
+        time.split('/').reverse().join('/');
+            $.ajax({
+                type: 'post',
+                url: '<?= $this->Url->build(["controller" => "Users","action" => "win", "prefix" => false]); ?>',
+                data: 'id=' + id + '&desc=' + desc+ '&time=' + time,
+                success: function () {
+                    $('#win').modal('hide');
+                    $('#alertetat-' + id).html('<div class="alert alert-success">Votre gain a été ajouté, merci.</div>')
+                            .fadeTo(2000, 500).slideUp(500, function () {
+                        $(this).slideUp(500);
+                    });
+                }
+            });
+    });
 </script>
 

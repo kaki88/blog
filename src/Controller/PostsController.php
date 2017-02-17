@@ -117,19 +117,21 @@ class PostsController extends AppController
     }
 
     public function alert()
-    {
-        $this->autoRender = false;
+{
+    $this->autoRender = false;
 
-        if ($this->request->is('post')) {
-            $tblalert = TableRegistry::get('Alerts');
-            $alert = $tblalert->query();
-            $alert->insert(['contest_id','user_id', 'text'])
-                ->values([
-                    'contest_id' => $this->request->data['id'],
-                    'user_id' => $this->Auth->User('id'),
-                    'text' => $this->request->data['text']
-                ])
-                ->execute();
-        }
+    if ($this->request->is('post')) {
+        $tblalert = TableRegistry::get('Alerts');
+        $alert = $tblalert->query();
+        $alert->insert(['contest_id','user_id', 'text'])
+            ->values([
+                'contest_id' => $this->request->data['id'],
+                'user_id' => $this->Auth->user('id'),
+                'text' => $this->request->data['text']
+            ])
+            ->execute();
     }
+}
+
+
 }
