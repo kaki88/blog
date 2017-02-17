@@ -338,15 +338,33 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $tblalert = TableRegistry::get('UsersDotations');
             $alert = $tblalert->query();
-            $alert->insert(['contest_id','user_id', 'description', 'date'])
+            $alert->insert(['contest_id','user_id', 'description', 'date','price'])
                 ->values([
                     'contest_id' => $this->request->data['id'],
                     'user_id' => $this->Auth->user('id'),
                     'description' => $this->request->data['desc'],
-                    'date' => $this->request->data['time']
+                    'date' => $this->request->data['time'],
+                    'price' => $this->request->data['price']
                 ])
                 ->execute();
         }
+    }
+
+    public function dotation($id= null, $login = null)
+    {
+
+        $this->paginate = [
+            'contain' => ['Contests.Categories'],
+            'limit' => 25,
+        ];
+
+        $users = $this->paginate($this->Users->UsersDotations->find('all')
+            ->where(['UsersDotations.user_id' => $id])
+            ->order(['date' => 'DESC']));
+
+
+        $this->set(compact('users'));
+        $this->set('_serialize', ['users']);
     }
 
 }

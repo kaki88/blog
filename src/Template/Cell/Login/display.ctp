@@ -15,7 +15,8 @@ else{
 if($isConnected) {
     ?>
         <li><a href="<?= $this->Url->build(['controller' => 'Users','action' => 'view' ,$myId, $auth,'prefix'=> false]); ?>"><span class="glyphicon glyphicon-user"></span> Profil</a></li>
-
+    <li><a href="<?= $this->Url->build(['controller' => 'Users','action' => 'dotation' ,$myId, $auth,'prefix'=> false]); ?>"><i class="fa fa-trophy" aria-hidden="true"></i>
+        </span> Mes Gains</a></li>
 
 
         <li class="divider"></li>

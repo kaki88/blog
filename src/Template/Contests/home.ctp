@@ -10,7 +10,7 @@
                 <button type="button" class="close"
                         data-dismiss="modal">
                     <span aria-hidden="true">&times;</span>
-                    <span class="sr-only">Close</span>
+                    <span class="sr-only">Fermer</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel">
                     Signaler une erreur sur la fiche :
@@ -74,7 +74,7 @@
                 <button type="button" class="close"
                         data-dismiss="modal">
                     <span aria-hidden="true">&times;</span>
-                    <span class="sr-only">Close</span>
+                    <span class="sr-only">Fermer</span>
                 </button>
                 <h4 class="modal-title" id="winmyModalLabel">
                     Déclarer un gain concours :
@@ -92,9 +92,14 @@
                             <input name="id" class="form-control" id="winid" type="hidden" >
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group">
-                        <input name="windate" class="form-control" id="windate"  value="<?= $time ?>">
+                        <input  name="windate" class="form-control" id="windate"  value="<?= $time ?>">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="number" name="price" class="form-control" id="price" >
                         </div>
                     </div>
                     <div class="row">
@@ -503,11 +508,17 @@
                             </a>
                             <?php endif ?>
 
+                            <button type="button" class="btn btn-sm  btn-success bt-win cacher"
+                                    id="win<?= $contest->id?>">
+                                <i class="fa fa-trophy" aria-hidden="true"></i> <span
+                                    id=""> <?= count($contest->users_dotations) ?> </span>
+                            </button>
+
                             <?php if ($this->request->session()->read('Auth.User.id')) :?>
                             <button type="button" class="btn btn-sm  btn-warning bt-post cacher"
                                     id="<?= $contest->id?>">
                                 <i class="fa fa-comments" aria-hidden="true"></i> <span
-                                    id="count-<?= $contest->id?>">(<?= count($contest->posts) ?>)</span>
+                                    id="count-<?= $contest->id?>"><?= count($contest->posts) ?></span>
                             </button>
                             <?php endif ?>
 
@@ -526,6 +537,7 @@
         </div>
 
         <div class="post" id="post-<?= $contest->id?>"></div>
+        <div class="post" id="winpost-<?= $contest->id?>"></div>
 
         <?php endforeach ?>
         <div class="row">
@@ -772,10 +784,11 @@
         var desc = $('#wintextarea').val();
         var time = $('#windate').val();
         time.split('/').reverse().join('/');
+        var price = $('#price').val();
             $.ajax({
                 type: 'post',
                 url: '<?= $this->Url->build(["controller" => "Users","action" => "win", "prefix" => false]); ?>',
-                data: 'id=' + id + '&desc=' + desc+ '&time=' + time,
+                data: 'id=' + id + '&desc=' + desc+ '&time=' + time+ '&price=' + price,
                 success: function () {
                     $('#win').modal('hide');
                     $('#alertetat-' + id).html('<div class="alert alert-success">Votre gain a été ajouté, merci.</div>')
@@ -784,6 +797,27 @@
                     });
                 }
             });
+    });
+
+    // afficher les dotations
+    $(document).on('click', '.bt-win', function () {
+        var id = $(this).attr('id').substring(3);
+        if ($(this).hasClass('cacher')) {
+            $('#win' + id).removeClass('cacher').addClass('visibl');
+            $('#winpost-' + id).load('<?= $this->Url->build(["controller" => "Contests","action" => "dotation", "prefix" => false]); ?>/' + id).show().css({
+                "-webkit-animation": "fadeInDown 2s linear",
+                "animation": "fadeInDown 2s linear",
+                "border": "1px solid black"
+            });
+
+        }
+        else {
+            $('#win' + id).removeClass('visibl').addClass('cacher');
+            $('#winpost-' + id).hide(1000).css({
+                "-webkit-animation": "zoomOutUp 1s linear",
+                "animation": "zoomOutUp 1s linear"
+            });
+        }
     });
 </script>
 
