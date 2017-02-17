@@ -1,9 +1,9 @@
 <?php
 namespace App\Controller;
 
+require_once(ROOT . DS . 'src'. DS . 'Controller'. DS . 'Component' . DS . 'ImageTool.php');
 use App\Controller\AppController;
 use Cake\I18n\Time;
-require_once(ROOT . DS . 'src'. DS . 'Controller'. DS . 'Component' . DS . 'ImageTool.php');
 use ImageTool;
 use Cake\ORM\TableRegistry;
 
@@ -93,11 +93,14 @@ else{
             array_push($votelist,  $item->contest_id);
         }
 
+        $now = Time::now();
+        $time = $now->i18nFormat('yyyy-MM-dd HH:mm');
+        
         $countquery  = $this->Contests->find();
         $counttotal = $countquery->select(['count' => $countquery->func()->count('*')])->first();
         $restrictions = $this->Contests->Restrictions->find('all');
         $zones = $this->Contests->Zones->find('all');
-        $this->set(compact('contests','categories','id','counttotal','restrictions','zones','markerlist','favlist','votelist'));
+        $this->set(compact('contests','categories','id','counttotal','restrictions','zones','markerlist','favlist','votelist','time'));
         $this->set('_serialize', ['contests']);
     }
 
@@ -322,4 +325,7 @@ else{
     }
 
 
+    
+    
+    
 }

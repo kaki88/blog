@@ -54,7 +54,7 @@
                 <li><a href="<?= $this->Url->build(['controller' => 'Contests','action' => 'add' , 'prefix' => false ]); ?>">
                     Favoris</a></li>
 
-                <?php if ($this->request->session()->read('Auth.User.role_id') == 11) : ?>
+                <?php if ($this->request->session()->read('Auth.User.role_id') == 1) : ?>
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-cogs" aria-hidden="true"></i> Admin</a>
