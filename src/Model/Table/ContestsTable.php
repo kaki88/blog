@@ -52,6 +52,11 @@ class ContestsTable extends Table
             'foreignKey' => 'contest_id',
             'dependent' => true,
         ]);
+
+        $this->hasMany('UsersDotations', [
+            'foreignKey' => 'contest_id',
+            'dependent' => true,
+        ]);
         
         $this->belongsTo('Categories', [
             'foreignKey' => 'category_id',

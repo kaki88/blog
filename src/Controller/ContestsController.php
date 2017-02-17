@@ -32,7 +32,7 @@ class ContestsController extends AppController
                 array_push($array, $pushall);
             }
             $this->paginate = [
-                'contain' => ['Categories', 'Frequencies', 'Principles','Users','UsersVotes',
+                'contain' => ['Categories', 'Frequencies', 'Principles','Users','UsersVotes','UsersDotations',
                     'Posts' => function($q) {
                         return $q->select(['contest_id']);}]];
 
@@ -44,7 +44,7 @@ else{
 
     if ($id){
         $this->paginate = [
-            'contain' => ['Categories', 'Frequencies', 'Principles','Users','UsersVotes',
+            'contain' => ['Categories', 'Frequencies', 'Principles','Users','UsersVotes','UsersDotations',
                 'Posts' => function($q) {
                     return $q->select(['contest_id']);}]];
 
@@ -53,7 +53,7 @@ else{
     }
     else{
         $this->paginate = [
-            'contain' => ['Categories', 'Frequencies', 'Principles','Users','UsersVotes',
+            'contain' => ['Categories', 'Frequencies', 'Principles','Users','UsersVotes','UsersDotations',
                 'Posts' => function($q) {
                         return $q->select(['contest_id']);}]];
 
@@ -322,6 +322,20 @@ else{
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function dotation($id = null)
+    {
+
+
+        $users = $this->Contests->UsersDotations->find('all')
+            ->contain(['Users'])
+            ->where(['UsersDotations.contest_id' => $id])
+            ->order(['date' => 'DESC']);
+
+
+        $this->set(compact('users'));
+        $this->set('_serialize', ['users']);
     }
 
 

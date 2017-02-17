@@ -89,6 +89,14 @@ Router::scope('/', function (RouteBuilder $routes) {
             'id' => '[0-9]+',
         ]
     );
+    $routes->connect(
+        '/dotations/:id-:login',
+        ['controller' => 'Users', 'action' => 'dotation'],
+        [
+            'pass' => ['id','login'],
+            'id' => '[0-9]+',
+        ]
+    );
     //   __________________________________________________________________Login
     $routes->connect(
         '/connexion',
@@ -123,6 +131,7 @@ Router::scope('/', function (RouteBuilder $routes) {
             'id' => '[0-9]+',
         ]
     );
+
     $routes->fallbacks(DashedRoute::class);
 });
 
