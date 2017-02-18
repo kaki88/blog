@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Righteous');
+
+
 /*____________________________________________________________général*/
 /*espace vertical*/
 .voffset  { margin-top: 2px; }
@@ -12,7 +15,7 @@
 .voffset9 { margin-top: 150px; }
 
 body{
-    background:#7a8895;
+    background:#fef0ca;
 }
 
 .logo{
@@ -146,7 +149,7 @@ a {
 
 .rowimg{
     max-height: 150px;
-    background-color: #3498db;
+    background-color: #f38634;
 }
 
 .admin-ico-freq{
@@ -241,7 +244,7 @@ hr{
 }
 
 .type{
-    background-color: #505050;
+    background-color: #666666;
     color: white;
 }
 
@@ -258,7 +261,7 @@ hr{
 
 .nom{
     padding: 2px 5px 2px 5px;
-    color: white;
+    color: #fef0ca;
     font-size: 15px;
 }
 
@@ -299,7 +302,7 @@ hr{
 }
 
 .pubby{
-    background-color: lightgrey;
+    background-color: #ffc777;
 }
 
 .alltable{
@@ -331,7 +334,7 @@ hr{
 }
 
 .bod{
-    background-color: #eee;
+    background-color: #fef0ca;
 }
 
 table td {
@@ -340,10 +343,8 @@ table td {
 
 .publierle {
     text-transform: lowercase;
-    background-color: #505050;
-    padding: 3px 5px 3px 5px;
     border-radius: 3px;
-    color: gainsboro;
+    color: black;
     font-size: 12px;
 }
 
@@ -364,10 +365,54 @@ table td {
     position: relative;
     display: block;
     padding: 8px;
+    color: #fef0ca!important;
+    border-color: #f6faff !important;
+}
+
+.mininav > .fcb a :hover {
+     color: #3498db!important;
+ }
+
+.mininav > .alertbt a :hover {
+    color: #ffad00 !important;
+}
+
+.mininav > .tropbt a :hover {
+     color: #ffec40 !important;
+ }
+
+.mininav > .favbt a :hover {
+    color: #9f9f9f !important;
+}
+
+.mininav > .rfavbt a :hover {
+    color: #ff0003 !important;
+}
+
+.mininav > .markbt a :hover {
+    color: #ff0003 !important;
+}
+
+.mininav > .rmarkbt a :hover {
+    color: #14ce48 !important;
+}
+
+.navbar-xs .rmarkbt a { border-right:none!important; }
+.navbar-xs .markbt a { border-right:none!important; }
+
+
+.navbar-default {
+    border-color: #666666!important;
+    background-color: #666666!important;
+}
+
+.mininav {
+    background-color: #666666;
+    border-color: #666666!important;
 }
 
 .minimenu{
-     background-color: #3498db;
+     background-color: #f38634;
      border-bottom-left-radius: 5px;
  }
 
@@ -511,7 +556,7 @@ margin: auto;
 
 ul.form {
     position:relative;
-    background:#eeeeee;
+    background:#fef0ca;
     width: 100%;
     min-width: 150px;
     margin:auto;
@@ -695,7 +740,7 @@ footer{
 }
 
 /*____________________________________________________________________navbar custom*/
-.navbar-custom{
+.header{
     background-image: url("../img/logohd.png");
     background-repeat: no-repeat;
     background-position: left;
@@ -704,9 +749,7 @@ footer{
     margin-bottom: 0!important;
 }
 
-.navbar-right-custom li a{
-    color: black;!important;
-}
+
 
 .wrap{
     background-image: url("../img/logoextend.png");
@@ -760,4 +803,64 @@ footer{
     position: absolute;
     margin-top: -50px;
     padding-left: 8px;
+}
+
+.wincount{
+    position: absolute;
+    margin-left: 600px;
+    margin-top: 72px;
+    font-size: 15px;
+    color: #FDF1CA !important;
+    text-shadow: 1px 1px 1px #333333, 2px 1px 8px #333333;
+    font-family: 'Righteous', 'cursive' !important;
+    font-style: italic;
+    transform: rotate(0deg);
+}
+
+.wrapper{
+    background-color: #ebc793;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid saddlebrown ;
+}
+
+.container-fluid {
+    width: 90%;
+}
+
+.navv{
+    margin-bottom: 0!important;
+    background-color: rgba(19, 132, 189, 1);
+    background: -webkit-linear-gradient(top, rgba(19, 132, 189, 0.82) 0%, rgba(19, 132, 189, 1) 100%);
+    background: linear-gradient(to bottom, rgba(19, 132, 189, 0.82) 0%, rgba(19, 132, 189, 1) 100%);
+    border: none!important;
+    border-radius: 0!important;
+    font-size: 16px;
+}
+
+.navv li a{
+    color: white!important;
+}
+
+.navbar-default .navbar-brand {
+    color: rgba(255, 255, 255, 1);
+}
+
+.navv li a:hover,
+.navv li a:focus {
+    color: rgba(255, 251, 0, 1)!important;
+    background-color: rgba(248, 248, 248, 0)!important;
+    background: -webkit-linear-gradient(top, rgba(248, 248, 248, 0) 0%, rgba(248, 248, 248, 0) 100%)!important;
+    background: linear-gradient(to bottom, rgba(248, 248, 248, 0) 0%, rgba(248, 248, 248, 0) 100%)!important;
+}
+
+.navv .active>a,
+.navv .active>a:hover,
+.navv .active>a:focus {
+    color: rgba(85, 85, 85, 1)!important;
+    background-color: rgba(19, 132, 189, 1);
+}
+
+.navv .dropdown-menu > li > a{
+    color: rgba(85, 85, 85, 1)!important;
 }

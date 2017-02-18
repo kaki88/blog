@@ -1,7 +1,10 @@
 <?php $this->assign('title', 'Accueil'); ?>
 <?= $this->Html->css('animate.css') ?>
 
-<!-- Alert modal -->
+<div class="wrapper">
+
+
+<!-- Alert modal-->
 <div class="modal fade" id="alert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -258,7 +261,13 @@
                             strtolower(str_replace(' ', '-', removeAccents($contest->name))),'prefix' => false]); ?>"
                            target="_blank"
                            style="text-decoration: none">
+                            <?php $ico = $contest->frequency->icon_url ?>
+                            <?= $this->Html->image("../uploads/icons/$ico" , ['class' => 'admin-ico-freq hidden-xs'])?>
+                            <?php if ($contest->on_facebook) : ?>
+                            <?= $this->Html->image('facebook.jpg', ['class' => 'admin-ico-freq hidden-xs']) ?>
+                            <?php endif ?>
                             <span class=" nom"><?= $contest->name ?></span>
+
                         </a>
 
                         <?php if ($this->request->session()->read('Auth.User.id')) :?>
@@ -268,14 +277,12 @@
                             <nav class="navbar navbar-default navbar-xs" role="navigation">
                                 <div class="collapse navbar-collapse mini" id="bs-example-navbar-collapse-1">
                                     <ul class="nav navbar-nav mininav">
-                                        <li class="dropdown">
-                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"> <i
-                                                    class="fa fa-caret-down" aria-hidden="true"></i>
+                                        <li class="dropdown fcb">
+                                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"> </i>
                                                 <i class="fa fa-share-alt-square" aria-hidden="true"></i>
                                             </a>
                                             <ul class="dropdown-menu">
-                                                <?php $link = 'http://olivierp.simplon-epinal.tk/blog/jeu-concours/'.$contest->
-                                                id.'-'.strtolower(str_replace(' ', '-', removeAccents($contest->name)));
+                                                <?php $link = 'http://pro-concours.com/beta/jeu-concours/'.$contest->id.'-'.strtolower(str_replace(' ', '-', removeAccents($contest->name)));
                                                 ?>
                                                 <li><a target="_blank"
                                                        OnClick="window.open(this.href,'targetWindow','toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250'); return false;"
@@ -290,29 +297,33 @@
 
                                             </ul>
                                         </li>
-                                        <li><a id="modal-<?= $contest->id?>" class="btmodal" data-target="#alert"
+                                        <li class="alertbt"><a id="modal-<?= $contest->id?>" class="btmodal" data-target="#alert"
                                                data-toggle="modal" href="#"><i class="fa fa-exclamation-triangle"
                                                                                aria-hidden="true"></i></a></li>
 
 
-                                        <li><a id="modalwin-<?= $contest->id?>" class="btmodal" data-target="#win"
+                                        <li class="tropbt"><a id="modalwin-<?= $contest->id?>" class="btmodal" data-target="#win"
                                                data-toggle="modal" href="#"><i class="fa fa-trophy"
                                                                                aria-hidden="true"></i></a></li>
 
 
-                                        <li id="fav-<?= $contest->id?>" class="favs"><a href="#">
+
                                             <?php if (in_array($contest->id, $favlist)) :?>
+                                        <li  id="fav-<?= $contest->id?>" class="favs favbt"><a href="#">
                                             <i class="fa fa-heartbeat" aria-hidden="true"></i>
                                             <?php else :?>
+                                        <li  id="fav-<?= $contest->id?>" class="favs rfavbt"><a href="#">
                                             <i class="fa fa-heart" aria-hidden="true"></i>
                                             <?php endif ?>
                                         </a></li>
 
 
-                                        <li id="marker-<?= $contest->id?>" class="markers"><a href="#">
+
                                             <?php if (in_array($contest->id, $markerlist)) :?>
+                                        <li id="marker-<?= $contest->id?>" class="markers markbt"><a href="#">
                                             <i class="fa fa-times" aria-hidden="true"></i>
                                             <?php else :?>
+                                        <li id="marker-<?= $contest->id?>" class="markers rmarkbt"><a href="#">
                                             <i class="fa fa-check" aria-hidden="true"></i>
                                             <?php endif ?>
                                         </a></li>
@@ -474,11 +485,7 @@
                                         <?= $contest->user->login ?> le <?= $contest->
                                         created->i18nformat('dd/MM ') ?></span>
 
-                            <?php $ico = $contest->frequency->icon_url ?>
-                            <?= $this->Html->image("../uploads/icons/$ico" , ['class' => 'admin-ico-freq hidden-xs'])?>
-                            <?php if ($contest->on_facebook) : ?>
-                            <?= $this->Html->image('facebook.jpg', ['class' => 'admin-ico-freq hidden-xs']) ?>
-                            <?php endif ?>
+
 
                         </div>
                         <div class="pull-right">
@@ -557,7 +564,7 @@
     </div>
 </div>
 
-
+</div>
 <!--remplacer les accents-->
 <?php
                 function removeAccents($words) {
@@ -617,6 +624,7 @@
             });
             $('.deja-' + contest_id).removeClass('hidden');
             $(this).find('i').removeClass('fa-check').addClass('fa-times');
+            $(this).removeClass('rmarkbt').addClass('markbt');
         }
         else {
             $.ajax({
@@ -629,6 +637,7 @@
             });
             $('.deja-' + contest_id).addClass('hidden');
             $(this).find('i').removeClass('fa-times').addClass('fa-check');
+            $(this).removeClass('markbt').addClass('rmarkbt');
         }
         return false;
     });
@@ -647,6 +656,7 @@
             });
             $('.enfav-' + c_id).removeClass('hidden');
             $(this).find('i').removeClass('fa-heart').addClass('fa-heartbeat');
+            $(this).removeClass('rfavbt').addClass('favbt');
         }
         else {
             $.ajax({
@@ -659,6 +669,7 @@
             });
             $('.enfav-' + c_id).addClass('hidden');
             $(this).find('i').removeClass('fa-heartbeat').addClass('fa-heart');
+            $(this).removeClass('favbt').addClass('rfavbt');
         }
         return false;
     });
