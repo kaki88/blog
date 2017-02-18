@@ -1,32 +1,6 @@
-<div class="wrap">
-<nav class="navbar navbar-custom" role="navigation">
-    <div class="container">
 
-        <ul class="nav navbar-nav hidden-sm hidden-md hidden-lg"  style="position: absolute; right: 90px; top: 0;">
-            <li class="dropdown">
-                <?php $cell = $this->cell('Login');
-                echo $cell; ?>
-            </li></ul>
-
-        <div class="collapse navbar-collapse" id="navbar-collapse">
-
-            <ul class="nav navbar-nav navbar-right navbar-right-custom">
-                <li class="dropdown hidden-xs">
-                    <?php $cell = $this->cell('Login');
-                    echo $cell; ?>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-</div>
-
-
-
-
-
-<nav class="navbar navbar-default" role="navigation">
-    <div class="container">
+<nav class="navbar navbar-default navv " role="navigation">
+    <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -37,6 +11,7 @@
             <a class="navbar-brand" href="<?= $this->Url->build(['controller' => 'Contests', 'action' => 'home','prefix'=> false]) ?>">
                 <i class="fa fa-home" aria-hidden="true"></i>
             </a>
+
         </div>
 
         <ul class="nav navbar-nav hidden-sm hidden-md hidden-lg"  style="position: absolute; right: 90px; top: 0;">
@@ -93,9 +68,36 @@
                 </li>
             </ul>
 
+                <ul class="nav navbar-nav hidden-sm hidden-md hidden-lg"  style="position: absolute; right: 90px; top: 0;">
+                    <li class="dropdown">
+                        <?php $cell = $this->cell('Login');
+                        echo $cell; ?>
+                    </li></ul>
+
+                <div class="collapse navbar-collapse" id="navbar-collapse">
+
+                    <ul class="nav navbar-nav navbar-right navbar-right-custom">
+                        <li class="dropdown hidden-xs">
+                            <?php $cell = $this->cell('Login');
+                            echo $cell; ?>
+                        </li>
+                    </ul>
+                </div>
+
         </div>
     </div>
 </nav>
+
+<div class="wrap ">
+    <?php $cellwin = $this->cell('Wincount');
+    echo $cellwin; ?>
+<div class="header">
+</div>
+</div>
+
+
+
+
 
 
 

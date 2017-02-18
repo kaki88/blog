@@ -95,6 +95,8 @@ else{
 
         $now = Time::now();
         $time = $now->i18nFormat('yyyy-MM-dd HH:mm');
+        $wins = $this->Contests->UsersDotations->find('all');
+
         
         $countquery  = $this->Contests->find();
         $counttotal = $countquery->select(['count' => $countquery->func()->count('*')])->first();

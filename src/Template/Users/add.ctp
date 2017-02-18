@@ -45,15 +45,15 @@
 
 
 
-                <div class="row ">
-                    <div class="btn-toolbar text-center ">
+                <!--<div class="row ">-->
+                    <!--<div class="btn-toolbar text-center ">-->
 
-                        <?= $this->Form->button(' <i class="fa fa-times" aria-hidden="true"></i> Effacer', ['onclick' => 'reset()' , 'type'=>'button','class' => 'btn btn-danger ']) ; ?>
-                        <?= $this->Form->button(' <i class="fa fa-check" aria-hidden="true"></i> Valider', ['type'=>'submit' , 'class' => 'btn btn-success  ', 'id'=>'sub','div' => false]) ; ?>
-                        <?= $this->Form->end() ?>
-                    </div>
-                </div>
-
+                        <!--<?= $this->Form->button(' <i class="fa fa-times" aria-hidden="true"></i> Effacer', ['onclick' => 'reset()' , 'type'=>'button','class' => 'btn btn-danger ']) ; ?>-->
+                        <!--<?= $this->Form->button(' <i class="fa fa-check" aria-hidden="true"></i> Valider', ['type'=>'submit' , 'class' => 'btn btn-success  ', 'id'=>'sub','div' => false]) ; ?>-->
+                        <!--<?= $this->Form->end() ?>-->
+                    <!--</div>-->
+                <!--</div>-->
+Les inscriptions sont fermées!
 
 
             </div>
