@@ -96,13 +96,37 @@ else{
         $now = Time::now();
         $time = $now->i18nFormat('yyyy-MM-dd HH:mm');
         $wins = $this->Contests->UsersDotations->find('all');
+        $votplus = $this->Contests->find('all')
+            ->order(['vote' => 'DESC'])
+            ->limit(3);
 
-        
+        $maxwin = $this->Contests->find()
+            ->contain(['UsersDotations'])
+        ->select(['Contests.id','Contests.name','Contests.prize']);
+
+        $countcont = [];
+        foreach ($maxwin as $test){
+            array_push($countcont,  ['id'=>$test->id ,
+                'name'=>$test->name ,
+                'prize'=>$test->prize ,
+                'counted'=>count($test->users_dotations)]);
+        }
+
+        foreach ($countcont as $key => $row)
+        {
+            $price[$key] = $row['counted'];
+        }
+        array_multisort($price, SORT_DESC, $countcont);
+        $countcontestwin = array_splice($countcont, 0, 3);
+        $countcontestwin = json_decode(json_encode((object) $countcontestwin), FALSE);
+
+
+
         $countquery  = $this->Contests->find();
         $counttotal = $countquery->select(['count' => $countquery->func()->count('*')])->first();
         $restrictions = $this->Contests->Restrictions->find('all');
         $zones = $this->Contests->Zones->find('all');
-        $this->set(compact('contests','categories','id','counttotal','restrictions','zones','markerlist','favlist','votelist','time'));
+        $this->set(compact('contests','categories','id','counttotal','restrictions','zones','markerlist','favlist','votelist','time','votplus','countcontestwin'));
         $this->set('_serialize', ['contests']);
     }
 
