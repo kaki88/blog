@@ -135,11 +135,7 @@
     <div class="col-md-3 menuspace hidden-xs hidden-sm">
         <div class="row">
             <div  class="btn-group-vertical col-md-12 col-xs-12 ">
-
-
-
                 <ul class="form">
-
 
                     <li id="li-tous"><a class=" tous" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home']);  ?>">
                         <?= $this->Html->image("menu/home.png" , ['class' => 'imgmenu'])?>
@@ -179,7 +175,7 @@
                                         }
 
                         .form li a.<?= $categorie->code ?>:hover {
-                                            color:  white;
+                                            color:  #fef0ca;
                                             background-position: 0 0;
                                         }
                     </style>
@@ -191,8 +187,49 @@
             </div>
         </div>
 
+        <div class="col-md-12 voffset2">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading panelhome">Les + recommandés</div>
+                <div class="panel-body panelcontent">
+                    <?php foreach ($votplus as $votp): ?>
+                    <div >
+                        <div class="row divplus" onclick='window.open("<?= $this->Url->build(['controller' => 'Contests', 'action' => 'gameview',$votp->id,
+                        strtolower(str_replace(' ', '-', removeAccents($votp->name))),'prefix' => false]); ?>")'>
+                        <span class="label label-danger labelplus"><?= $votp->vote ?>°</span>
+                        <span class="titleplus"><?= $votp->name ?> </span>
+                        <br><span class="descrplus"><?= $votp->prize ?></span>
+                    </div>
+                </div>
+                <hr class="style10">
+                <?php endforeach ?>
+            </div>
+        </div>
+    </div>
 
-
+        <div class="row">
+        <div class="col-md-12 voffset2">
+            <div class="row">
+                <div class="panel panel-default">
+                    <div class="panel-heading panelhome">Le + de gagnants</div>
+                    <div class="panel-body panelcontent">
+                        <?php foreach ($countcontestwin as $maxwinp): ?>
+                        <div >
+                            <div class="row divplus" onclick='window.open("<?= $this->Url->build(['controller' => 'Contests', 'action' => 'gameview',$maxwinp->id,
+                            strtolower(str_replace(' ', '-', removeAccents($maxwinp->name))),'prefix' => false]); ?>")'>
+                            <span class="label label-danger labelplus labelwin"><?= $maxwinp->counted ?> <i class="fa fa-trophy" aria-hidden="true"></i> </span>
+                            <span class="titleplus"><?= $maxwinp->name ?> </span>
+                            <br><span class="descrplus"><?= $maxwinp->prize ?></span>
+                        </div>
+                    </div>
+                    <hr class="style10">
+                    <?php endforeach ?>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+</div>
     </div>
 
 
@@ -232,8 +269,6 @@
         </ul >
         <?php endforeach ?>
     </div >
-
-
     <div class="row hidden-lg hidden-md">
     </div >
 
@@ -254,6 +289,7 @@
                             <span style="color: <?= $contest->category->color ?>;
                             background-color:  #eeeeee;padding: 2px 5px  2px 5px;
                             border-radius: 4px;
+                            margin-left: 5px;
                             ; font-size: 14px"><?= $contest->category->code ?></span>
 
 
@@ -484,11 +520,11 @@
                                             class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                         <?= $contest->user->login ?> le <?= $contest->
                                         created->i18nformat('dd/MM ') ?></span>
-
-
-
                         </div>
-                        <div class="pull-right">
+
+
+
+                        <div class="pull-right ">
                             <div class="dejouerplace deja-<?= $contest->id?> hidden">
                                 <?= $this->Html->image("jouer.png" , ['class' => 'dejajouer'])?>
                             </div>
@@ -507,35 +543,40 @@
                             </div>
                             <?php endif ?>
 
-                            <?php if ($contest->rule_url) : ?>
-                            <a href="<?= $contest->rule_url ?>" target="_blank">
-                                <button type="button" class="btn btn-sm red hidden-xs">
-                                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-                                </button>
-                            </a>
-                            <?php endif ?>
 
-                            <button type="button" class="btn btn-sm  btn-success bt-win cacher"
+
+
+                            <div class="pull-right btn-group">
+
+                                <?php if ($contest->rule_url) : ?>
+
+                                    <button onclick="window.open('<?= $contest->rule_url ?>');" type="button" class="btn btn-sm grey-cascade hidden-xs">
+                                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                    </button>
+
+                                <?php endif ?>
+
+                            <button type="button" class="btn  btn-sm grey-cascade bt-win cacher"
                                     id="win<?= $contest->id?>">
-                                <i class="fa fa-trophy" aria-hidden="true"></i> <span
-                                    id=""> <?= count($contest->users_dotations) ?> </span>
+                                <span
+                                    id=""> <?= count($contest->users_dotations) ?> </span> <i class="fa fa-trophy" aria-hidden="true"></i>
                             </button>
 
                             <?php if ($this->request->session()->read('Auth.User.id')) :?>
-                            <button type="button" class="btn btn-sm  btn-warning bt-post cacher"
+                            <button type="button" class="btn  btn-sm grey-cascade bt-post cacher"
                                     id="<?= $contest->id?>">
-                                <i class="fa fa-comments" aria-hidden="true"></i> <span
-                                    id="count-<?= $contest->id?>"><?= count($contest->posts) ?></span>
+                                 <span
+                                    id="count-<?= $contest->id?>"><?= count($contest->posts) ?></span> <i class="fa fa-comments" aria-hidden="true"></i>
                             </button>
                             <?php endif ?>
 
                             <a href="<?= $contest->game_url ?>" target="_blank">
-                                <button type="button" class="btn btn-sm blue">
-                                    <strong> <i class="fa fa-external-link" aria-hidden="true"></i> PARTICIPER</strong>
+                                <button type="button" class="btn btn-sm  grey-cascade particpe">
+                                    <strong>  PARTICIPER <i class="fa fa-external-link" aria-hidden="true"></i></strong>
                                 </button>
                             </a>
                         </div>
-
+                        </div>
                     </td>
                 </tr>
                 </tbody>
@@ -829,6 +870,19 @@
                 "animation": "zoomOutUp 1s linear"
             });
         }
+    });
+
+    var divplus = $('.divplus');
+    divplus.mouseenter (function(){
+        $(this).css({
+            'background-color' : '#ffc777',
+            'border-radius' : '5px',
+            'cursor' : 'pointer'
+        });
+    });
+
+    divplus.mouseleave (function(){
+        $(this).css("background-color","#fef0ca");
     });
 </script>
 

@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Righteous');
+@import url('https://fonts.googleapis.com/css?family=Rock+Salt');
+
 
 
 /*____________________________________________________________général*/
@@ -250,10 +252,10 @@ hr{
 
 .clos{
     text-transform: lowercase;
-    background-color: crimson;
-    padding: 4px 5px 2px 5px;
+    background-color: #666666;
+    padding: 4px 5px 4px 5px;
     border-radius: 3px;
-    color: white;
+    color: #fef0ca;
     font-size: 12px;
     font-weight: bold;
 }
@@ -263,6 +265,7 @@ hr{
     padding: 2px 5px 2px 5px;
     color: #fef0ca;
     font-size: 15px;
+    text-transform: capitalize!important;
 }
 
 .contest-img{
@@ -515,7 +518,7 @@ table td {
     margin-bottom: 0!important;
     -moz-border-radius: 3px;
     border-radius: 5px;
-    border: 1px solid black;
+    border: 1px solid #9c9c9c;
 }
 
 /*menu latéral*/
@@ -558,7 +561,7 @@ ul.form {
     position:relative;
     background:#fef0ca;
     width: 100%;
-    min-width: 150px;
+    min-width: 100px;
     margin:auto;
     padding:0;
     list-style: none;
@@ -572,12 +575,12 @@ ul.form {
 }
 
 .form li a {
-    border: 1px solid grey;
+    border: 1px solid #9c9c9c;
     width: 100%;
     min-width: 150px;
-    padding-left:10px;
-    height:50px;
-    line-height:50px;
+    padding-left:6px;
+    height:32px;
+    line-height:32px;
     display:block;
     overflow:hidden;
     position:relative;
@@ -606,7 +609,7 @@ ul.form {
 }
 
 .form i {
-    margin-right:15px;
+    margin-right:10px;
 
     -webkit-transition:all 0.2s linear;
     -moz-transition:all 0.2s linear;
@@ -631,8 +634,8 @@ ul.form {
 }
 
 .imgmenu{
-    margin-right: 10px;
-    width: 30px;
+    margin-right: 6px;
+    width: 20px;
 }
 
 .imgmenuadmin{
@@ -646,6 +649,8 @@ ul.form {
 .badgemenu{
     margin: 5px;
     font-weight: bold;
+    background-color: #f38634!important;
+    color: #fef0ca!important;
 }
 
 .menufont{
@@ -656,17 +661,17 @@ footer{
 }
 
 .form li.selected a.tous {
-    background: #505050;
-    color:  white;
+    background: #666666;
+    color:  #fef0ca;
 }
 
 .form li a.tous {
-                    border-left:7px solid #505050;
+                    border-left:7px solid #666666;
     background-image: linear-gradient(to left,
     transparent,
     transparent 50%,
-    #505050 50%,
-    #505050);
+    #666666 50%,
+    #666666);
     background-position: 100% 0;
     background-size: 200% 100%;
     transition: all .25s ease-in;
@@ -807,18 +812,18 @@ footer{
 
 .wincount{
     position: absolute;
-    margin-left: 600px;
+    margin-left: 700px;
     margin-top: 72px;
-    font-size: 15px;
+    font-size: 14px;
+    font-weight: bold;
     color: #FDF1CA !important;
-    text-shadow: 1px 1px 1px #333333, 2px 1px 8px #333333;
-    font-family: 'Righteous', 'cursive' !important;
-    font-style: italic;
-    transform: rotate(0deg);
+    text-shadow: 1px 1px 1px #968366, 2px 1px 4px #333333;
+    font-family: 'Rock Salt', cursive;
+    transform: rotate(2deg);
 }
 
 .wrapper{
-    background-color: #ebc793;
+    background-color: #f1cf9c;
     padding: 15px;
     border-radius: 5px;
     border: 1px solid saddlebrown ;
@@ -864,3 +869,71 @@ footer{
 .navv .dropdown-menu > li > a{
     color: rgba(85, 85, 85, 1)!important;
 }
+
+.table .btn-group .btn {
+    margin-right: 0;
+}
+
+.particpe{
+    border-bottom-left-radius: 0!important;
+    border-top-left-radius: 0!important;
+}
+
+.btn.grey-cascade:not(.btn-outline).active, .btn.grey-cascade:not(.btn-outline):active, .btn.grey-cascade:not(.btn-outline):hover, .open>.btn.grey-cascade:not(.btn-outline).dropdown-toggle {
+    color: #fef0ca;
+    background-color: #464646;
+    border-color: #95A5A6;
+}
+
+.btn.grey-cascade:not(.btn-outline) {
+    color: #fef0ca;
+    background-color: #666666;
+    border-color: #74898a;
+}
+
+.table > thead > tr > th{
+    padding: 4px!important;
+    font-size: 12px;
+}
+
+.panelhome{
+    background-color: #666666!important;
+    color: #fef0ca!important;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.panelcontent{
+    background-color:  #fef0ca!important;;
+}
+
+.titleplus{
+    font-weight: bold;
+    text-transform: capitalize;
+    margin-left: 44px;
+}
+
+.descrplus{
+    font-size: 11px;
+}
+
+.labelplus{
+    width: 40px!important;
+    display: block;!important;
+    position: absolute;
+}
+
+hr.style10 {
+    border-top: 1px dotted #263d29;
+    border-bottom: 1px dotted #263d29;
+}
+
+.divplus{
+    padding: 5px;
+    margin: 1px!important;
+}
+
+.labelwin{
+    background-color: #e1c800;
+}
+
