@@ -100,6 +100,10 @@ else{
             ->order(['vote' => 'DESC'])
             ->limit(3);
 
+        $playplus = $this->Contests->find('all')
+            ->order(['play' => 'DESC'])
+            ->limit(3);
+
         $maxwin = $this->Contests->find()
             ->contain(['UsersDotations'])
         ->select(['Contests.id','Contests.name','Contests.prize']);
@@ -126,7 +130,7 @@ else{
         $counttotal = $countquery->select(['count' => $countquery->func()->count('*')])->first();
         $restrictions = $this->Contests->Restrictions->find('all');
         $zones = $this->Contests->Zones->find('all');
-        $this->set(compact('contests','categories','id','counttotal','restrictions','zones','markerlist','favlist','votelist','time','votplus','countcontestwin'));
+        $this->set(compact('contests','categories','id','counttotal','restrictions','zones','markerlist','favlist','votelist','time','votplus','countcontestwin','playplus'));
         $this->set('_serialize', ['contests']);
     }
 
@@ -236,6 +240,7 @@ else{
             }
             $contest = $this->Contests->patchEntity($contest, $this->request->data);
             $contest->user_id = $this->request->session()->read('Auth.User.id');
+            $contest->active = 0;
             if ($this->Contests->save($contest)) {
 
                 $this->Flash->success(__('Le concours a été sauvegardé.'));
@@ -364,8 +369,17 @@ else{
         $this->set('_serialize', ['users']);
     }
 
+    public function playcount()
+    {
+        $this->autoRender = false;
 
-    
-    
-    
+        if ($this->request->is('post')) {
+        $count = $this->Contests->query();
+            $count->update()
+                ->set($count->newExpr('play = play + 1'))
+            ->where(['id' => $this->request->data['id']])
+            ->execute();
+    }
+    }
+
 }

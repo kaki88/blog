@@ -196,7 +196,8 @@
                     <div >
                         <div class="row divplus" onclick='window.open("<?= $this->Url->build(['controller' => 'Contests', 'action' => 'gameview',$votp->id,
                         strtolower(str_replace(' ', '-', removeAccents($votp->name))),'prefix' => false]); ?>")'>
-                        <span class="label label-danger labelplus"><?= $votp->vote ?>°</span>
+                        <span class="label label-danger labelplus"><?= $votp->vote ?> <i class="fa fa-sun-o" aria-hidden="true"></i>
+</span>
                         <span class="titleplus"><?= $votp->name ?> </span>
                         <br><span class="descrplus"><?= $votp->prize ?></span>
                     </div>
@@ -207,7 +208,30 @@
         </div>
     </div>
 
+
         <div class="row">
+            <div class="col-md-12 voffset2">
+                <div class="row">
+                    <div class="panel panel-default">
+                        <div class="panel-heading panelhome">Les + joués</div>
+                        <div class="panel-body panelcontent">
+                            <?php foreach ($playplus as $maxwinp): ?>
+                            <div >
+                                <div class="row divplus" onclick='window.open("<?= $this->Url->build(['controller' => 'Contests', 'action' => 'gameview',$maxwinp->id,
+                                strtolower(str_replace(' ', '-', removeAccents($maxwinp->name))),'prefix' => false]); ?>")'>
+                                <span class="label label-danger labelplus labelplay"><?= $maxwinp->play ?> <i class="fa fa-hand-pointer-o" aria-hidden="true"></i></span>
+                                <span class="titleplus"><?= $maxwinp->name ?> </span>
+                                <br><span class="descrplus"><?= $maxwinp->prize ?></span>
+                            </div>
+                        </div>
+                        <hr class="style10">
+                        <?php endforeach ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <div class="col-md-12 voffset2">
             <div class="row">
                 <div class="panel panel-default">
@@ -460,9 +484,13 @@
  </span></td>
                     <td><span class="befdescr">
                          <?php $zonearray =  explode(",",$contest->zone);
+                        $countloop = 0;
+                  $size = sizeof($zonearray);
                             foreach ($zones as $zone) : ?>
+                        <?php $countloop++ ?>
                         <?php if( in_array( $zone->id ,$zonearray ) ) : ?>
-                        <?= $zone->place ?> |
+                        <?= $zone->place ?>
+                        <?php if( $countloop < $size  ) : ?> | <?php endif ?>
                         <?php endif ?>
                         <?php endforeach ?>
                         </span></td>
@@ -474,9 +502,13 @@
  </span></td>
                     <td><span class="befdescr">
                            <?php $array =  explode(",",$contest->restriction);
+                          $countloopp = 0;
+                  $sizee = sizeof($array);
                             foreach ($restrictions as $restriction) : ?>
+                        <?php $countloopp++ ?>
                         <?php if( in_array( $restriction->id ,$array ) ) : ?>
-                        <?= $restriction->sort ?>  |
+                        <?= $restriction->sort ?>
+                        <?php if( $countloopp < $sizee  ) : ?> | <?php endif ?>
                         <?php endif ?>
                         <?php endforeach ?>
                         </span></td>
@@ -571,7 +603,7 @@
                             <?php endif ?>
 
                             <a href="<?= $contest->game_url ?>" target="_blank">
-                                <button type="button" class="btn btn-sm  grey-cascade particpe">
+                                <button type="button" class="btn btn-sm btplay  grey-cascade particpe" id="play<?= $contest->id?>">
                                     <strong>  PARTICIPER <i class="fa fa-external-link" aria-hidden="true"></i></strong>
                                 </button>
                             </a>
@@ -622,8 +654,8 @@
         if ($(this).hasClass('cacher')) {
             $('#' + id).removeClass('cacher').addClass('visibl');
             $('#post-' + id).load('<?= $this->Url->build(["controller" => "Posts","action" => "index", "prefix" => false]); ?>/index/' + id).show().css({
-                "-webkit-animation": "fadeInDown 2s linear",
-                "animation": "fadeInDown 2s linear",
+                "-webkit-animation": "fadeInDown 1.5s linear",
+                "animation": "fadeInDown 1.5s linear",
                 "border": "1px solid black"
             });
 
@@ -884,5 +916,16 @@
     divplus.mouseleave (function(){
         $(this).css("background-color","#fef0ca");
     });
+
+    // compter le nombre de clics jouer
+    $(document).on('click', '.btplay', function () {
+        var id = $(this).attr('id').substring(4);
+        $.ajax({
+            type: 'post',
+            url: '<?= $this->Url->build(["controller" => "Contests","action" => "playcount", "prefix" => false]); ?>',
+            data: 'id=' + id
+        });
+    });
+
 </script>
 

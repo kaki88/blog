@@ -416,7 +416,6 @@ table td {
 
 .minimenu{
      background-color: #f38634;
-     border-bottom-left-radius: 5px;
  }
 
 .minimenuxs{
@@ -438,14 +437,14 @@ table td {
 
 /*_____________________________________________________________commentaires*/
 .titlecom{
-    background-color: lightgrey;
+    background-color: #ffc777;
     padding: 3px;
     font-size: 12px;
     margin-left: 40px;
 }
 
 .comments{
-    background-color: white ;
+    background-color: #f0f1f1 ;
     padding: 7px;
     margin-left: 40px;
 }
@@ -506,8 +505,8 @@ table td {
 }
 
 .post{
-    background-color: #eeeeee;
-    border-radius: 5px;
+    background-color: #fef0ca;
+    border-color: #bc987b!important;
 }
 
 .postcom{
@@ -517,7 +516,6 @@ table td {
 .tbl-prin {
     margin-bottom: 0!important;
     -moz-border-radius: 3px;
-    border-radius: 5px;
     border: 1px solid #9c9c9c;
 }
 
@@ -937,3 +935,6 @@ hr.style10 {
     background-color: #e1c800;
 }
 
+.labelplay{
+    background-color: #7bb7d5;
+}
