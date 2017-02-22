@@ -151,7 +151,7 @@ a {
 
 .rowimg{
     max-height: 150px;
-    background-color: #f38634;
+    background-color: #fef0ca;
 }
 
 .admin-ico-freq{
@@ -252,12 +252,14 @@ hr{
 
 .clos{
     text-transform: lowercase;
-    background-color: #666666;
+    background-color: #d9534f;
     padding: 4px 5px 4px 5px;
     border-radius: 3px;
     color: #fef0ca;
     font-size: 12px;
     font-weight: bold;
+    width: 135px;
+    display: block;
 }
 
 
@@ -271,8 +273,8 @@ hr{
 .contest-img{
     width: 135px;
     max-height: 135px;
-    border-radius: 3px;
-    border: 2px solid white;
+    border-radius: 5px;
+    border: 3px solid #f7ab66;
     z-index: 99999;
 
 }
@@ -305,7 +307,7 @@ hr{
 }
 
 .pubby{
-    background-color: #ffc777;
+    background-color: #fef0ca;
 }
 
 .alltable{
@@ -415,7 +417,7 @@ table td {
 }
 
 .minimenu{
-     background-color: #f38634;
+     background-color: #fef0ca;
  }
 
 .minimenuxs{
@@ -458,6 +460,7 @@ table td {
 
 .close-com{
     margin: 20px 0;
+
 }
 
 .pagination{
@@ -647,7 +650,7 @@ ul.form {
 .badgemenu{
     margin: 5px;
     font-weight: bold;
-    background-color: #f38634!important;
+    background-color: #ada89a!important;
     color: #fef0ca!important;
 }
 
@@ -763,6 +766,7 @@ footer{
     display: inline-block;
     width: 105px;
     height: 10px;
+left: -5px!important;
     -webkit-transform: rotate(-90deg);
     transform: rotate(-90deg);
 }
@@ -805,7 +809,6 @@ footer{
 .contain-pourcent{
     position: absolute;
     margin-top: -50px;
-    padding-left: 8px;
 }
 
 .wincount{
@@ -937,4 +940,26 @@ hr.style10 {
 
 .labelplay{
     background-color: #7bb7d5;
+}
+
+.com {
+    color: #686253;
+    background-color: #f7bb1a;
+    border-color: #e1e5ec;
+}
+
+.play {
+    color: #686253;
+    background-color: #f7ed60;
+    border-color: #e1e5ec;
+}
+
+.miniava{
+    width:25px;
+    border-radius: 50%;
+}
+
+.postpseudo{
+    font-weight: bold;
+    color: #666666;
 }

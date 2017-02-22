@@ -7,6 +7,7 @@ use Cake\I18n\Time;
 use ImageTool;
 use Cake\ORM\TableRegistry;
 
+
 /**
  * Contests Controller
  *
@@ -49,7 +50,8 @@ else{
                     return $q->select(['contest_id']);}]];
 
         $contests = $this->paginate($this->Contests->find('all')
-            ->where(['Contests.active' => 1, ['category_id '=> $id]]));
+            ->where(['Contests.active' => 1, ['category_id '=> $id]])
+            ->order('Contests.created DESC'));
     }
     else{
         $this->paginate = [
@@ -58,7 +60,8 @@ else{
                         return $q->select(['contest_id']);}]];
 
         $contests = $this->paginate($this->Contests->find('all')
-            ->where(['Contests.active' => 1]));
+            ->where(['Contests.active' => 1])
+        ->order('Contests.created DESC'));
 }
 }
 

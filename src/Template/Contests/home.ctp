@@ -140,7 +140,7 @@
                     <li id="li-tous"><a class=" tous" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home']);  ?>">
                         <?= $this->Html->image("menu/home.png" , ['class' => 'imgmenu'])?>
                         <span class="menufont">Tous les jeux</span>
-                    <span class="badgemenu label label-default pull-right" style="color: black">
+                    <span class="badgemenu badge badge-default pull-right" style="color: black">
                       <?= $counttotal->count ?>
                     </span>
                     </a></li>
@@ -150,7 +150,7 @@
                     <li id="li-<?= $categorie->id ?>"><a class="menufont <?= $categorie->code ?>" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home', $categorie->id, strtolower(str_replace(' ', '-', removeAccents($categorie->type)))]);  ?>">
                         <?= $this->Html->image("menu/".$categorie->icon_url , ['class' => 'imgmenu'])?>
                         <span class="menufont"><?=  $categorie->type ?></span>
-                    <span class="badgemenu label label-default  pull-right" style="color: black">
+                    <span class="badgemenu badge badge-default   pull-right" style="color: black">
                         <?= count($categorie->contests) ?>
                     </span>
                     </a></li>
@@ -416,22 +416,25 @@
 
 
                     </td>
+
+                    <td width="2%"><span class="befprize"><i class="fa fa-trophy" aria-hidden="true"></i> </span></td>
+                    <td width="69%"><span class="prize"><?= $contest->prize ?></span></td>
                     <td width="12%" rowspan="<?= $row ?>">
                         <div class="contain-pourcent">
 
                             <div>
-                            <button class="btn btn-warning bt-vote plus" id="votep-<?= $contest->id?>"
-                            <?php if (in_array($contest->id, $votelist) && $contest->users_votes[0]->result == 1) :?>
+                                <button class="btn btn-warning bt-vote plus" id="votep-<?= $contest->id?>"
+                                <?php if (in_array($contest->id, $votelist) && $contest->users_votes[0]->result == 1) :?>
                                 disabled
-                            <?php endif ?>
+                                <?php endif ?>
                                 <?php if (in_array($contest->id, $votelist) && $contest->users_votes[0]->result == 0) :?>
                                 disabled style="background-color:grey"
                                 <?php endif ?>
                                 ><i class="fa fa-sun-o" aria-hidden="true"></i></button>
-                                </div>
-                                <div class="pourcent"><span class="pourcentid<?= $contest->id?>"><?= $contest->
-                                    vote ?></span>°
-                                </div>
+                            </div>
+                            <div class="pourcent"><span class="pourcentid<?= $contest->id?>"><?= $contest->
+                                vote ?></span>°
+                            </div>
                             <div>
                                 <button class="btn btn-primary bt-vote minus" id="votem-<?= $contest->id?>"
                                 <?php if (in_array($contest->id, $votelist) && $contest->users_votes[0]->result == 0) :?>
@@ -441,9 +444,9 @@
                                 disabled style="background-color:grey"
                                 <?php endif ?>
                                 ><i
-                                class="fa fa-snowflake-o" aria-hidden="true"></i>
+                                    class="fa fa-snowflake-o" aria-hidden="true"></i>
                                 </button>
-                                </div>
+                            </div>
 
 
                             <div class="progress vertical">
@@ -466,9 +469,6 @@
                             </div>
                         </div>
                     </td>
-                    <td width="2%"><span class="befprize"><i class="fa fa-trophy" aria-hidden="true"></i> </span></td>
-                    <td width="69%"><span class="prize"><?= $contest->prize ?></span></td>
-
 
                 </tr>
                 <tr>
@@ -529,7 +529,21 @@
                     <td class="minimenu text-center hidden-xs">
                              <span class=" clos ">
                                 <i class="fa fa-hourglass-end" aria-hidden="true"></i>
+
+                                 <?php if ($contest->deadline->isWithinNext('24 hours')): ?>
+                   aujourd'hui
+                                 <?php elseif ($contest->deadline->isWithinNext('1 days')): ?>
+                   demain
+                                 <?php elseif ($contest->deadline->isWithinNext('3 days')): ?>
+                                                              dans <?= $contest->deadline->timeAgoInWords([
+                                    'format' => 'MMM d, YYY',
+    'accuracy' => ['day' => 'day','month'=>'month','hour'=>'hour','year'=>'year','week'=>'week'],
+                                  'end' => '+10 year'
+]);
+                                    ?>
+                                 <?php else : ?>
                                  <?= $contest->deadline->i18nformat('dd MMMM YYYY') ?>
+                                 <?php endif ?>
                              </span>
 
                     <td class="minimenuxs text-center hidden-sm hidden-md hidden-lg">
@@ -544,10 +558,16 @@
 
                         <div class="pull-left voffset1">
 
-                                <span class="publierle hidden-xs  hidden-sm"><i class="fa fa-pencil-square-o"
-                                                                                aria-hidden="true"></i>  par <?= $contest->
-                                    user->login ?> le <?= $contest->created->i18nformat('dd MMM ') ?>
-                                à   <?= $contest->created->i18nformat('HH:mm') ?></span>
+                                <span class="publierle hidden-xs  hidden-sm">
+                                    <?php $imgava = $contest->user->avatar ?>
+                                      <?= $this->Html->image("../uploads/avatars/$imgava", ['class' => 'miniava']) ?>
+                                    <span class="postpseudo"><?= $contest->user->login ?> </span>,  <?= $contest->created->timeAgoInWords([
+                                    'format' => 'MMM d, YYY',
+    'accuracy' => ['day' => 'day','month'=>'month','hour'=>'hour','year'=>'year','week'=>'week'],
+                                  'end' => '+10 year'
+]);
+                                    ?>
+                          </span>
                                     <span class="publierle  hidden-xs  hidden-md hidden-lg"><i
                                             class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                         <?= $contest->user->login ?> le <?= $contest->

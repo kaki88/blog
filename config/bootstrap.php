@@ -224,5 +224,6 @@ if (Configure::read('debug')) {
 
 Plugin::load('Bootstrap', ['autoload' => true]);
 Plugin::load('Migrations');
-Configure::write('Config.language', 'fra');
-setlocale(LC_ALL, 'fr_FR.UTF-8');
+Configure::write('Config.language', 'fr-FR');
+use Cake\I18n\Time;
+Time::$defaultLocale = 'fr_FR';
