@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Righteous');
 @import url('https://fonts.googleapis.com/css?family=Rock+Salt');
-
+@import url('https://fonts.googleapis.com/css?family=Luckiest+Guy');
+@import url('https://fonts.googleapis.com/css?family=Convergence');
+@import url('https://fonts.googleapis.com/css?family=Catamaran');
 
 
 /*____________________________________________________________général*/
@@ -18,6 +20,8 @@
 
 body{
     background:#fef0ca;
+    font-family: 'Catamaran', sans-serif;
+    font-size: 14px;
 }
 
 .logo{
@@ -151,7 +155,7 @@ a {
 
 .rowimg{
     max-height: 150px;
-    background-color: #fef0ca;
+    background-color: #fff8e3;
 }
 
 .admin-ico-freq{
@@ -252,7 +256,7 @@ hr{
 
 .clos{
     text-transform: lowercase;
-    background-color: #d9534f;
+    background-color: #f38531;
     padding: 4px 5px 4px 5px;
     border-radius: 3px;
     color: #fef0ca;
@@ -262,12 +266,19 @@ hr{
     display: block;
 }
 
+.today{
+    background-color: #d9534f!important;
+    color: #fef0ca!important;
+}
+
 
 .nom{
     padding: 2px 5px 2px 5px;
     color: #fef0ca;
-    font-size: 15px;
+    font-size: 14px;
     text-transform: capitalize!important;
+    font-family: 'Convergence', sans-serif;
+
 }
 
 .contest-img{
@@ -339,7 +350,7 @@ hr{
 }
 
 .bod{
-    background-color: #fef0ca;
+    background-color: #fff8e3;
 }
 
 table td {
@@ -446,7 +457,7 @@ table td {
 }
 
 .comments{
-    background-color: #f0f1f1 ;
+    background-color: #fff8e3 ;
     padding: 7px;
     margin-left: 40px;
 }
@@ -560,7 +571,7 @@ margin: auto;
 
 ul.form {
     position:relative;
-    background:#fef0ca;
+    background:#fff8e3;
     width: 100%;
     min-width: 100px;
     margin:auto;
@@ -893,7 +904,7 @@ left: -5px!important;
 }
 
 .table > thead > tr > th{
-    padding: 4px!important;
+    padding: 6px!important;
     font-size: 12px;
 }
 
@@ -901,10 +912,19 @@ left: -5px!important;
     background-color: #666666!important;
     color: #fef0ca!important;
     text-transform: uppercase;
-    font-weight: bold;
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 16px;
 }
 
 .panelcontent{
+    background-color:  #ffecec!important;;
+}
+
+.panelcontentplay{
+    background-color:  #ececec!important;;
+}
+
+.panelcontentwin{
     background-color:  #fef0ca!important;;
 }
 
@@ -922,6 +942,7 @@ left: -5px!important;
     width: 40px!important;
     display: block;!important;
     position: absolute;
+    background-color: #d9534f;
 }
 
 hr.style10 {
@@ -963,3 +984,26 @@ hr.style10 {
     font-weight: bold;
     color: #666666;
 }
+
+.paneladd{
+    text-transform: uppercase;
+    font-weight: bold;
+    background-color: #9fe814;
+    text-align: left;
+    padding-left: 12px;
+    color: #666666;
+    font-family: 'Luckiest Guy', cursive;
+    font-size: 20px;
+}
+
+.paneladd:hover{
+    background-color: #a9fa00;
+    color: #666666;
+}
+
+.addsquare{
+     float: right;
+    font-size: 30px;
+    margin-top: -7px;
+ padding-right: 5px;
+ }
