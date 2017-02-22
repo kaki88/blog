@@ -133,59 +133,14 @@
 
 <div class="row">
     <div class="col-md-3 menuspace hidden-xs hidden-sm">
-        <div class="row">
-            <div  class="btn-group-vertical col-md-12 col-xs-12 ">
-                <ul class="form">
-
-                    <li id="li-tous"><a class=" tous" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home']);  ?>">
-                        <?= $this->Html->image("menu/home.png" , ['class' => 'imgmenu'])?>
-                        <span class="menufont">Tous les jeux</span>
-                    <span class="badgemenu badge badge-default pull-right" style="color: black">
-                      <?= $counttotal->count ?>
-                    </span>
-                    </a></li>
 
 
-                    <?php foreach ($categories as $categorie) : ?>
-                    <li id="li-<?= $categorie->id ?>"><a class="menufont <?= $categorie->code ?>" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home', $categorie->id, strtolower(str_replace(' ', '-', removeAccents($categorie->type)))]);  ?>">
-                        <?= $this->Html->image("menu/".$categorie->icon_url , ['class' => 'imgmenu'])?>
-                        <span class="menufont"><?=  $categorie->type ?></span>
-                    <span class="badgemenu badge badge-default   pull-right" style="color: black">
-                        <?= count($categorie->contests) ?>
-                    </span>
-                    </a></li>
+        <div class="">
+            <a href="/deposer-un-jeu" class="btn btn-success btn-block paneladd"> proposer un jeu
+                <span class="addsquare"><i class="fa fa-plus-square" aria-hidden="true"></i></span></a>
 
-                    <style>
-                        .form li.selected a.<?= $categorie->code ?> {
-                                                     background: <?= $categorie->color ?>;
-                                                     color:  white;
-                                                 }
-
-                        .form li a.<?= $categorie->code ?> {
-                                            border-left:7px solid <?= $categorie->color ?>;
-                                            background-image: linear-gradient(to left,
-                                            transparent,
-                                            transparent 50%,
-                                            <?= $categorie->color ?> 50%,
-                                            <?= $categorie->color ?>);
-                                            background-position: 100% 0;
-                                            background-size: 200% 100%;
-                                            transition: all .25s ease-in;
-
-                                        }
-
-                        .form li a.<?= $categorie->code ?>:hover {
-                                            color:  #fef0ca;
-                                            background-position: 0 0;
-                                        }
-                    </style>
-                    <?php endforeach ?>
-
-
-
-                </ul>
-            </div>
         </div>
+
 
         <div class="col-md-12 voffset2">
         <div class="row">
@@ -214,10 +169,10 @@
                 <div class="row">
                     <div class="panel panel-default">
                         <div class="panel-heading panelhome">Les + joués</div>
-                        <div class="panel-body panelcontent">
+                        <div class="panel-body panelcontentplay">
                             <?php foreach ($playplus as $maxwinp): ?>
                             <div >
-                                <div class="row divplus" onclick='window.open("<?= $this->Url->build(['controller' => 'Contests', 'action' => 'gameview',$maxwinp->id,
+                                <div class="row divplus divplay" onclick='window.open("<?= $this->Url->build(['controller' => 'Contests', 'action' => 'gameview',$maxwinp->id,
                                 strtolower(str_replace(' ', '-', removeAccents($maxwinp->name))),'prefix' => false]); ?>")'>
                                 <span class="label label-danger labelplus labelplay"><?= $maxwinp->play ?> <i class="fa fa-hand-pointer-o" aria-hidden="true"></i></span>
                                 <span class="titleplus"><?= $maxwinp->name ?> </span>
@@ -236,10 +191,10 @@
             <div class="row">
                 <div class="panel panel-default">
                     <div class="panel-heading panelhome">Le + de gagnants</div>
-                    <div class="panel-body panelcontent">
+                    <div class="panel-body panelcontentwin">
                         <?php foreach ($countcontestwin as $maxwinp): ?>
                         <div >
-                            <div class="row divplus" onclick='window.open("<?= $this->Url->build(['controller' => 'Contests', 'action' => 'gameview',$maxwinp->id,
+                            <div class="row divplus divwin" onclick='window.open("<?= $this->Url->build(['controller' => 'Contests', 'action' => 'gameview',$maxwinp->id,
                             strtolower(str_replace(' ', '-', removeAccents($maxwinp->name))),'prefix' => false]); ?>")'>
                             <span class="label label-danger labelplus labelwin"><?= $maxwinp->counted ?> <i class="fa fa-trophy" aria-hidden="true"></i> </span>
                             <span class="titleplus"><?= $maxwinp->name ?> </span>
@@ -251,6 +206,9 @@
                 </div>
             </div>
         </div>
+
+
+
         </div>
         </div>
 </div>
@@ -261,7 +219,6 @@
 
 
     <div class="col-sm-12 menuspace centermini hidden-xs hidden-md hidden-lg">
-
         <?php foreach ($categories as $categorie) : ?>
         <ul class=" miniform col-sm-4 col-xs-4  hidden-md hidden-lg">
             <li id="li-<?= $categorie->id ?>"><a style="display: block;text-decoration: none" class="menufont <?= $categorie->code ?>" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home', $categorie->id, strtolower(str_replace(' ', '-', removeAccents($categorie->type)))]);  ?>">
@@ -273,10 +230,6 @@
             </a></li>
         </ul >
         <?php endforeach ?>
-
-
-
-
     </div >
 
     <div class="col-xs-12 menuspace hidden-sm hidden-md hidden-lg">
@@ -309,7 +262,7 @@
 
                 <thead>
                 <tr class="type">
-                    <th colspan="4">
+                    <th>
                             <span style="color: <?= $contest->category->color ?>;
                             background-color:  #eeeeee;padding: 2px 5px  2px 5px;
                             border-radius: 4px;
@@ -326,9 +279,10 @@
                             <?php if ($contest->on_facebook) : ?>
                             <?= $this->Html->image('facebook.jpg', ['class' => 'admin-ico-freq hidden-xs']) ?>
                             <?php endif ?>
-                            <span class=" nom"><?= $contest->name ?></span>
-
                         </a>
+                    </th>
+                    <th colspan="3">
+                        <span class=" nom"><?= $contest->name ?></span>
 
                         <?php if ($this->request->session()->read('Auth.User.id')) :?>
                         <div class="pull-right hidden-xs">
@@ -411,7 +365,7 @@
 
                         <?php if ($contest->img_url): ?>
                         <?= $this->Html->image("../uploads/img/$contest->img_url" , ['class' => 'contest-img zoom
-                        voffset3'])?>
+                        '])?>
                         <?php endif ?>
 
 
@@ -527,14 +481,18 @@
 
 
                     <td class="minimenu text-center hidden-xs">
-                             <span class=" clos ">
-                                <i class="fa fa-hourglass-end" aria-hidden="true"></i>
 
                                  <?php if ($contest->deadline->isWithinNext('24 hours')): ?>
+                          <span class=" clos today">
+                                <i class="fa fa-hourglass-end" aria-hidden="true"></i>
                    aujourd'hui
                                  <?php elseif ($contest->deadline->isWithinNext('1 days')): ?>
+                                <span class=" clos today">
+                                <i class="fa fa-hourglass-end" aria-hidden="true"></i>
                    demain
                                  <?php elseif ($contest->deadline->isWithinNext('3 days')): ?>
+                                      <span class=" clos today">
+                                <i class="fa fa-hourglass-end" aria-hidden="true"></i>
                                                               dans <?= $contest->deadline->timeAgoInWords([
                                     'format' => 'MMM d, YYY',
     'accuracy' => ['day' => 'day','month'=>'month','hour'=>'hour','year'=>'year','week'=>'week'],
@@ -542,6 +500,8 @@
 ]);
                                     ?>
                                  <?php else : ?>
+                                            <span class=" clos ">
+                                <i class="fa fa-hourglass-end" aria-hidden="true"></i>
                                  <?= $contest->deadline->i18nformat('dd MMMM YYYY') ?>
                                  <?php endif ?>
                              </span>
@@ -925,15 +885,25 @@
     });
 
     var divplus = $('.divplus');
+    var divplay = $('.divplay');
+    var divwin = $('.divwin');
     divplus.mouseenter (function(){
         $(this).css({
-            'background-color' : '#ffc777',
+            'background-color' : '#fff8e3',
             'border-radius' : '5px',
             'cursor' : 'pointer'
         });
     });
 
     divplus.mouseleave (function(){
+        $(this).css("background-color","#ffecec");
+    });
+
+    divplay.mouseleave (function(){
+        $(this).css("background-color","#ececec");
+    });
+
+    divwin.mouseleave (function(){
         $(this).css("background-color","#fef0ca");
     });
 
