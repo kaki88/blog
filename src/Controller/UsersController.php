@@ -211,7 +211,8 @@ class UsersController extends AppController
     public function logout()
     {
         $this->Flash->success('Vous êtes maintenant deconnecté.');
-        return $this->redirect($this->Auth->logout());
+        $this->Auth->logout();
+        return $this->redirect(['controller'=>'Contests', 'action' => 'home']);
     }
 
     public function isAuthorized($user)
@@ -362,8 +363,12 @@ class UsersController extends AppController
             ->where(['UsersDotations.user_id' => $id])
             ->order(['date' => 'DESC']));
 
+       $loginreg = $this->Users->find('all')
+           ->select('created')
+           ->where(['id' => $id])
+       ->first();
 
-        $this->set(compact('users'));
+        $this->set(compact('users','login','loginreg'));
         $this->set('_serialize', ['users']);
     }
 

@@ -30,11 +30,19 @@ class LoginCell extends Cell
             $myId = $this->request->session()->read('Auth.User.id');
             $this->set('myId',$myId);
             $this->set('auth', $this->request->session()->read('Auth.User.login'));
+            $this->loadModel('Users');
+            $user = $this->Users->find('all')
+                ->where(['id' => $myId])
+                ->first();
+
         }
         else{
             $isConnected = false;
         }
 
+
+
         $this->set('isConnected',$isConnected);
+        $this->set(compact('user'));
     }
 }

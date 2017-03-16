@@ -1,7 +1,17 @@
+<?= $this->Html->script('rgraph/RGraph.svg.common.core.js') ?>
+<?= $this->Html->script('rgraph/RGraph.svg.hbar.js') ?>
 
-<div class="container">
+<div class="wrapper">
+
 <div class="row">
     <div class="col-lg-12">
+
+        <div class="userdot"><?= $login ?> a remporté <?= count($users) ?> lots depuis son inscription du <?= $loginreg->created  ?></div>
+
+
+            <div  id="chart-container"></div>
+
+
         <div class="main-box no-header clearfix">
             <div class="main-box-body clearfix">
                 <div class="table-responsive">
@@ -43,7 +53,6 @@
         </div>
             </div>
         </div>
-    </div>
 </div>
 
     <div class="pagination left">
@@ -58,5 +67,25 @@
     </div>
 </div>
 
+</div>
 
 
+
+
+<script>
+    new RGraph.SVG.HBar({
+        id: 'chart-container',
+        data: [20,30,22],
+        options: {
+            backgroundGrid: false,
+            xaxis: false,
+            xaxisScale: false,
+            colors: ['#164366','#FDB515','#FF0000'],
+            colorsSequential: true,
+            yaxisLabels: ['2017','2016','2015'],
+            labelsAbove: true,
+            labelsAboveDecimals: 0,
+            yaxisTickmarks: false
+        }
+    }).wave();
+</script>
