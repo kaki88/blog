@@ -27,6 +27,9 @@ $cakeDescription = 'Blog dédié au jeux concours';
     <?= $this->Html->script('tooltip.js') ?>
     <?= $this->Html->script('jquery.easy-autocomplete.js') ?>
     <?= $this->Html->script('jquery-ui-timepicker-addon.js') ?>
+    <?= $this->Html->script('mixitup.js') ?>
+    <?= $this->Html->script('jquery.mixitup.pagination.min.js') ?>
+
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>

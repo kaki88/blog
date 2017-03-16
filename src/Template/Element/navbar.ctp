@@ -1,6 +1,14 @@
+<div class="admin"></div>
+<div class="wrap ">
+    <?php $cellwin = $this->cell('Wincount');
+    echo $cellwin; ?>
+    <div class="header">
+    </div>
+</div>
 
+<div class="container-fluid">
 <nav class="navbar navbar-default navv " role="navigation">
-    <div class="container-fluid">
+
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -14,14 +22,12 @@
 
         </div>
 
-        <ul class="nav navbar-nav hidden-sm hidden-md hidden-lg"  style="position: absolute; right: 90px; top: 0;">
-            <li class="dropdown">
-                <?php $cell = $this->cell('Login');
-                echo $cell; ?>
-            </li></ul>
+
 
         <div class="collapse navbar-collapse" id="navbar-collapse-2">
             <ul class="nav navbar-nav">
+                <?php $cellwin = $this->cell('Category');
+                echo $cellwin; ?>
                 <li><a href="<?= $this->Url->build(['controller' => 'Contests','action' => 'add' , 'prefix' => false ]); ?>">
                     Nouveaux</a></li>
                 <li><a href="<?= $this->Url->build(['controller' => 'Contests','action' => 'add' , 'prefix' => false ]); ?>">
@@ -68,32 +74,12 @@
                 </li>
             </ul>
 
-                <ul class="nav navbar-nav hidden-sm hidden-md hidden-lg"  style="position: absolute; right: 90px; top: 0;">
-                    <li class="dropdown">
-                        <?php $cell = $this->cell('Login');
-                        echo $cell; ?>
-                    </li></ul>
-
-                <div class="collapse navbar-collapse" id="navbar-collapse">
-
-                    <ul class="nav navbar-nav navbar-right navbar-right-custom">
-                        <li class="dropdown hidden-xs">
-                            <?php $cell = $this->cell('Login');
-                            echo $cell; ?>
-                        </li>
-                    </ul>
-                </div>
 
         </div>
-    </div>
-</nav>
 
-<div class="wrap ">
-    <?php $cellwin = $this->cell('Wincount');
-    echo $cellwin; ?>
-<div class="header">
+</nav>
 </div>
-</div>
+
 
 
 

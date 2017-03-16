@@ -19,6 +19,49 @@ class ContestsController extends AppController
 
     public function home($id= null)
     {
+        $votplus = $this->Contests->find('all')
+            ->order(['vote' => 'DESC'])
+            ->limit(3);
+
+        $playplus = $this->Contests->find('all')
+            ->order(['play' => 'DESC'])
+            ->limit(3);
+
+        $maxwin = $this->Contests->find()
+            ->contain(['UsersDotations'])
+        ->select(['Contests.id','Contests.name','Contests.prize']);
+
+        $countcont = [];
+        foreach ($maxwin as $test){
+            array_push($countcont,  ['id'=>$test->id ,
+                'name'=>$test->name ,
+                'prize'=>$test->prize ,
+                'counted'=>count($test->users_dotations)]);
+        }
+
+        foreach ($countcont as $key => $row)
+        {
+            $price[$key] = $row['counted'];
+        }
+        array_multisort($price, SORT_DESC, $countcont);
+        $countcontestwin = array_splice($countcont, 0, 3);
+        $countcontestwin = json_decode(json_encode((object) $countcontestwin), FALSE);
+
+        $lastwins = $this->Contests->UsersDotations->find()
+            ->contain(['Users','Contests'])
+        ->order('date DESC');
+
+        $lastcontests = $this->Contests->find()
+            ->contain(['Users','Categories'])
+            ->order('Contests.created DESC')
+        ->limit(12);
+
+
+        $this->set(compact('votplus','countcontestwin','playplus','lastwins','lastcontests'));
+    }
+
+    public function category($id= null)
+    {
 
         if ($this->request->is('post')) {
             $array = [];
@@ -41,34 +84,34 @@ class ContestsController extends AppController
                 ->where(['Contests.active' => 1, $array]));
         }
 
-else{
+        else{
 
-    if ($id){
-        $this->paginate = [
-            'contain' => ['Categories', 'Frequencies', 'Principles','Users','UsersVotes','UsersDotations',
-                'Posts' => function($q) {
-                    return $q->select(['contest_id']);}]];
+            if ($id){
+                $this->paginate = [
+                    'contain' => ['Categories', 'Frequencies', 'Principles','Users','UsersVotes','UsersDotations',
+                        'Posts' => function($q) {
+                            return $q->select(['contest_id']);}]];
 
-        $contests = $this->paginate($this->Contests->find('all')
-            ->where(['Contests.active' => 1, ['category_id '=> $id]])
-            ->order('Contests.created DESC'));
-    }
-    else{
-        $this->paginate = [
-            'contain' => ['Categories', 'Frequencies', 'Principles','Users','UsersVotes','UsersDotations',
-                'Posts' => function($q) {
-                        return $q->select(['contest_id']);}]];
+                $contests = $this->paginate($this->Contests->find('all')
+                    ->where(['Contests.active' => 1, ['category_id '=> $id]])
+                    ->order('Contests.created DESC'));
+            }
+            else{
+                $this->paginate = [
+                    'contain' => ['Categories', 'Frequencies', 'Principles','Users','UsersVotes','UsersDotations',
+                        'Posts' => function($q) {
+                            return $q->select(['contest_id']);}]];
 
-        $contests = $this->paginate($this->Contests->find('all')
-            ->where(['Contests.active' => 1])
-        ->order('Contests.created DESC'));
-}
-}
+                $contests = $this->paginate($this->Contests->find('all')
+                    ->where(['Contests.active' => 1])
+                    ->order('Contests.created DESC'));
+            }
+        }
 
         $categories = $this->Contests->Categories->find('all')
-        ->contain(['Contests' => function($q) {
-            return $q->select(['Contests.category_id']);}
-        ]);
+            ->contain(['Contests' => function($q) {
+                return $q->select(['Contests.category_id']);}
+            ]);
 
         $markers = $this->loadModel('UsersMarkers');
         $marker = $markers->find('all')
@@ -109,7 +152,7 @@ else{
 
         $maxwin = $this->Contests->find()
             ->contain(['UsersDotations'])
-        ->select(['Contests.id','Contests.name','Contests.prize']);
+            ->select(['Contests.id','Contests.name','Contests.prize']);
 
         $countcont = [];
         foreach ($maxwin as $test){
@@ -136,7 +179,6 @@ else{
         $this->set(compact('contests','categories','id','counttotal','restrictions','zones','markerlist','favlist','votelist','time','votplus','countcontestwin','playplus'));
         $this->set('_serialize', ['contests']);
     }
-
     /**
      * View method
      *
@@ -384,5 +426,6 @@ else{
             ->execute();
     }
     }
+
 
 }
