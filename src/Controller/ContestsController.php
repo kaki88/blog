@@ -21,15 +21,18 @@ class ContestsController extends AppController
     {
         $votplus = $this->Contests->find('all')
             ->order(['vote' => 'DESC'])
+            ->where(['Contests.active' => 1])
             ->limit(3);
 
         $playplus = $this->Contests->find('all')
             ->order(['play' => 'DESC'])
+            ->where(['Contests.active' => 1])
             ->limit(3);
 
         $maxwin = $this->Contests->find()
             ->contain(['UsersDotations'])
-        ->select(['Contests.id','Contests.name','Contests.prize']);
+        ->select(['Contests.id','Contests.name','Contests.prize'])
+            ->where(['Contests.active' => 1]);
 
         $countcont = [];
         foreach ($maxwin as $test){
@@ -54,6 +57,7 @@ class ContestsController extends AppController
         $lastcontests = $this->Contests->find()
             ->contain(['Users','Categories'])
             ->order('Contests.created DESC')
+            ->where(['Contests.active' => 1])
         ->limit(12);
 
 
@@ -144,15 +148,18 @@ class ContestsController extends AppController
         $wins = $this->Contests->UsersDotations->find('all');
         $votplus = $this->Contests->find('all')
             ->order(['vote' => 'DESC'])
+            ->where(['Contests.active' => 1])
             ->limit(3);
 
         $playplus = $this->Contests->find('all')
             ->order(['play' => 'DESC'])
+            ->where(['Contests.active' => 1])
             ->limit(3);
 
         $maxwin = $this->Contests->find()
             ->contain(['UsersDotations'])
-            ->select(['Contests.id','Contests.name','Contests.prize']);
+            ->select(['Contests.id','Contests.name','Contests.prize'])
+            ->where(['Contests.active' => 1]);
 
         $countcont = [];
         foreach ($maxwin as $test){
@@ -170,13 +177,15 @@ class ContestsController extends AppController
         $countcontestwin = array_splice($countcont, 0, 3);
         $countcontestwin = json_decode(json_encode((object) $countcontestwin), FALSE);
 
-
+        $freq = $this->Contests->frequencies->find('all');
+        $des = $this->Contests->principles->find('all');
+        $zon = $this->Contests->zones->find('all');
 
         $countquery  = $this->Contests->find();
         $counttotal = $countquery->select(['count' => $countquery->func()->count('*')])->first();
         $restrictions = $this->Contests->Restrictions->find('all');
         $zones = $this->Contests->Zones->find('all');
-        $this->set(compact('contests','categories','id','counttotal','restrictions','zones','markerlist','favlist','votelist','time','votplus','countcontestwin','playplus'));
+        $this->set(compact('zon','des','freq','contests','categories','id','counttotal','restrictions','zones','markerlist','favlist','votelist','time','votplus','countcontestwin','playplus'));
         $this->set('_serialize', ['contests']);
     }
     /**
@@ -427,5 +436,103 @@ class ContestsController extends AppController
     }
     }
 
+    public function edittype()
+    {
+        $this->autoRender = false;
+
+        if ($this->request->is('post')) {
+            $count = $this->Contests->query();
+            $type= intval($this->request->data['type']);
+            $count->update()
+                ->set(['category_id' => $type])
+                ->where(['id' => $this->request->data['id']])
+                ->execute();
+        }
+    }
+
+    public function editfreq()
+    {
+        $this->autoRender = false;
+
+        if ($this->request->is('post')) {
+            $count = $this->Contests->query();
+            $type= intval($this->request->data['freq']);
+            $count->update()
+                ->set(['frequency_id' => $type])
+                ->where(['id' => $this->request->data['id']])
+                ->execute();
+        }
+    }
+
+
+    public function editname()
+    {
+        $this->autoRender = false;
+
+        if ($this->request->is('post')) {
+            $count = $this->Contests->query();
+            $name= $this->request->data['name'];
+            $count->update()
+                ->set(['name' => $name])
+                ->where(['id' => $this->request->data['id']])
+                ->execute();
+        }
+    }
+
+    public function editdot()
+    {
+        $this->autoRender = false;
+
+        if ($this->request->is('post')) {
+            $count = $this->Contests->query();
+            $dot= $this->request->data['dot'];
+            $count->update()
+                ->set(['prize' => $dot])
+                ->where(['id' => $this->request->data['id']])
+                ->execute();
+        }
+    }
+
+    public function editdes()
+    {
+        $this->autoRender = false;
+
+        if ($this->request->is('post')) {
+            $count = $this->Contests->query();
+            $des= intval($this->request->data['des']);
+            $count->update()
+                ->set(['principle_id' => $des])
+                ->where(['id' => $this->request->data['id']])
+                ->execute();
+        }
+    }
+
+    public function editzone()
+    {
+        $this->autoRender = false;
+
+        if ($this->request->is('post')) {
+            $count = $this->Contests->query();
+            $zones = $this->request->data['zone'];
+            $count->update()
+                ->set(['zone' => $zones])
+                ->where(['id' => $this->request->data['id']])
+                ->execute();
+        }
+    }
+
+    public function editres()
+    {
+        $this->autoRender = false;
+
+        if ($this->request->is('post')) {
+            $count = $this->Contests->query();
+            $res = $this->request->data['res'];
+            $count->update()
+                ->set(['restriction' => $res])
+                ->where(['id' => $this->request->data['id']])
+                ->execute();
+        }
+    }
 
 }

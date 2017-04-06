@@ -1,7 +1,7 @@
 <div class="admin"></div>
 <div class="wrap ">
     <?php $cellwin = $this->cell('Wincount');
-    echo $cellwin; ?>
+  ?>
     <div class="header">
     </div>
 </div>

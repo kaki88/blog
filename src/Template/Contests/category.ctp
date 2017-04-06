@@ -239,34 +239,9 @@
 
 
 
-    <div class="col-sm-12 menuspace centermini hidden-xs hidden-md hidden-lg">
-        <?php foreach ($categories as $categorie) : ?>
-        <ul class=" miniform col-sm-4 col-xs-4  hidden-md hidden-lg">
-            <li id="li-<?= $categorie->id ?>"><a style="display: block;text-decoration: none" class="menufont <?= $categorie->code ?>" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home', $categorie->id, strtolower(str_replace(' ', '-', removeAccents($categorie->type)))]);  ?>">
-                <?= $this->Html->image("menu/".$categorie->icon_url , ['class' => 'imgmenu'])?>
-                <span class="menufont"><?=  $categorie->code ?></span>
-            <span class="badgemenu label label-default  pull-right" style="color: black">
-                        <?= count($categorie->contests) ?>
-                    </span>
-            </a></li>
-        </ul >
-        <?php endforeach ?>
-    </div >
 
-    <div class="col-xs-12 menuspace hidden-sm hidden-md hidden-lg">
 
-        <?php foreach ($categories as $categorie) : ?>
-        <ul class=" vminiform col-xs-12  hidden-sm hidden-md hidden-lg">
-            <li id="li-<?= $categorie->id ?>"><a style="display: block;text-decoration: none" class="menufont <?= $categorie->code ?>" href=" <?= $this->Url->build(['controller' =>'Contests', 'action' => 'home', $categorie->id, strtolower(str_replace(' ', '-', removeAccents($categorie->type)))]);  ?>">
-                <?= $this->Html->image("menu/".$categorie->icon_url , ['class' => 'imgmenu'])?>
-                <span class="menufont"><?=  $categorie->code ?></span>
-                <span class="badgemenu label label-default  pull-right" style="color: black">
-                        <?= count($categorie->contests) ?>
-                    </span>
-            </a></li>
-        </ul >
-        <?php endforeach ?>
-    </div >
+
     <div class="row hidden-lg hidden-md">
     </div >
 
@@ -284,26 +259,29 @@
                 <thead>
                 <tr class="type">
                     <th>
-                            <span style="color: <?= $contest->category->color ?>;
+                            <span class="edittype<?= $contest->id ?>" style="color: <?= $contest->category->color ?>;
                             background-color:  #eeeeee;padding: 2px 5px  2px 5px;
                             border-radius: 4px;
                             margin-left: 5px;
                             ; font-size: 14px"><?= $contest->category->code ?></span>
 
 
-                        <a href="<?= $this->Url->build(['controller' => 'Contests', 'action' => 'gameview',$contest->id,
-                            strtolower(str_replace(' ', '-', removeAccents($contest->name))),'prefix' => false]); ?>"
-                           target="_blank"
-                           style="text-decoration: none">
+
                             <?php $ico = $contest->frequency->icon_url ?>
-                            <?= $this->Html->image("../uploads/icons/$ico" , ['class' => 'admin-ico-freq hidden-xs'])?>
+                            <?= $this->Html->image("../uploads/icons/$ico" , ['class' => 'admin-ico-freq hidden-xs editfreq'.$contest->id])?>
                             <?php if ($contest->on_facebook) : ?>
                             <?= $this->Html->image('facebook.jpg', ['class' => 'admin-ico-freq hidden-xs']) ?>
                             <?php endif ?>
-                        </a>
+
                     </th>
                     <th colspan="3">
-                        <span class=" nom"><?= $contest->name ?></span>
+                <!--        <a href="<?= $this->Url->build(['controller' => 'Contests', 'action' => 'gameview',$contest->id,
+                            strtolower(str_replace(' ', '-', removeAccents($contest->name))),'prefix' => false]); ?>"
+                           target="_blank"
+                           style="text-decoration: none">
+                        <span class=" nom editname<?= $contest->id ?>"><?= $contest->name ?></span>
+                        </a>-->
+                        <span class=" nom editname<?= $contest->id ?>"><?= $contest->name ?></span>
 
                         <?php if ($this->request->session()->read('Auth.User.id')) :?>
                         <div class="pull-right hidden-xs">
@@ -393,7 +371,7 @@
                     </td>
 
                     <td width="2%"><span class="befprize"><i class="fa fa-trophy" aria-hidden="true"></i> </span></td>
-                    <td width="69%"><span class="prize"><?= $contest->prize ?></span></td>
+                    <td width="69%"><span class="prize editdot<?= $contest->id ?>"><?= $contest->prize ?></span></td>
                     <td width="12%" rowspan="<?= $row ?>">
                         <div class="contain-pourcent">
 
@@ -450,14 +428,14 @@
                     <td>
 
                         <span class="befprize"><i class="fa fa-sticky-note-o" aria-hidden="true"></i> </span></td>
-                    <td><span class="befdescr"><?= $contest->principle->description ?></span></td>
+                    <td><span class="befdescr editdes<?= $contest->id ?>"><?= $contest->principle->description ?></span></td>
 
                 </tr>
                 <?php if ($contest->zone) : ?>
                 <tr>
                     <td><span class="befprize"><i class="fa fa-globe" aria-hidden="true"></i>
  </span></td>
-                    <td><span class="befdescr">
+                    <td><span class="befdescr editzone<?= $contest->id ?>">
                          <?php $zonearray =  explode(",",$contest->zone);
                         $countloop = 0;
                   $size = sizeof($zonearray);
@@ -475,7 +453,7 @@
                 <tr>
                     <td><span class="befprize"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>
  </span></td>
-                    <td><span class="befdescr">
+                    <td><span class="befdescr editres<?= $contest->id ?>">
                            <?php $array =  explode(",",$contest->restriction);
                           $countloopp = 0;
                   $sizee = sizeof($array);
@@ -535,7 +513,7 @@
                     </td>
 
 
-                    <td colspan="3" class="pubby">
+                    <td colspan="3" class="pubby " >
 
                         <div class="pull-left voffset1">
 
@@ -620,7 +598,188 @@
         <div class="post" id="post-<?= $contest->id?>"></div>
         <div class="post" id="winpost-<?= $contest->id?>"></div>
 
+
+        <!--___________________________________________________________________________________edition-->
+        <?php if ($this->request->session()->read('Auth.User.role_id') == 1) : ?>
+        <script>
+// _______________________________________________________________________type
+            $('.edittype<?= $contest->id ?>').editable({
+                type: 'select',
+                inputclass: 'editable-<?= $contest->id ?>',
+                value: <?= $contest->category->id ?>,
+                source: [
+            <?php foreach ($categories as $cat): ?>
+            {value:<?= $cat->id ?>, text: '<?= $cat->code ?>'},
+            <?php endforeach ?>
+            ]
+            });
+
+            $(document).on("change", ".editable-<?= $contest->id ?>", function() {
+                $.ajax({
+                    type: 'post',
+                    url: '<?= $this->Url->build(["controller" => "Contests","action" => "edittype", "prefix" => false]); ?>',
+                    data: "id=<?= $contest->id ?>&type=" + $(".editable-<?= $contest->id ?>").val() ,
+                    error: function (html) {
+                        alert(html);
+                    }
+                });
+            });
+
+// _______________________________________________________________________frequence
+$('.editfreq<?= $contest->id ?>').editable({
+    type: 'select',
+    inputclass: 'editable-freq<?= $contest->id ?>',
+    value: <?= $contest->frequency->id ?>,
+    source: [
+<?php foreach ($freq as $fre): ?>
+{value:<?= $fre->id ?>, text: '<?= $fre->period ?>'},
+<?php endforeach ?>
+]
+});
+
+$(document).on("change", ".editable-freq<?= $contest->id ?>", function() {
+    $.ajax({
+        type: 'post',
+        url: '<?= $this->Url->build(["controller" => "Contests","action" => "editfreq", "prefix" => false]); ?>',
+        data: "id=<?= $contest->id ?>&freq=" + $(".editable-freq<?= $contest->id ?>").val() ,
+        success: function () {
+            $('.editfreq<?= $contest->id ?>').prop('src','../uploads/icons/' + $(".editable-freq<?= $contest->id ?>").val() + '.png');
+        },
+        error: function (html) {
+            alert(html);
+        }
+    });
+});
+
+// _______________________________________________________________________titre
+$('.editname<?= $contest->id ?>').editable({
+    inputclass: 'editable-name<?= $contest->id ?>'
+});
+
+$(document).on("change", ".editable-name<?= $contest->id ?>", function() {
+    $.ajax({
+        type: 'post',
+        url: '<?= $this->Url->build(["controller" => "Contests","action" => "editname", "prefix" => false]); ?>',
+        data: "id=<?= $contest->id ?>&name=" + $(".editable-name<?= $contest->id ?>").val() ,
+        error: function (html) {
+            alert(html);
+        }
+    });
+});
+
+// _______________________________________________________________________dotation
+$('.editdot<?= $contest->id ?>').editable({
+    inputclass: 'editable-dot<?= $contest->id ?>',
+    type: 'textarea'
+});
+
+$(document).on("change", ".editable-dot<?= $contest->id ?>", function() {
+    $.ajax({
+        type: 'post',
+        url: '<?= $this->Url->build(["controller" => "Contests","action" => "editdot", "prefix" => false]); ?>',
+        data: "id=<?= $contest->id ?>&dot=" + $(".editable-dot<?= $contest->id ?>").val() ,
+        error: function (html) {
+            alert(html);
+        }
+    });
+});
+
+// _______________________________________________________________________principe
+$('.editdes<?= $contest->id ?>').editable({
+    type: 'select',
+    inputclass: 'editable-des<?= $contest->id ?>',
+    value: <?= $contest->principle->id ?>,
+    source: [
+<?php foreach ($des as $de): ?>
+{value:<?= $de->id ?>, text: '<?= $de->description ?>'},
+<?php endforeach ?>
+]
+});
+
+$(document).on("change", ".editable-des<?= $contest->id ?>", function() {
+    $.ajax({
+        type: 'post',
+        url: '<?= $this->Url->build(["controller" => "Contests","action" => "editdes", "prefix" => false]); ?>',
+        data: "id=<?= $contest->id ?>&des=" + $(".editable-des<?= $contest->id ?>").val() ,
+        error: function (html) {
+            alert(html);
+        }
+    });
+});
+
+// _______________________________________________________________________zone
+$('.editzone<?= $contest->id ?>').editable({
+    type: 'checklist',
+    inputclass: 'editable-zone<?= $contest->id ?>',
+    value: [
+    <?php $zonearray =  explode(",",$contest->zone);
+$countloop = 0;
+$size = sizeof($zonearray);
+foreach ($zones as $zone) : ?>
+<?php if( in_array( $zone->id ,$zonearray ) ) : ?>
+<?= $zone->id ?> ,
+<?php endif ?>
+<?php endforeach ?>
+    ],
+    source: [
+<?php foreach ($zon as $zonn): ?>
+{value:<?= $zonn->id ?>, text: '<?= $zonn->place ?>'},
+<?php endforeach ?>
+]
+});
+
+$(document).on("change", ".editable-zone<?= $contest->id ?>", function() {
+    $.ajax({
+        type: 'post',
+        url: '<?= $this->Url->build(["controller" => "Contests","action" => "editzone", "prefix" => false]); ?>',
+        data: "id=<?= $contest->id ?>&zone=" + $.map($('.editable-zone<?= $contest->id ?>:checked'), function(c){return c.value; }) ,
+        error: function (html) {
+            alert(html);
+        }
+    });
+});
+
+// _______________________________________________________________________restriction
+$('.editres<?= $contest->id ?>').editable({
+    type: 'checklist',
+    inputclass: 'editable-res<?= $contest->id ?>',
+    value: [
+    <?php $zonearray =  explode(",",$contest->restriction);
+$countloop = 0;
+$sizee = sizeof($array);
+foreach ($restrictions as $res) : ?>
+<?php if( in_array( $res->id ,$array ) ) : ?>
+<?= $res->id ?> ,
+<?php endif ?>
+<?php endforeach ?>
+],
+source: [
+<?php foreach ($restrictions as $restriction): ?>
+{value:<?= $restriction->id ?>, text: "<?= $restriction->sort ?>"},
+<?php endforeach ?>
+]
+});
+
+$(document).on("change", ".editable-res<?= $contest->id ?>", function() {
+    $.ajax({
+        type: 'post',
+        url: '<?= $this->Url->build(["controller" => "Contests","action" => "editres", "prefix" => false]); ?>',
+        data: "id=<?= $contest->id ?>&res=" + $.map($('.editable-res<?= $contest->id ?>:checked'), function(c){return c.value; }) ,
+        error: function (html) {
+            alert(html);
+        }
+    });
+});
+        </script>
+
+
+
+        <?php endif ?>
         <?php endforeach ?>
+
+
+
+
         <div class="row">
             <div class="pull-right">
                 <ul class="pagination pagination-large">

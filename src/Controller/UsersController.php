@@ -339,13 +339,14 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $tblalert = TableRegistry::get('UsersDotations');
             $alert = $tblalert->query();
-            $alert->insert(['contest_id','user_id', 'description', 'date','price'])
+            $alert->insert(['contest_id','user_id', 'description', 'date','price','state'])
                 ->values([
                     'contest_id' => $this->request->data['id'],
                     'user_id' => $this->Auth->user('id'),
                     'description' => $this->request->data['desc'],
                     'date' => $this->request->data['time'],
-                    'price' => $this->request->data['price']
+                    'price' => $this->request->data['price'],
+                    'state' => 0
                 ])
                 ->execute();
         }
@@ -368,8 +369,98 @@ class UsersController extends AppController
            ->where(['id' => $id])
        ->first();
 
-        $this->set(compact('users','login','loginreg'));
+        $win2016 = $this->Users->UsersDotations->find('all')
+            ->select('date')
+            ->where(['YEAR(UsersDotations.date)' => 2016])
+            ->where(['UsersDotations.user_id' => $id])
+        ->count();
+
+       $win2017 = $this->Users->UsersDotations->find('all')
+           ->select('date')
+           ->where(['YEAR(UsersDotations.date)' => 2017])
+           ->where(['UsersDotations.user_id' => $id])
+           ->count();
+
+        $ig = $this->Users->UsersDotations->find('all')
+            ->contain(['Contests.Categories'])
+            ->where(['code' => 'IG'])
+            ->count();
+
+        $tas = $this->Users->UsersDotations->find('all')
+        ->contain(['Contests.Categories'])
+        ->where(['code' => 'TAS'])
+        ->count();
+
+        $score = $this->Users->UsersDotations->find('all')
+        ->contain(['Contests.Categories'])
+        ->where(['code' => 'SCORE'])
+        ->count();
+
+        $vote = $this->Users->UsersDotations->find('all')
+            ->contain(['Contests.Categories'])
+            ->where(['code' => 'VOTE'])
+            ->count();
+
+        $jury = $this->Users->UsersDotations->find('all')
+            ->contain(['Contests.Categories'])
+            ->where(['code' => 'JURY'])
+            ->count();
+
+        $twitter = $this->Users->UsersDotations->find('all')
+            ->contain(['Contests.Categories'])
+            ->where(['code' => 'TWITTER'])
+            ->count();
+
+        $sms = $this->Users->UsersDotations->find('all')
+        ->contain(['Contests.Categories'])
+        ->where(['code' => 'SMS'])
+        ->count();
+
+        $courrier = $this->Users->UsersDotations->find('all')
+            ->contain(['Contests.Categories'])
+            ->where(['code' => 'COURRIER'])
+            ->count();
+
+        $magasin = $this->Users->UsersDotations->find('all')
+            ->contain(['Contests.Categories'])
+            ->where(['code' => 'MAGASIN'])
+            ->count();
+
+        $this->set(compact('users','login','loginreg','win2017','win2016','ig','tas','score','vote','jury','twitter','sms','courrier','magasin'));
         $this->set('_serialize', ['users']);
     }
 
+    public function state()
+    {
+        $this->autoRender = false;
+
+        if ($this->request->is('post')) {
+            $tblalert = TableRegistry::get('UsersDotations');
+            $alert = $tblalert->query();
+
+            if ($this->request->data['state'] == 0 ) {
+                $alert->update()
+                    ->set($alert->newExpr('state = 0'))
+                    ->where(['contest_id' => $this->request->data['id']])
+                    ->where(['user_id' =>$this->Auth->user('id')])
+                    ->execute();
+            }
+
+            if ($this->request->data['state'] == 1 ) {
+                $alert->update()
+                    ->set($alert->newExpr('state = 1'))
+                    ->where(['contest_id' => $this->request->data['id']])
+                    ->where(['user_id' =>$this->Auth->user('id')])
+                    ->execute();
+            }
+
+            if ($this->request->data['state'] == 2 ) {
+                $alert->update()
+                    ->set($alert->newExpr('state = 2'))
+                    ->where(['contest_id' => $this->request->data['id']])
+                    ->where(['user_id' =>$this->Auth->user('id')])
+                    ->execute();
+            }
+        }
+    }
 }

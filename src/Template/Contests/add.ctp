@@ -4,13 +4,12 @@
 <?= $this->Html->script('bootstrap-fileinput.js') ?>
         <?= $this->Html->script('bootstrap-select.min.js') ?>
 
-<div class="row">
+<div class="wrapper">
+    <div class="row">
 <div class="col-md-12">
-    <div class="panel panel-primary panstyl">
-        <div class="panel-heading clearfix">
-            <i class="icon-calendar"></i>
-            <h3 class="panel-title">
-                <?= __('Déposer un jeu concours') ?></h3>
+    <div class="panel panel-default">
+        <div class="panel-heading panelhome panellast">
+                <?= __('Déposer un jeu concours') ?>
         </div>
 
         <div class="panel-body">
@@ -111,6 +110,7 @@
 
         </div>
     </div>
+</div>
 </div>
 </div>
 
