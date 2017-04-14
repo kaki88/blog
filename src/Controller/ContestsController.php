@@ -67,28 +67,36 @@ class ContestsController extends AppController
     public function category($id= null)
     {
 
-        if ($this->request->is('post')) {
-            $array = [];
-            if (!empty($this->request->data['category'])) {
-                $push = $this->request->data['category'];
-                $pushall = "category_id = '$push'";
-                array_push($array, $pushall);
-            }
-            if (!empty($this->request->data['name'])) {
-                $push = $this->request->data['name'];
-                $pushall = "name LIKE '%$push%'";
-                array_push($array, $pushall);
-            }
-            $this->paginate = [
-                'contain' => ['Categories', 'Frequencies', 'Principles','Users','UsersVotes','UsersDotations',
-                    'Posts' => function($q) {
-                        return $q->select(['contest_id']);}]];
+        $params = [];
+        $state = 1;
 
-            $contests = $this->paginate($this->Contests->find('all')
-                ->where(['Contests.active' => 1, $array]));
+        if(isset ( $_GET['status'] ) ){
+            if ($this->request->query('status') !== 'a') {
+            $state = 0;
+        }
         }
 
-        else{
+        if(isset ( $_GET['freq'] ) ){
+                $freq = $this->request->query('freq');
+            if ($freq !== 'a') {
+            $request = "frequency_id = '$freq'";
+            array_push($params, $request);
+        }
+        }
+
+        if(isset ( $_GET['zone'] ) ){
+            $zone = $this->request->query('zone');
+            if ($zone !== 'a') {
+                $request = "zone LIKE  '%$zone%'";
+                array_push($params, $request);
+            }
+        }
+
+        if(isset ( $_GET['rechercher'] ) ){
+            $search = $this->request->query('rechercher');
+                $request = "(name LIKE  '%$search%' OR  prize LIKE  '%$search%') ";
+                array_push($params, $request);
+        }
 
             if ($id){
                 $this->paginate = [
@@ -97,7 +105,7 @@ class ContestsController extends AppController
                             return $q->select(['contest_id']);}]];
 
                 $contests = $this->paginate($this->Contests->find('all')
-                    ->where(['Contests.active' => 1, ['category_id '=> $id]])
+                    ->where(['Contests.active' => $state, ['category_id '=> $id],$params])
                     ->order('Contests.created DESC'));
             }
             else{
@@ -107,10 +115,10 @@ class ContestsController extends AppController
                             return $q->select(['contest_id']);}]];
 
                 $contests = $this->paginate($this->Contests->find('all')
-                    ->where(['Contests.active' => 1])
+                    ->where(['Contests.active' => $state ,$params])
                     ->order('Contests.created DESC'));
             }
-        }
+
 
         $categories = $this->Contests->Categories->find('all')
             ->contain(['Contests' => function($q) {
@@ -181,21 +189,21 @@ class ContestsController extends AppController
         $des = $this->Contests->principles->find('all');
         $zon = $this->Contests->zones->find('all');
 
+        $uid = $this->Auth->user('id');
+
         $countquery  = $this->Contests->find();
         $counttotal = $countquery->select(['count' => $countquery->func()->count('*')])->first();
         $restrictions = $this->Contests->Restrictions->find('all');
         $zones = $this->Contests->Zones->find('all');
-        $this->set(compact('zon','des','freq','contests','categories','id','counttotal','restrictions','zones','markerlist','favlist','votelist','time','votplus','countcontestwin','playplus'));
+        $this->set(compact('state','uid','zon','des','freq','contests','categories','id','counttotal','restrictions','zones','markerlist','favlist','votelist','time','votplus','countcontestwin','playplus'));
         $this->set('_serialize', ['contests']);
+        $this->set('frek', $this->Contests->frequencies->find('list'));
+        $this->set('zonelist', $this->Contests->zones->find('list'));
     }
-    /**
-     * View method
-     *
-     * @param string|null $id Contest id.
-     * @return \Cake\Network\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function gameview($id = null)
+
+
+
+        public function gameview($id = null)
     {
         $contest = $this->Contests->get($id, [
             'contain' => ['Categories', 'Frequencies', 'Principles', 'Users.Roles']
@@ -530,6 +538,34 @@ class ContestsController extends AppController
             $res = $this->request->data['res'];
             $count->update()
                 ->set(['restriction' => $res])
+                ->where(['id' => $this->request->data['id']])
+                ->execute();
+        }
+    }
+
+    public function editq()
+{
+    $this->autoRender = false;
+
+    if ($this->request->is('post')) {
+        $count = $this->Contests->query();
+        $dot= $this->request->data['q'];
+        $count->update()
+            ->set(['answer' => $dot])
+            ->where(['id' => $this->request->data['id']])
+            ->execute();
+    }
+}
+
+    public function editdate()
+    {
+        $this->autoRender = false;
+
+        if ($this->request->is('post')) {
+            $count = $this->Contests->query();
+            $date= $this->request->data['date'];
+            $count->update()
+                ->set(['deadline' => $date])
                 ->where(['id' => $this->request->data['id']])
                 ->execute();
         }

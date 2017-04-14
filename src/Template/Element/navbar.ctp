@@ -65,9 +65,13 @@
 
             <ul class="nav navbar-nav navbar-right navbar-right-custom">
                 <li>
-                    <form class="navbar-form navbar-left" role="search">
+
+                        <?php echo $this->Form->create('Post',array('id' => 'form-search' , 'class' => 'navbar-form navbar-left','type' => 'get','url' => '/jeux' )); ?>
+
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Rechercher">
+                            <?= $this->Form->input('rechercher', ['label' => false ,'placeholder' => 'Rechercher', 'templates' => [
+                            'inputContainer' => '{{content}}'
+                            ]]);  ?>
                         </div>
                         <button type="submit" class="btn btn-default">Ok</button>
                     </form>

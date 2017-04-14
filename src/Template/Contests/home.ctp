@@ -11,7 +11,7 @@
         echo $cell; ?>
 
         <div class="">
-            <a href="/deposer-un-jeu" class="btn btn-success btn-block paneladd"> deposer un jeu
+            <a href="/beta/deposer-un-jeu" class="btn btn-success btn-block paneladd"> deposer un jeu
                 <span class="addsquare"><i class="fa fa-plus-square" aria-hidden="true"></i></span>
             </a>
 
@@ -209,6 +209,7 @@
             $('#lastvign').removeClass('hidden');
         }
     });
+
 
 
 </script>
