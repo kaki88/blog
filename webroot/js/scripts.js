@@ -40,8 +40,7 @@ jQuery(function($){
         isRTL: false,
         showMonthAfterYear: false,
         yearSuffix: '',
-        minDate: '-1M',
-        maxDate: 0,
+
         numberOfMonths: 1,
         showButtonPanel: true
     };

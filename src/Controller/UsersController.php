@@ -87,6 +87,8 @@ class UsersController extends AppController
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $this->request->data['role_id'] = 2;
+            $this->request->data['active'] = 0;
+            $this->request->data['connected'] = Time::now();
             
 # upload image
             if (!empty($_FILES['avatar']) ) {

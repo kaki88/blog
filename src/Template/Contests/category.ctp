@@ -137,7 +137,7 @@
         <?php $cell = $this->cell('Login');
         echo $cell; ?>
         <div class="">
-            <a href="/deposer-un-jeu" class="btn btn-success btn-block paneladd"> deposer un jeu
+            <a href="/beta/deposer-un-jeu" class="btn btn-success btn-block paneladd"> deposer un jeu
                 <span class="addsquare"><i class="fa fa-plus-square" aria-hidden="true"></i></span></a>
 
         </div>
@@ -245,7 +245,36 @@
     <div class="row hidden-lg hidden-md">
     </div >
 
+<!--________________________________________filtres-->
+<div class="col-md-9 ">
+    <?php echo $this->Form->create('Post',array('id' => 'form-search' , 'class' => 'form-horizontal','type' => 'get','url' => $this->request->here(true) )); ?>
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
+        <?= $this->Form->input('status', ['empty' =>  ['a'=>'---- Status ----'],'options' => ['Terminé','Actif'],  'default' => $this->request->query('status'), 'label' => false , 'templates' => [
+        'inputContainer' => '{{content}}'
+        ]]);  ?>
 
+        <span class="input-group-addon"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
+        <?= $this->Form->input('freq', ['empty' => ['a'=>'---- Fréquence ----'],'options' => $frek,  'default' => $this->request->query('freq'), 'label' => false , 'templates' => [
+        'inputContainer' => '{{content}}'
+        ]]);  ?>
+
+        <span class="input-group-addon"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
+        <?= $this->Form->input('zone', ['empty' => ['a'=>'---- Zone ----'],'options' => $zonelist,  'default' => $this->request->query('zone'), 'label' => false , 'templates' => [
+        'inputContainer' => '{{content}}'
+        ]]);  ?>
+
+        <span class="input-group-addon"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
+        <?= $this->Form->input('rechercher', ['label' => false ,'placeholder' => 'Rechercher', 'default' => $this->request->query('rechercher'), 'templates' => [
+        'inputContainer' => '{{content}}'
+        ]]);  ?>
+
+    </div>
+
+    <?=   $this->Form->submit('Ok', ['class' => 'btn btn-success center-block']) ;
+    $this->Form->end() ;
+    ?>
+</div>
 
     <!--________________________________________liste des jeux-->
     <div class="col-md-9 ">
@@ -358,6 +387,12 @@
                      if ($contest->zone) {$row++;};
                     if ($contest->restriction) {$row++;};
                     if ($contest->answer) {$row++;};
+                    if (empty($contest->zone) && $this->request->session()->read('Auth.User.role_id') == 1) {$row++;};
+                    if (empty($contest->zone) && $contest->user->id ==  $uid  && $this->request->session()->read('Auth.User.role_id') !== 1) {$row++;};
+                    if (empty($contest->answer) && $this->request->session()->read('Auth.User.role_id') == 1) {$row++;};
+                    if (empty($contest->answer) && $contest->user->id ==  $uid && $this->request->session()->read('Auth.User.role_id') !== 1) {$row++;};
+                    if (empty($contest->restriction) && $this->request->session()->read('Auth.User.role_id') == 1) {$row++;};
+                    if (empty($contest->restriction) && $contest->user->id ==  $uid && $this->request->session()->read('Auth.User.role_id') !== 1) {$row++;};
                     ?>
 
                     <td width="17%" rowspan="<?= $row ?>" class="hidden-xs rowimg">
@@ -431,6 +466,15 @@
                     <td><span class="befdescr editdes<?= $contest->id ?>"><?= $contest->principle->description ?></span></td>
 
                 </tr>
+
+                <?php if(empty($contest->zone) && $this->request->session()->read('Auth.User.role_id') == 1 || empty($contest->zone) && $contest->user->id ==  $uid ) : ?>
+                <?php $row++; ?>
+                <tr>
+                    <td><span class="befprize"><i class="fa fa-globe" aria-hidden="true"></i></span></td>
+                    <td><span class="befdescr editzone<?= $contest->id ?>"> ajouter une zone ? </span></td>
+                </tr>
+                <?php endif ?>
+
                 <?php if ($contest->zone) : ?>
                 <tr>
                     <td><span class="befprize"><i class="fa fa-globe" aria-hidden="true"></i>
@@ -445,8 +489,17 @@
                         <?= $zone->place ?>
                         <?php if( $countloop < $size  ) : ?> | <?php endif ?>
                         <?php endif ?>
+
                         <?php endforeach ?>
                         </span></td>
+                </tr>
+                <?php endif ?>
+
+                <?php if(empty($contest->restriction) && $this->request->session()->read('Auth.User.role_id') == 1 || empty($contest->restriction) && $contest->user->id ==  $uid ) : ?>
+                <?php $row++; ?>
+                <tr>
+                    <td><span class="befprize"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></span></td>
+                    <td><span class="befdescr editres<?= $contest->id ?>"> ajouter une restriction ? </span></td>
                 </tr>
                 <?php endif ?>
                 <?php if ($contest->restriction) : ?>
@@ -467,30 +520,41 @@
                         </span></td>
                 </tr>
                 <?php endif ?>
+                <?php if(empty($contest->answer) && $this->request->session()->read('Auth.User.role_id') == 1 || empty($contest->answer) && $contest->user->id ==  $uid ) : ?>
+                <?php $row++; ?>
+                <tr>
+                    <td><span class="befprize"><i class="fa fa-list" aria-hidden="true"></i></span></td>
+                    <td><span class="befdescr editq<?= $contest->id ?>"> ajouter le(s) réponse(s) ? </span></td>
+                </tr>
+                <?php endif ?>
                 <?php if ($contest->answer) : ?>
                 <tr>
                     <td><span class="befprize"><i class="fa fa-list" aria-hidden="true"></i>
  </span></td>
-                    <td><span class="befdescr">
+                    <td><span class="befdescr editq<?= $contest->id ?>">
                       <?= $contest->answer ?>
                         </span></td>
                 </tr>
                 <?php endif ?>
+
+
+
+
                 <tr>
 
 
                     <td class="minimenu text-center hidden-xs">
-
+<input class="getdate<?= $contest->id ?>" type="hidden" value=" <?= $contest->deadline->i18nformat('YYYY-MM-dd') ?>">
                                  <?php if ($contest->deadline->isWithinNext('24 hours')): ?>
-                          <span class=" clos today">
+                          <span class=" clos today editdate<?= $contest->id ?>">
                                 <i class="fa fa-hourglass-end" aria-hidden="true"></i>
                    aujourd'hui
                                  <?php elseif ($contest->deadline->isWithinNext('1 days')): ?>
-                                <span class=" clos today">
+                                <span class=" clos today editdate<?= $contest->id ?>">
                                 <i class="fa fa-hourglass-end" aria-hidden="true"></i>
                    demain
                                  <?php elseif ($contest->deadline->isWithinNext('3 days')): ?>
-                                      <span class=" clos today">
+                                      <span class=" clos today editdate<?= $contest->id ?>">
                                 <i class="fa fa-hourglass-end" aria-hidden="true"></i>
                                                               dans <?= $contest->deadline->timeAgoInWords([
                                     'format' => 'MMM d, YYY',
@@ -499,14 +563,14 @@
 ]);
                                     ?>
                                  <?php else : ?>
-                                            <span class=" clos ">
+                                            <span class=" clos editdate<?= $contest->id ?> ">
                                 <i class="fa fa-hourglass-end" aria-hidden="true"></i>
                                  <?= $contest->deadline->i18nformat('dd MMMM YYYY') ?>
                                  <?php endif ?>
                              </span>
 
                     <td class="minimenuxs text-center hidden-sm hidden-md hidden-lg">
-                          <span class=" clos ">
+                          <span class=" clos">
                                 <i class="fa fa-hourglass-end" aria-hidden="true"></i>
                               <?= $contest->deadline->i18nformat('dd/MM') ?>
                              </span>
@@ -531,6 +595,12 @@
                                             class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                         <?= $contest->user->login ?> le <?= $contest->
                                         created->i18nformat('dd/MM ') ?></span>
+
+                            <?php if ($contest->user->id ==  $uid  && $this->request->session()->read('Auth.User.role_id') !== 1 ): ?>
+                            <span class="befdescr editlog">
+                Vous avez les droits d'éditions
+                        </span>
+                            <?php endif ?>
                         </div>
 
 
@@ -600,7 +670,7 @@
 
 
         <!--___________________________________________________________________________________edition-->
-        <?php if ($this->request->session()->read('Auth.User.role_id') == 1) : ?>
+        <?php if ($this->request->session()->read('Auth.User.role_id') == 1 ||  $contest->user->id ==  $uid  ): ?>
         <script>
 // _______________________________________________________________________type
             $('.edittype<?= $contest->id ?>').editable({
@@ -744,7 +814,7 @@ $('.editres<?= $contest->id ?>').editable({
     type: 'checklist',
     inputclass: 'editable-res<?= $contest->id ?>',
     value: [
-    <?php $zonearray =  explode(",",$contest->restriction);
+    <?php $array =  explode(",",$contest->restriction);
 $countloop = 0;
 $sizee = sizeof($array);
 foreach ($restrictions as $res) : ?>
@@ -770,6 +840,56 @@ $(document).on("change", ".editable-res<?= $contest->id ?>", function() {
         }
     });
 });
+
+// _______________________________________________________________________reponse
+$('.editq<?= $contest->id ?>').editable({
+    inputclass: 'editable-q<?= $contest->id ?>',
+});
+
+$(document).on("change", ".editable-q<?= $contest->id ?>", function() {
+    $.ajax({
+        type: 'post',
+        url: '<?= $this->Url->build(["controller" => "Contests","action" => "editq", "prefix" => false]); ?>',
+        data: "id=<?= $contest->id ?>&q=" + $(".editable-q<?= $contest->id ?>").val() ,
+        error: function (html) {
+            alert(html);
+        }
+    });
+});
+
+// _______________________________________________________________________date
+$(document).on("click", ".editdate<?= $contest->id ?>", function() {
+    $(".getdate<?= $contest->id ?>").datepicker({
+        dayNamesMin: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+        monthNamesShort: ["Jan", "Fev", "Mar", "Avr", "Mai", "Jun", "Jul", "Aou", "Sep", "Oct", "Nov", "Dec"],
+        dateFormat: "dd MM yy",
+        defaultDate: $(".editdate<?= $contest->id ?>").text().trim(),
+        firstDay: 1,
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: false,
+        beforeShow: function(input, inst) {
+            $(document).off('focusin.bs.modal');
+        },
+        onClose:function(){
+            $(document).on('focusin.bs.modal');
+        },
+    }).datepicker( "show" );
+    $(document).on("change", ".getdate<?= $contest->id ?>", function() {
+        var dateTypeVar = $('.getdate<?= $contest->id ?>').datepicker('getDate');
+        $(".editdate<?= $contest->id ?>").text($(".getdate<?= $contest->id ?>").val());
+        $.ajax({
+            type: 'post',
+            url: '<?= $this->Url->build(["controller" => "Contests","action" => "editdate", "prefix" => false]); ?>',
+            data: "id=<?= $contest->id ?>&date=" + $.datepicker.formatDate('yy-mm-dd', dateTypeVar) ,
+            error: function (html) {
+                console.log(html);
+            }
+        });
+    });
+});
+
+
         </script>
 
 
