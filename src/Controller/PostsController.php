@@ -63,6 +63,13 @@ class PostsController extends AppController
             $post->message = $this->request->data['message'];
             $post->user_id = $this->Auth->user('id');
            $this->Posts->save($post);
+
+            $tbl = TableRegistry::get('Contests');
+            $q = $tbl->query();
+            $q->update()
+                ->set($q->newExpr('post_count = post_count + 1'))
+                ->where(['id' => $this->request->data['id']])
+                ->execute();
         }
         $users = $this->Posts->Users->find('list', ['limit' => 200]);
         $this->set(compact('post', 'users'));

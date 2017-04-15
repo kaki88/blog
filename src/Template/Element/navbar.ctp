@@ -28,12 +28,15 @@
             <ul class="nav navbar-nav">
                 <?php $cellwin = $this->cell('Category');
                 echo $cellwin; ?>
+                <li><a href="<?= $this->Url->build(['controller' => 'Contests','action' => 'category' , 'prefix' => false ]); ?>">
+                    <i class="fa fa-calendar" aria-hidden="true"></i> Nouveaux</a></li>
+                <li><a href="/jeux?tri=recommandation&ordre=desc">
+                    <i class="fa fa-thermometer-half" aria-hidden="true"></i> Les + Hot</a></li>
                 <li><a href="<?= $this->Url->build(['controller' => 'Contests','action' => 'add' , 'prefix' => false ]); ?>">
-                    Nouveaux</a></li>
+                    <i class="fa fa-plus-square" aria-hidden="true"></i> Publier</a></li>
                 <li><a href="<?= $this->Url->build(['controller' => 'Contests','action' => 'add' , 'prefix' => false ]); ?>">
-                    Hot</a></li>
-                <li><a href="<?= $this->Url->build(['controller' => 'Contests','action' => 'add' , 'prefix' => false ]); ?>">
-                    Favoris</a></li>
+                    <i class="fa fa-comments" aria-hidden="true"></i>  Forum</a></li>
+
 
                 <?php if ($this->request->session()->read('Auth.User.role_id') == 1) : ?>
 
@@ -63,7 +66,7 @@
                 <?php endif ?>
             </ul>
 
-            <ul class="nav navbar-nav navbar-right navbar-right-custom">
+<!--            <ul class="nav navbar-nav navbar-right navbar-right-custom">
                 <li>
 
                         <?php echo $this->Form->create('Post',array('id' => 'form-search' , 'class' => 'navbar-form navbar-left','type' => 'get','url' => '/jeux' )); ?>
@@ -76,7 +79,7 @@
                         <button type="submit" class="btn btn-default">Ok</button>
                     </form>
                 </li>
-            </ul>
+            </ul>-->
 
 
         </div>
