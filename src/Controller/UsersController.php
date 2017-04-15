@@ -351,6 +351,13 @@ class UsersController extends AppController
                     'state' => 0
                 ])
                 ->execute();
+
+            $tbl = TableRegistry::get('Contests');
+            $q = $tbl->query();
+            $q->update()
+                ->set($q->newExpr('dotation_count = dotation_count + 1'))
+                ->where(['id' => $this->request->data['id']])
+                ->execute();
         }
     }
 

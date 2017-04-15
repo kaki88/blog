@@ -33,6 +33,7 @@ class UsersDotationsTable extends Table
     {
         parent::initialize($config);
 
+
         $this->table('users_dotations');
         $this->primaryKey('user_id');
 

@@ -246,26 +246,63 @@
     </div >
 
 <!--________________________________________filtres-->
+
 <div class="col-md-9 ">
+
+    <div class="panel panel-default">
+        <div class="panel-body"><?= $countcontest ; ?> concours</div>
+    </div>
+
     <?php echo $this->Form->create('Post',array('id' => 'form-search' , 'class' => 'form-horizontal','type' => 'get','url' => $this->request->here(true) )); ?>
     <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
-        <?= $this->Form->input('status', ['empty' =>  ['a'=>'---- Status ----'],'options' => ['Terminé','Actif'],  'default' => $this->request->query('status'), 'label' => false , 'templates' => [
+        <?= $this->Form->input('status', ['empty' =>  ['a'=>'-- Status --'],'options' => ['En attente','Actif','Terminé'],  'default' => $this->request->query('status'), 'label' => false , 'templates' => [
         'inputContainer' => '{{content}}'
         ]]);  ?>
 
-        <span class="input-group-addon"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
-        <?= $this->Form->input('freq', ['empty' => ['a'=>'---- Fréquence ----'],'options' => $frek,  'default' => $this->request->query('freq'), 'label' => false , 'templates' => [
+        <span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
+        <?= $this->Form->input('freq', ['empty' => ['a'=>'-- Fréquence --'],'options' => $frek,  'default' => $this->request->query('freq'), 'label' => false , 'templates' => [
         'inputContainer' => '{{content}}'
         ]]);  ?>
 
-        <span class="input-group-addon"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
-        <?= $this->Form->input('zone', ['empty' => ['a'=>'---- Zone ----'],'options' => $zonelist,  'default' => $this->request->query('zone'), 'label' => false , 'templates' => [
+        <span class="input-group-addon"><i class="fa fa-facebook-f" aria-hidden="true"></i></span>
+        <?= $this->Form->input('fb', ['empty' =>  ['a'=>'-- Facebook --'],'options' => ['Non','Oui'],  'default' => $this->request->query('fb'), 'label' => false , 'templates' => [
         'inputContainer' => '{{content}}'
         ]]);  ?>
 
-        <span class="input-group-addon"><i class="fa fa-question-circle" aria-hidden="true"></i></span>
-        <?= $this->Form->input('rechercher', ['label' => false ,'placeholder' => 'Rechercher', 'default' => $this->request->query('rechercher'), 'templates' => [
+        <span class="input-group-addon"><i class="fa fa-twitter" aria-hidden="true"></i></span>
+        <?= $this->Form->input('twitter', ['empty' =>  ['a'=>'-- Twitter --'],'options' => ['Non','Oui'],  'default' => $this->request->query('twitter'), 'label' => false , 'templates' => [
+        'inputContainer' => '{{content}}'
+        ]]);  ?>
+
+        <span class="input-group-addon"><i class="fa fa-globe" aria-hidden="true"></i></span>
+        <?= $this->Form->input('zone', ['empty' => ['a'=>'-- Zone --'],'options' => $zonelist,  'default' => $this->request->query('zone'), 'label' => false , 'templates' => [
+        'inputContainer' => '{{content}}'
+        ]]);  ?>
+
+    </div>
+
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></span>
+        <?= $this->Form->input('rechercher', ['label' => false ,'placeholder' => 'Mots clés', 'default' => $this->request->query('rechercher'), 'templates' => [
+        'inputContainer' => '{{content}}'
+        ]]);  ?>
+
+        <span class="input-group-addon"><i class="fa fa-list" aria-hidden="true"></i></span>
+        <?= $this->Form->input('tri', ['options' => [
+        'publication'=>'par date de publication',
+        'date'=>'par date de fin',
+        'gagnant'=>'par nombre de gagnant(s)',
+        'commentaire'=>'par nombre de commentaire(s)',
+        'recommandation'=>'par recommandation'
+        ],  'default' => $this->request->query('tri'), 'label' => false , 'templates' => [
+        'inputContainer' => '{{content}}'
+        ]]);  ?>
+        <span class="input-group-addon"><i class="fa fa-list" aria-hidden="true"></i></span>
+        <?= $this->Form->input('ordre', ['options' => [
+        'asc'=>'en ordre croissant',
+        'desc'=>'en ordre décroissant',
+        ],  'default' => $this->request->query('ordre'), 'label' => false , 'templates' => [
         'inputContainer' => '{{content}}'
         ]]);  ?>
 

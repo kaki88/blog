@@ -68,6 +68,8 @@ class ContestsController extends AppController
     {
 
         $params = [];
+        $name = 'Contests.created';
+        $sens = 'DESC';
         $state = 1;
 
         if(isset ( $_GET['status'] ) ){
@@ -92,11 +94,56 @@ class ContestsController extends AppController
             }
         }
 
+        if(isset ( $_GET['twitter'] ) ){
+            $tw= $this->request->query('twitter');
+            if ($tw !== 'a' && $tw == '1') {
+                $request = "game_url LIKE  '%twitter%'";
+                array_push($params, $request);
+            }
+        }
+
+        if(isset ( $_GET['fb'] ) ){
+            $fb= $this->request->query('fb');
+            if ($fb !== 'a' && $fb == '1') {
+                $request = "game_url LIKE  '%facebook%'";
+                array_push($params, $request);
+            }
+            if ($fb !== 'a' && $fb == '0') {
+                $request = "game_url NOT LIKE  '%facebook%'";
+                array_push($params, $request);
+            }
+        }
+
         if(isset ( $_GET['rechercher'] ) ){
             $search = $this->request->query('rechercher');
                 $request = "(name LIKE  '%$search%' OR  prize LIKE  '%$search%') ";
                 array_push($params, $request);
         }
+
+        if(isset ( $_GET['ordre'] ) ){
+            $sens = $this->request->query('ordre');
+        }
+
+        if(isset ( $_GET['tri'] ) ){
+            $tri = $this->request->query('tri');
+            if ($tri == 'publication'){
+                $name =  'Contests.created';
+            }
+            if ($tri == 'date'){
+                $name =  'Contests.deadline';
+            }
+            if ($tri == 'gagnant'){
+                $name =  'Contests.dotation_count';
+            }
+            if ($tri == 'commentaire'){
+                $name =  'Contests.post_count';
+            }
+            if ($tri == 'recommandation'){
+                $name =  'Contests.vote';
+            }
+        }
+
+        $order = $name. ' ' .$sens;
 
             if ($id){
                 $this->paginate = [
@@ -106,7 +153,7 @@ class ContestsController extends AppController
 
                 $contests = $this->paginate($this->Contests->find('all')
                     ->where(['Contests.active' => $state, ['category_id '=> $id],$params])
-                    ->order('Contests.created DESC'));
+                    ->order($order));
             }
             else{
                 $this->paginate = [
@@ -116,7 +163,7 @@ class ContestsController extends AppController
 
                 $contests = $this->paginate($this->Contests->find('all')
                     ->where(['Contests.active' => $state ,$params])
-                    ->order('Contests.created DESC'));
+                    ->order($order));
             }
 
 
@@ -153,7 +200,8 @@ class ContestsController extends AppController
 
         $now = Time::now();
         $time = $now->i18nFormat('yyyy-MM-dd HH:mm');
-        $wins = $this->Contests->UsersDotations->find('all');
+
+
         $votplus = $this->Contests->find('all')
             ->order(['vote' => 'DESC'])
             ->where(['Contests.active' => 1])
@@ -199,6 +247,7 @@ class ContestsController extends AppController
         $this->set('_serialize', ['contests']);
         $this->set('frek', $this->Contests->frequencies->find('list'));
         $this->set('zonelist', $this->Contests->zones->find('list'));
+        $this->set('countcontest', $contests->count());
     }
 
 
@@ -303,6 +352,8 @@ class ContestsController extends AppController
             $contest = $this->Contests->patchEntity($contest, $this->request->data);
             $contest->user_id = $this->request->session()->read('Auth.User.id');
             $contest->active = 0;
+            $contest->dotation_count = 0;
+            $contest->post_count = 0;
             if ($this->Contests->save($contest)) {
 
                 $this->Flash->success(__('Le concours a été sauvegardé.'));
