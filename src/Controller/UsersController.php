@@ -472,4 +472,23 @@ class UsersController extends AppController
             }
         }
     }
+
+    public function getlastchat()
+    {
+        if ($this -> request -> is('post')) {
+                $this->loadModel('Chat');
+                $id = $this->request->data['lastid'];
+                $responses = $this->Chat->find('all')
+                    ->contain(['Users'])
+                    ->where(['Chat.id >' => $id])
+                    ->order(['Chat.id' => 'DESC']);
+
+            $this->set(compact('responses'));
+        }
+    }
+
+    public function smilies()
+    {
+    }
+
 }

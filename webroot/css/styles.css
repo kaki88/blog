@@ -1322,3 +1322,42 @@ hr.style10 {
 .editlog{
     color: red;
 }
+
+.tapchat{
+    width: 50%;
+}
+
+#msg{
+    width: 100%;
+}
+
+.shoutbox{
+    background-color: #f4fffc;
+}
+
+#messages{
+    height: 210px;
+    word-wrap: break-word;
+    overflow: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+
+.chatimg{
+    width: 30px;
+    border-radius: 5px;
+    padding-bottom: 4px;
+}
+
+.smilies{
+    width: 25px;
+}
+
+#showsmilies{
+    position: absolute;
+    border: 1px solid black;
+    margin-left: 300px;
+    background-color: white;
+    width:20%;
+}

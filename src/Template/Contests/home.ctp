@@ -1,8 +1,11 @@
 <?php $this->assign('title', 'Accueil'); ?>
 <?= $this->Html->css('animate.css') ?>
 
-<div class="wrapper">
 
+
+
+
+<div class="wrapper">
 
 <div class="row">
     <div class="col-md-3 menuspace hidden-xs hidden-sm">
@@ -19,7 +22,8 @@
 
 
         </div>
-
+    <?php $cellchat = $this->cell('Chat');
+    echo $cellchat; ?>
     <!--________________________________________derniers lots remportés-->
     <div class="col-md-9 voffset2 pull-right">
         <div class="panel panel-default">
