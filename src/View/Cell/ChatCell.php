@@ -27,7 +27,7 @@ class ChatCell extends Cell
     {
         $this->loadModel('Chat');
 
-        if ($this->request->is('post')) {
+        if ($this->request->is('post') && $this->request->data['type'] == 0) {
             $time = Time::now();
             $alert = $this->Chat->query();
             $alert->insert(['user_id', 'message','created'])
@@ -36,6 +36,14 @@ class ChatCell extends Cell
                     'message' => $this->request->data['message'],
                     'created' => $time
                 ])
+                ->execute();
+        }
+
+        if ($this->request->is('post') && $this->request->data['type'] == 1) {
+            $alert = $this->Chat->query();
+            $alert->update()
+                ->set(['message' => $this->request->data["message"]])
+                ->where(['id' => $this->request->data['id']])
                 ->execute();
         }
 
