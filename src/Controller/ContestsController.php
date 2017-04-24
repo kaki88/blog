@@ -60,8 +60,21 @@ class ContestsController extends AppController
             ->where(['Contests.active' => 1])
         ->limit(12);
 
+        $topwin = $this->Contests->Users->find();
+        $topwin->select(['total_win' => $topwin->func()->count('UsersDotations.user_id'), 'Users.login'])
+            ->leftJoinWith('UsersDotations')
+            ->group('UsersDotations.user_id')
+        ->order('total_win DESC')
+        ->limit(10);
 
-        $this->set(compact('votplus','countcontestwin','playplus','lastwins','lastcontests'));
+        $topcreate = $this->Contests->Users->find();
+        $topcreate->select(['total' => $topcreate->func()->count('Contests.user_id'), 'Users.login'])
+            ->leftJoinWith('Contests')
+            ->group('Contests.user_id')
+            ->order('total DESC')
+            ->limit(10);
+
+        $this->set(compact('votplus','countcontestwin','playplus','lastwins','lastcontests','topwin','topcreate'));
     }
 
     public function category($id= null)

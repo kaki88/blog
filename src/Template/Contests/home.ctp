@@ -17,11 +17,63 @@
             <a href="/beta/deposer-un-jeu" class="btn btn-success btn-block paneladd"> deposer un jeu
                 <span class="addsquare"><i class="fa fa-plus-square" aria-hidden="true"></i></span>
             </a>
-
         </div>
 
+        <!--________________________________________Top Gagnants-->
 
+        <div class="col-md-12 voffset2">
+            <div class="row">
+                <div class="panel panel-default">
+                    <div class="panel-heading paneltop panelplay">Top Gagnants</div>
+                    <div class="panel-body panelcontent">
+                        <table class="table">
+                            <tbody>
+                            <?php foreach ($topwin as $top) : ?>
+                            <tr>
+                                <td width="85%">
+                                    <b><?= $top->login ?></b>
+                                </td>
+                                <td>
+                                    <span class=" label  label-default"> <?= $top->total_win ?> </span>
+                                </td>
+                            </tr>
+                            <?php endforeach ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <!--________________________________________Top Dépôts-->
+
+        <div class="col-md-12 voffset2">
+            <div class="row">
+                <div class="panel panel-default">
+                    <div class="panel-heading paneltop panelplay">Top Dépôts</div>
+                    <div class="panel-body panelcontent">
+                        <table class="table">
+                            <tbody>
+                            <?php foreach ($topcreate as $top) : ?>
+                            <tr>
+                                <td width="85%">
+                                    <b><?= $top->login ?></b>
+                                </td>
+                                <td>
+                                    <span class=" label  label-default"> <?= $top->total ?> </span>
+                                </td>
+                            </tr>
+                            <?php endforeach ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!--________________________________________shoutbox-->
     <?php $cellchat = $this->cell('Chat');
     echo $cellchat; ?>
     <!--________________________________________derniers lots remportés-->

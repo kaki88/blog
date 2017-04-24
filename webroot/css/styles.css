@@ -1336,16 +1336,16 @@ hr.style10 {
 }
 
 #messages{
-    height: 210px;
+    height: 250px;
     word-wrap: break-word;
     overflow: auto;
     margin-top: 10px;
-    margin-bottom: 10px;
-    font-size: 15px;
+    margin-bottom: 5px;
+    font-size: 13px;
 }
 
 .chatimg{
-    width: 30px;
+    width: 32px;
     border-radius: 5px;
     padding-bottom: 4px;
 }
@@ -1355,9 +1355,6 @@ hr.style10 {
 }
 
 #showsmilies{
-    position: absolute;
-    border: 1px solid black;
-    margin-left: 300px;
-    background-color: white;
-    width:20%;
+    width:100%;
+    padding: 10px;
 }
