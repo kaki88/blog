@@ -34,7 +34,7 @@
                     <i class="fa fa-thermometer-half" aria-hidden="true"></i> Les + Hot</a></li>
                 <li><a href="<?= $this->Url->build(['controller' => 'Contests','action' => 'add' , 'prefix' => false ]); ?>">
                     <i class="fa fa-plus-square" aria-hidden="true"></i> Publier</a></li>
-                <li><a href="<?= $this->Url->build(['controller' => 'Contests','action' => 'add' , 'prefix' => false ]); ?>">
+                <li><a href="<?= $this->Url->build(['controller' => 'Forums','action' => 'index' , 'prefix' => false ]); ?>">
                     <i class="fa fa-comments" aria-hidden="true"></i>  Forum</a></li>
 
 
