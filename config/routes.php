@@ -102,6 +102,21 @@ Router::scope('/', function (RouteBuilder $routes) {
         '/connexion',
         ['controller' => 'Users', 'action' => 'login']
     );
+    //   __________________________________________________________________Forum
+    $routes->connect(
+        '/forum',
+        ['controller' => 'Forums', 'action' => 'index']
+    );
+    $routes->connect(
+        '/forum/:id-:slug', ['controller' => 'Forums', 'action' => 'view'],
+        ['pass' => ['slug', 'id'], 'id' => '[0-9]+',]
+    );
+    $routes->connect(
+        '/forum/:fid-:forum/:id-:slug',
+        ['controller' => 'ForumsThreads', 'action' => 'view'],
+        ['pass' => ['fid', 'forum', 'slug', 'id'], 'id' => '[0-9]+',]
+    );
+
     //   __________________________________________________________________Concours
     $routes->connect(
         '/jeux',
