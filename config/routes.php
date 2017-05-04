@@ -116,6 +116,16 @@ Router::scope('/', function (RouteBuilder $routes) {
         ['controller' => 'ForumsThreads', 'action' => 'view'],
         ['pass' => ['fid', 'forum', 'slug', 'id'], 'id' => '[0-9]+',]
     );
+    $routes->connect(
+        '/forum/:id-:slug/creer-un-sujet',
+        ['controller' => 'ForumsThreads', 'action' => 'add'],
+        ['pass' => ['slug', 'id'], 'id' => '[0-9]+',]
+    );
+    $routes->connect('/forum/:fid-:forum/:id-:slug/poster-une-reponse', ['controller' => 'ForumsPosts', 'action' => 'add'], ['pass' => ['fid', 'forum', 'slug', 'id'], 'id' => '[0-9]+',]);
+    $routes->connect('/forum/:fid-:forum/:id-:slug/poster-une-reponse/:quote', ['controller' => 'ForumsPosts', 'action' => 'addquote'], ['pass' => ['fid', 'forum', 'slug', 'id', 'quote'], 'id' => '[0-9]+',]);
+    $routes->connect('/forum/:fid-:forum/:id-:slug/editer', ['controller' => 'ForumsPosts', 'action' => 'edit'], ['pass' => ['fid', 'forum', 'slug', 'id'], 'id' => '[0-9]+',]);
+    $routes->connect('/forum/:fid-:forum/:id-:slug/editer-topic', ['controller' => 'ForumsThreads', 'action' => 'edit'], ['pass' => ['fid', 'forum', 'slug', 'id'], 'id' => '[0-9]+',]);
+    $routes->connect('/forum/rechercher/*', ['controller' => 'Forums', 'action' => 'search']);
 
     //   __________________________________________________________________Concours
     $routes->connect(
