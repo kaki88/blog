@@ -30,35 +30,38 @@ class ForumsController extends AppController
         $role = $this->Auth->user('role_id');
 
             $cat = $this->Forums->ForumsCategories->find('all')
-                ->contain(['Forums.Users',
-                    'Forums' => function ($q) {
-                    return $q
-                        ->order(['Forums.sort' => 'ASC']);
+                ->contain(['Forums.Endtopic'=> function ($z) {
+                    return $z
+                        ->select(['id','created','subject']);
+                },
+                    'Forums.Endpost'=> function ($z) {
+                        return $z
+                            ->select(['id','created','title']);
+                    },
+                    'Forums.Endpost.Usersd'=> function ($z) {
+                        return $z
+                            ->select(['id','login']);
+                    },
+                    'Forums.Endtopic.Users'=> function ($z) {
+                    return $z
+                        ->select(['id','login']);
                 },
                     'Forums.ForumsThreads' => function ($z) {
                     return $z
-                        ->order(['ForumsThreads.id' => 'DESC'])
-                        ->limit(1);
-                }
+                        ->select(['id','forum_id','created','subject']);
+                },
+                    'Forums.ForumsThreads.Users' => function ($z) {
+                        return $z
+                            ->select(['id','login']);
+                    },
+                    'Forums.ForumsThreads.ForumsPosts'  => function ($z) {
+                        return $z
+                            ->select(['thread_id','created']);
+                    },
                 ])
                 ->order(['ForumsCategories.sort' => 'ASC']);
 
-
-
-            $countpost = $this->Forums->ForumsThreads->ForumsPosts->find('all')
-                ->contain(['ForumsThreads.Forums.ForumsCategories'])
-                ->count();
-
-            $countthread = $this->Forums->ForumsThreads->find('all')
-                ->contain(['Forums.ForumsCategories'])
-                ->count();
-
-        $countuser = $this->Forums->Users->find('all')->count();
-        $lastuser = $this->Forums->Users->find('all')
-            ->select(['id', 'login'])
-            ->order(['Users.created' => 'DESC'])->first();
-
-        $this->set(compact('cat', 'countpost', 'countthread', 'countuser', 'lastuser', 'role'));
+        $this->set(compact('cat'));
     }
 
 
@@ -67,9 +70,16 @@ class ForumsController extends AppController
     {
         $role = $this->Auth->user('role_id');
 
-        $forum = $this->Forums->ForumsThreads->find('all')
-            ->contain(['Users', 'ForumsPosts'])
-            ->where(['forum_id' => $id]);
+        $forum = $this->Forums->ForumsThreads->find()
+            ->contain(['ForumsPosts'=> function ($z) {
+                return $z
+                    ->select(['thread_id']);
+            },'Users', 'ForumsPs.Users'
+            ])
+            ->select(['Users.login', 'Users.id','ForumsThreads.id','ForumsThreads.created','ForumsThreads.subject',
+                'ForumsThreads.countview'
+            ])
+            ->where(['forum_id' => $id])->order(['ForumsThreads.lastdate' => 'DESC' ]);
 
         $forumname = $this->Forums->find('all')
             ->select(['name'])
@@ -79,6 +89,7 @@ class ForumsController extends AppController
         $this->set(compact('forumname', 'id', 'role'));
         $this->set('forum', $this->paginate($forum));
     }
+
 
     public function search()
     {

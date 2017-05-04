@@ -24,7 +24,7 @@
         <button id="sub" class="btn btn-warning dash-hide" role="button" aria-pressed="true"> <i class="fa fa-thumb-tack"></i> S'ABONNER A CE SUJET</button>
         <?php endif ?>
 
-        <a href="<?= $this->Url->build(['controller' => 'Posts', 'action' => 'add' ,
+        <a href="<?= $this->Url->build(['controller' => 'ForumsPosts', 'action' => 'add' ,
     'fid' => $fid,
     'forum' => strtolower(str_replace(' ', '-', $forum)),
     'slug' => strtolower(str_replace(' ', '-', $slug)),
@@ -188,7 +188,7 @@
      ]); ?>"
                            class="btn btn-sm purple" role="button" aria-pressed="true"><i class="fa fa-pencil"></i> EDITER</a>
 
-                        <?= $this->Form->postLink(__('<i class="fa fa-times"></i>'),[ 'controller' => 'Threads'
+                        <?= $this->Form->postLink(__('<i class="fa fa-times"></i>'),[ 'controller' => 'ForumsThreads'
                         , 'action' => 'delete' , $thread->id],['escape'=>false , 'class'=>'btn btn-sm btn-danger dash-delete dash-hide']); ?>
                         <?php endif ?>
                     </div>
@@ -376,12 +376,11 @@
                     ?>
         </div>
     <div class="right">
-        <a href="<?= $this->Url->build(['controller' => 'Posts', 'action' => 'add' ,
-   'fid' => $fid,
+        <a href="<?= $this->Url->build(['controller' => 'ForumsPosts', 'action' => 'add' ,
+    'fid' => $fid,
     'forum' => strtolower(str_replace(' ', '-', $forum)),
     'slug' => strtolower(str_replace(' ', '-', $slug)),
-     'id' => $id
-     ]) ?>"
+     'id' => $id]) ?>"
            class="btn btn-success dash-post"  role="button" aria-pressed="true"> <i class="fa fa-comments-o"></i> REPONDRE</a>
     </div></div>
 
@@ -395,7 +394,7 @@ $(document).on('click', '#sub', function () {
     $.ajax({
         type:'post',
         data: 'thread_id=' + id,
-        url: '<?= $this->Url->build("forums/subscriptions/add"); ?>',
+        url: '<?= $this->Url->build("forumssubscriptions/add"); ?>',
         success:function(){
             $('#sub').addClass('hidden');
             $('#right').prepend('<button id="issub" class="btn btn-danger" role="button" aria-pressed="true"> <i class="fa fa-times"></i> SE DESABONNER DU SUJET</button>')
@@ -408,7 +407,7 @@ $(document).on('click', '#issub', function () {
     $.ajax({
         type:'post',
         data: 'thread_id=' + id,
-        url: '<?= $this->Url->build("forums/subscriptions/delete"); ?>',
+        url: '<?= $this->Url->build("forumssubscriptions/delete"); ?>',
         success:function(){
             $('#issub').addClass('hidden');
             $('#right').prepend('<button id="sub" class="btn btn-warning " role="button" aria-pressed="true"> <i class="fa fa-thumb-tack"></i> S\'ABONNER A CE SUJET</button>')

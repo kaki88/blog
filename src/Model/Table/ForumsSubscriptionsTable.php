@@ -7,21 +7,20 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Posts Model
+ * ForumsSubscriptions Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Users
+ * @property \Cake\ORM\Association\BelongsTo $Threads
  *
- * @method \App\Model\Entity\Post get($primaryKey, $options = [])
- * @method \App\Model\Entity\Post newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Post[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Post|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Post patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Post[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Post findOrCreate($search, callable $callback = null)
- *
- * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @method \App\Model\Entity\ForumsSubscription get($primaryKey, $options = [])
+ * @method \App\Model\Entity\ForumsSubscription newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\ForumsSubscription[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\ForumsSubscription|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\ForumsSubscription patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\ForumsSubscription[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\ForumsSubscription findOrCreate($search, callable $callback = null)
  */
-class PostsTable extends Table
+class ForumsSubscriptionsTable extends Table
 {
 
     /**
@@ -34,22 +33,18 @@ class PostsTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('posts');
+        $this->table('forums_subscriptions');
         $this->displayField('id');
         $this->primaryKey('id');
 
-        $this->addBehavior('Timestamp');
-
-        $this->belongsTo('Contests', [
-            'foreignKey' => 'contest_id',
-            'joinType' => 'INNER'
-        ]);
-        
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
             'joinType' => 'INNER'
         ]);
-
+        $this->belongsTo('ForumsThreads', [
+            'foreignKey' => 'thread_id',
+            'joinType' => 'INNER'
+        ]);
     }
 
     /**
@@ -64,10 +59,6 @@ class PostsTable extends Table
             ->integer('id')
             ->allowEmpty('id', 'create');
 
-        $validator
-            ->requirePresence('message', 'create')
-            ->notEmpty('message');
-
         return $validator;
     }
 
@@ -81,6 +72,7 @@ class PostsTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['user_id'], 'Users'));
+        $rules->add($rules->existsIn(['thread_id'], 'ForumsThreads'));
 
         return $rules;
     }

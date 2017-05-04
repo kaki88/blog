@@ -16,7 +16,7 @@
     </div>
 
 <div class="right">
-    <a href="<?= $this->Url->build([ 'controller' => 'Threads', 'action' => 'add' , 'slug' => strtolower(str_replace(' ', '-', $forumname->name)), 'id' => $id]) ?>"
+    <a href="<?= $this->Url->build([ 'controller' => 'ForumsThreads', 'action' => 'add' , 'slug' => strtolower(str_replace(' ', '-', $forumname->name)), 'id' => $id]) ?>"
        class="btn btn-success " role="button" aria-pressed="true"> <i class="fa fa-plus"></i> CREER UN SUJET</a>
 </div>
     </div>
@@ -44,13 +44,18 @@
             <br> par
                 <?= $this->Html->link($threads->user->login, 'utilisateur/profil/'.$threads->user->id.'') ?>
             </td>
-            <td width="10%" class="hidden-xs"><?= $threads->countpost ?></td>
+            <td width="10%" class="hidden-xs">
+                <?php if ($threads->forums_posts) : ?>
+                <?= count($threads->forums_posts) ?>
+                <?php endif ?>
+            </td>
             <td width="10%" class="hidden-xs"><?= $threads->countview ?></td>
             <td width="25%">
 
-            <?php if ($threads->lastpost) : ?>
-            le <?= $threads->lastpost->i18nformat('dd/MM/YY à HH:mm', 'Europe/Paris') ?>
-                <br> par
+            <?php if ($threads->forums_p) : ?>
+
+            le <?= $threads->forums_p->created ?>
+                <br> par  <?= $threads->forums_p->user->login ?>
 
                 </br>
 
@@ -61,7 +66,7 @@
 
             <?php if ($role !== 2 || empty($role)) : ?>
             <td width="5%" class="actions">
-                <?= $this->Form->postLink(__('<i class="fa fa-times"></i>'),[ 'controller' => 'Threads'
+                <?= $this->Form->postLink(__('<i class="fa fa-times"></i>'),[ 'controller' => 'ForumsThreads'
                 , 'action' => 'delete' , $threads->id],['escape'=>false , 'class'=>'btn btn-sm btn-danger']); ?>
             </td>
             <?php endif ?>

@@ -20,6 +20,7 @@ class ForumsThreadsController extends AppController
     {
         parent::initialize();
         $this->loadComponent('Paginator');
+        $this->loadComponent('Upload');
     }
 
     public function view($fid = null, $forum = null, $slug = null, $id = null)
@@ -33,13 +34,13 @@ class ForumsThreadsController extends AppController
             ->first();
 
         $thread = $this->ForumsThreads->find()
-            ->contain(['Users.Roles'])
+            ->contain(['Users.Roles','Files'])
         ->where(['ForumsThreads.id' => $id])
         ->first();
 
         $posts = $this->ForumsThreads->ForumsPosts->find('all')
-           ->contain(['Users.Roles'])
-            ->where(['thread_id' => $id]);
+           ->contain(['Users.Roles','Files'])
+            ->where(['ForumsPosts.thread_id' => $id]);
 
         $query = $this->ForumsThreads->query();
         $query->update()
@@ -47,7 +48,7 @@ class ForumsThreadsController extends AppController
             ->where(['id' => $id])
             ->execute();
 
-        $this->set(compact('thread','subscription','fid','forum','slug','id','role'));
+        $this->set(compact('thread','subscription','fid','forum','slug','id','role','threads'));
         $this->set('posts', $this->paginate($posts));
     }
 
@@ -56,33 +57,33 @@ class ForumsThreadsController extends AppController
     {
         $user = $this->Auth->user('id');
 
-        $thread = $this->Threads->newEntity();
+        $thread = $this->ForumsThreads->newEntity();
 
         if ($this->request->is('post')) {
             $this->request->data['user_id'] = $user;
             $this->request->data['forum_id'] = $id;
-            $thread = $this->Threads->patchEntity($thread, $this->request->data);
-            if ($this->Threads->save($thread)) {
+            $thread = $this->ForumsThreads->patchEntity($thread, $this->request->data);
+            if ($this->ForumsThreads->save($thread)) {
 #upload de fichier
                 $picture = $this->Upload->getFile($this->request->data['upload'],'files');
                 $this->request->data['upload'] = $picture;
-                $file = $this->Threads->Files->newEntity();
+                $file = $this->ForumsThreads->Files->newEntity();
                 $this->request->data['name'] = $picture ;
                 $this->request->data['post_id'] = $thread->id ;
-                $file = $this->Threads->Files->patchEntity($file, $this->request->data);
-                $this->Threads->Files->save($file);
+                $file = $this->ForumsThreads->Files->patchEntity($file, $this->request->data);
+                $this->ForumsThreads->Files->save($file);
                 $data = [
                     'thread_id' => $thread->id
                     ,
                     'file_id' => $file->id
 
                 ];
-                $fp = TableRegistry::get('threads_files');
+                $fp = TableRegistry::get('forum_threads_files');
                 $postsFiles = $fp->newEntity();
                 $postsFiles = $fp->patchEntity($postsFiles,$data);
                 $fp->save($postsFiles);
 
-                $query = $this->Threads->Forums->query();
+                $query = $this->ForumsThreads->Forums->query();
                 $query->update()
                     ->set($query->newExpr('countthread = countthread + 1'))
                     ->where(['id' => $id])
@@ -126,32 +127,9 @@ class ForumsThreadsController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $thread = $this->Threads->get($id);
-
-        $post = $this->Threads->find()
-            ->select('countpost')
-            ->where(['Threads.id' => $id])
-            ->first();
-
-        $forumid = $this->Threads->find()
-            ->select('forum_id')
-            ->where(['id' => $id])
-            ->first();
-
-        if ($this->Threads->delete($thread)) {
-            $this->Flash->success(__('The thread has been deleted.'));
-            $query = $this->Threads->Forums->query();
-            $query->update()
-                ->set([$query->newExpr('countthread = countthread - 1'),
-                    $query->newExpr('countpost = countpost - '.$post->countpost.'')])
-                ->where(['id' => $forumid->forum_id])
-                ->execute();
-        } else {
-            $this->Flash->error(__('The thread could not be deleted. Please, try again.'));
-        }
-
+        $thread = $this->ForumsThreads->get($id);
+        $this->ForumsThreads->delete($thread);
         return $this->redirect($this->referer());
     }
-
 
 }
